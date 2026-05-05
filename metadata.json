@@ -1,0 +1,7 @@
+{
+  "name": "TERANGA TE - Partenaire technologique du Sahel",
+  "description": "Expert en ICT, Énergie et Énergies Renouvelables au Sahel. Solutions technologiques critiques avec support 24/7 et SLA garanti.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
