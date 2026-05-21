@@ -1,99 +1,537 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useRef } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 
-const CLIENTS = [
-  { name: 'AFRI-RH', sub: 'RH & Conseil' },
-  { name: 'GODIFA', sub: 'Technologies & Innovation' },
-  { name: 'AFRILAND', sub: 'Immobilier & Bâtiment' },
-  { name: 'KAI', sub: 'Transport & Mobilité' },
-  { name: 'AL AMINE', sub: 'GED & Archivage' },
-  { name: 'ICP', sub: 'Conseil & Projets' },
-  { name: 'NBW', sub: 'Law Firm' },
+/* ══════════════════════════════════════════════════
+   TYPES
+══════════════════════════════════════════════════ */
+interface PartnerItem {
+  name: string;
+  slug?: string | null;
+  logo?: string;
+  color: string;
+}
+
+interface PartnerGroup {
+  id: string;
+  title: string;
+  subtitle: string;
+  accentColor: string;
+  items: PartnerItem[];
+}
+
+/* ══════════════════════════════════════════════════
+   DONNÉES
+══════════════════════════════════════════════════ */
+const PARTNERS: PartnerGroup[] = [
+  {
+    id: 'ict',
+    title: 'ICT',
+    subtitle: 'Réseaux, sécurité, postes & serveurs',
+    accentColor: '#1BA0D7',
+    items: [
+      { name: 'Cisco', logo: '/assets/logo partenaires/virtualisation/cisco.png', color: '#1BA0D7' },
+      { name: 'Fortinet', logo: '/assets/logo partenaires/virtualisation/fortinet.png', color: '#EE3124' },
+      { name: 'HP', logo: '/assets/logo partenaires/virtualisation/hp.png', color: '#0096D6' }, // si absent → fallback texte
+      { name: 'Microsoft', logo: '/assets/logo partenaires/virtualisation/microsoft.png', color: '#737373' },
+      { name: 'VMware', logo: '/assets/logo partenaires/virtualisation/vmware.png', color: '#607078' },
+      { name: 'IBM', logo: '/assets/logo partenaires/virtualisation/ibm.png', color: '#054ADA' },
+      { name: 'Palo Alto', logo: '/assets/logo partenaires/virtualisation/palo-alto.png', color: '#FA582D' },
+      { name: 'Proxmox', logo: '/assets/logo partenaires/virtualisation/proxmox.png', color: '#E57000' },
+    ],
+  },
+
+  {
+    id: 'impression',
+    title: 'Impression',
+    subtitle: 'Managed Print Services',
+    accentColor: '#5E2A78',
+    items: [
+      { name: 'Ricoh', logo: '/assets/logo partenaires/impression/ricoh.png', color: '#D7000F' },
+      { name: 'Riso', logo: '/assets/logo partenaires/impression/riso.png', color: '#5E2A78' },
+      { name: 'Epson', logo: '/assets/logo partenaires/impression/epson.png', color: '#0033A0' },
+      { name: 'Canon', logo: '/assets/logo partenaires/impression/canon.png', color: '#D71920' },
+    ],
+  },
+
+  {
+    id: 'energie',
+    title: 'Énergie CFO',
+    subtitle: 'Groupes électrogènes & onduleurs',
+    accentColor: '#E12325',
+    items: [
+      { name: 'GE', logo: '/assets/logo partenaires/energie/ge.png', color: '#005EB8' },
+      { name: 'Promac', logo: '/assets/logo partenaires/energie/promac.png', color: '#C8102E' },
+      { name: 'Kohler', logo: '/assets/logo partenaires/groupe electrogene/kohler.png', color: '#1a1a1a' },
+      { name: 'Honeywell', logo: '/assets/logo partenaires/energie/honeywell.png', color: '#E2231A' },
+      { name: 'Cummins', logo: '/assets/logo partenaires/groupe electrogene/cummins.png', color: '#E12325' },
+      { name: 'FG Wilson', logo: '/assets/logo partenaires/groupe electrogene/fg-wilson.png', color: '#003E7E' },
+      { name: 'Himoinsa', logo: '/assets/logo partenaires/groupe electrogene/himonisa.png', color: '#D6261B' },
+      { name: 'CAT', logo: '/assets/logo partenaires/energie/cat.png', color: '#FFCD11' },
+      { name: 'Eaton', logo: '/assets/logo partenaires/energie/eaton.png', color: '#004B8D' },
+      { name: 'Schneider Electric', logo: '/assets/logo partenaires/energie/schneider-electric.png', color: '#3DCD58' },
+      { name: 'APC', logo: '/assets/logo partenaires/energie/apc.png', color: '#3DCD58' },
+      { name: 'Socomec', logo: '/assets/logo partenaires/energie/socomec.png', color: '#003D7A' },
+    ],
+  },
+
+  {
+    id: 'renouvelables',
+    title: 'Énergies Renouvelables',
+    subtitle: 'Solaire & stockage',
+    accentColor: '#3DCD58',
+    items: [
+      { name: 'Huawei', logo: '/assets/logo partenaires/energie/huawei.png', color: '#C7000B' },
+      { name: 'Jinko', logo: '/assets/logo partenaires/energie/jinko.png', color: '#0066B3' },
+      { name: 'JA Solar', logo: '/assets/logo partenaires/energie/ja-solar.png', color: '#003F7F' },
+      { name: 'Longi', logo: '/assets/logo partenaires/energie/longi.png', color: '#E60000' },
+      { name: 'SMA', logo: '/assets/logo partenaires/energie/sma.png', color: '#00A0E2' },
+      { name: 'Victron Energy', logo: '/assets/logo partenaires/energie/victron-energy.png', color: '#005A9C' },
+    ],
+  },
 ];
-
-const PARTNERS = {
-  virtualisation: {
-    title: 'Virtualisation',
-    logos: ['VMware', 'Hyper-V', 'Proxmox', 'Microsoft', 'Cisco', 'Fortinet', 'IBM', 'Palo Alto']
+/* ══════════════════════════════════════════════════
+   VARIANTS FRAMER MOTION
+══════════════════════════════════════════════════ */
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.1 },
   },
-  impression: {
-    title: 'Impression (MPS)',
-    logos: ['Riso', 'Epson', 'Canon']
-  },
-  energie: {
-    title: 'Énergie',
-    logos: ['APC', 'Jinko', 'Eaton', 'Victron Energy', 'Schneider Electric', 'JA Solar', 'Socomec', 'Promac', 'Huawei', 'SMA', 'Longi']
-  },
-  groupes: {
-    title: 'Groupes Élec.',
-    logos: ['Cummins', 'SDMO Kohler', 'FG Wilson', 'CAT']
-  }
 };
 
-export const Partners = () => {
+const cardVariants = {
+  hidden: { opacity: 0, y: 24, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.55, ease: [0.25, 1, 0.5, 1] },
+  },
+};
+
+const groupVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
+/* ══════════════════════════════════════════════════
+   PARTNER CARD
+   — 3D tilt + shimmer traversant + scale logo
+   — Sans aucun effet de lumière radiale
+══════════════════════════════════════════════════ */
+const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({
+  p,
+  accentColor,
+}) => {
+  const [err, setErr] = useState(false);
+  const [tilt, setTilt]   = useState({ rx: 0, ry: 0 });
+  const [hovered, setHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const showImg =  Boolean(p.logo) && !err; 
+
+  /* Tilt 3D au survol — remplace l'effet lumière */
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const cx   = rect.left + rect.width  / 2;
+    const cy   = rect.top  + rect.height / 2;
+    const dx   = (e.clientX - cx) / (rect.width  / 2);   // -1 → +1
+    const dy   = (e.clientY - cy) / (rect.height / 2);   // -1 → +1
+    setTilt({ rx: -dy * 8, ry: dx * 8 });                // max ±8°
+  };
+
+  const resetTilt = () => {
+    setTilt({ rx: 0, ry: 0 });
+    setHovered(false);
+  };
+
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <span className="text-primary font-bold text-[10px] uppercase tracking-[0.3em] mb-4 block">EXCELLENCE TECHNOLOGIQUE</span>
-          <h2 className="text-3xl lg:text-5xl font-display font-extrabold text-dark mb-6">Nos Partenaires Technologiques</h2>
-          <div className="w-20 h-1 bg-primary/30 mx-auto rounded-full mb-8 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full" />
-          </div>
-          <p className="text-slate-500 max-w-2xl mx-auto text-base leading-relaxed">
-            Nous collaborons avec les leaders mondiaux pour garantir des solutions fiables et performantes.
+    <motion.div
+      ref={cardRef}
+      variants={cardVariants}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={resetTilt}
+      style={{
+        perspective: 600,
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {/* Carte réelle */}
+      <motion.div
+        animate={{
+          rotateX: tilt.rx,
+          rotateY: tilt.ry,
+          scale: hovered ? 1.04 : 1,
+          boxShadow: hovered
+            ? `0 20px 44px -12px rgba(15,26,46,0.22), 0 0 0 1.5px ${accentColor}55`
+            : '0 2px 10px -4px rgba(15,26,46,0.08), 0 0 0 1px #E7E3DA',
+        }}
+        transition={{ type: 'spring', stiffness: 280, damping: 22, mass: 0.6 }}
+        style={{
+          background: '#fff',
+          borderRadius: 18,
+          padding: '22px 16px 18px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 12,
+          minHeight: 120,
+          position: 'relative',
+          overflow: 'hidden',
+          transformStyle: 'preserve-3d',
+          cursor: 'default',
+        }}
+      >
+        {/* ── Shimmer traversant (horizontal) — pas de radial ── */}
+        <motion.div
+          animate={{ x: hovered ? '250%' : '-120%' }}
+          initial={{ x: '-120%' }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'linear-gradient(105deg, transparent 30%, rgba(201,161,75,0.18) 50%, transparent 70%)',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
+
+        {/* ── Liseré coloré en bas qui monte au hover ── */}
+        <motion.div
+          animate={{ scaleY: hovered ? 1 : 0 }}
+          initial={{ scaleY: 0 }}
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 3,
+            background: accentColor,
+            transformOrigin: 'bottom',
+            borderRadius: '0 0 18px 18px',
+            zIndex: 1,
+          }}
+          transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+        />
+
+        {/* ── Logo / texte de fallback ── */}
+        <motion.div
+          animate={{
+            y:     hovered ? -3 : 0,
+            scale: hovered ? 1.12 : 1,
+          }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          style={{ position: 'relative', zIndex: 2 }}
+        >
+          {showImg ? (
+            <img
+              src={p.logo}
+              alt={p.name}
+              onError={() => setErr(true)}
+              style={{
+                maxWidth: 80,
+                maxHeight: 42,
+                width: 'auto',
+                height: 'auto',
+                objectFit: 'contain',
+                display: 'block',
+                filter: hovered
+                  ? `grayscale(0) drop-shadow(0 4px 10px ${p.color}55)`
+                  : 'grayscale(0.25)',
+                transition: 'filter 0.35s ease',
+              }}
+            />
+          ) : (
+            <span
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 800,
+                fontSize: 17,
+                letterSpacing: '-0.01em',
+                color: hovered ? p.color : '#374151',
+                transition: 'color 0.25s ease',
+                lineHeight: 1,
+              }}
+            >
+              {p.name}
+            </span>
+          )}
+        </motion.div>
+
+        {/* ── Nom sous le logo ── */}
+        <motion.span
+          animate={{
+            color: hovered ? accentColor : '#8A93A6',
+            y:     hovered ? 1 : 0,
+          }}
+          transition={{ duration: 0.25 }}
+          style={{
+            fontSize: 11,
+            fontWeight: 600,
+            position: 'relative',
+            zIndex: 2,
+            letterSpacing: '0.02em',
+          }}
+        >
+          {p.name}
+        </motion.span>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+/* ══════════════════════════════════════════════════
+   GROUP HEADER
+   — Numéro + titre + accent bar animée
+══════════════════════════════════════════════════ */
+const GroupHeader: React.FC<{
+  group: PartnerGroup;
+  index: number;
+  isActive: boolean;
+}> = ({ group, index, isActive }) => (
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 16,
+      marginBottom: 28,
+    }}
+  >
+    {/* Numéro */}
+    <span
+      style={{
+        fontFamily: 'var(--font-display)',
+        fontWeight: 800,
+        fontSize: 11,
+        color: group.accentColor,
+        opacity: 0.6,
+        letterSpacing: '0.12em',
+        minWidth: 24,
+      }}
+    >
+      {String(index + 1).padStart(2, '0')}
+    </span>
+
+    {/* Titre + sous-titre */}
+    <div>
+      <h4
+        style={{
+          fontSize: 13,
+          fontWeight: 800,
+          letterSpacing: '0.22em',
+          textTransform: 'uppercase',
+          color: group.accentColor,
+          margin: 0,
+          lineHeight: 1,
+        }}
+      >
+        {group.title}
+      </h4>
+      <p
+        style={{
+          fontSize: 11,
+          color: 'var(--slate-2)',
+          marginTop: 4,
+          letterSpacing: '0.04em',
+        }}
+      >
+        {group.subtitle}
+      </p>
+    </div>
+
+    {/* Ligne décorative */}
+    <motion.div
+      animate={{ scaleX: isActive ? 1 : 0.4, opacity: isActive ? 1 : 0.3 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        flex: 1,
+        height: 1,
+        background: `linear-gradient(90deg, ${group.accentColor}, transparent)`,
+        transformOrigin: 'left',
+        borderRadius: 1,
+      }}
+    />
+
+    {/* Compteur */}
+    <span
+      style={{
+        fontSize: 11,
+        fontWeight: 700,
+        color: 'var(--slate-2)',
+        letterSpacing: '0.06em',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {group.items.length} partenaires
+    </span>
+  </div>
+);
+
+/* ══════════════════════════════════════════════════
+   COMPOSANT PRINCIPAL
+══════════════════════════════════════════════════ */
+export const Partners: React.FC = () => {
+  const [activeGroup, setActiveGroup] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef, { once: true, margin: '-80px 0px' });
+
+  return (
+    <section ref={sectionRef} className="section section--paper">
+      <div className="container">
+
+        {/* ── Header section ── */}
+        <motion.div
+          className="section-head"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <span className="eyebrow">
+            <span className="bar" />
+            ÉCOSYSTÈME PARTENAIRES
+          </span>
+          <h2>
+            Nos{' '}
+            <span className="text-ital text-gold">partenaires technologiques.</span>
+          </h2>
+          <p>
+            Nous collaborons avec les leaders mondiaux pour garantir des solutions
+            fiables et performantes.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Partenaires Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
-          {Object.entries(PARTNERS).map(([key, section]) => (
-            <div key={key} className="bg-slate-50 p-6 rounded-[1.5rem] border border-slate-100/50 flex flex-col">
-              <h4 className="text-[11px] font-black text-dark mb-6 pb-3 border-b border-slate-200 uppercase tracking-widest flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-primary" />
-                {section.title}
-              </h4>
-              <div className="flex flex-wrap gap-1.5 content-start flex-grow">
-                {section.logos.map((logo, i) => (
-                  <span 
-                    key={i} 
-                    className="px-2.5 py-1 bg-white rounded-md border border-slate-200 text-[9px] font-bold text-slate-600 shadow-sm transition-shadow cursor-default"
-                  >
-                    {logo}
-                  </span>
-                ))}
-              </div>
-            </div>
+        {/* ── Filtre rapide (pills) ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 10,
+            flexWrap: 'wrap',
+            marginBottom: 56,
+          }}
+        >
+          {/* Pill "Tous" */}
+          <motion.button
+            onClick={() => setActiveGroup(null)}
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.96 }}
+            style={{
+              padding: '9px 18px',
+              borderRadius: 999,
+              border: `1.5px solid ${activeGroup === null ? 'var(--ink)' : 'var(--line)'}`,
+              background: activeGroup === null ? 'var(--ink)' : '#fff',
+              color: activeGroup === null ? '#fff' : 'var(--slate)',
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+            }}
+          >
+            Tous
+          </motion.button>
+
+          {PARTNERS.map((g) => (
+            <motion.button
+              key={g.id}
+              onClick={() => setActiveGroup(activeGroup === g.id ? null : g.id)}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.96 }}
+              style={{
+                padding: '9px 18px',
+                borderRadius: 999,
+                border: `1.5px solid ${
+                  activeGroup === g.id ? g.accentColor : 'var(--line)'
+                }`,
+                background:
+                  activeGroup === g.id
+                    ? `${g.accentColor}18`
+                    : '#fff',
+                color:
+                  activeGroup === g.id ? g.accentColor : 'var(--slate)',
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: '0.04em',
+                cursor: 'pointer',
+                transition: 'all 0.25s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              {/* Pastille colorée */}
+              <span
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  background: g.accentColor,
+                  flexShrink: 0,
+                  opacity: activeGroup === g.id ? 1 : 0.45,
+                }}
+              />
+              {g.title}
+            </motion.button>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Ils nous ont fait confiance */}
-        <div className="pt-16 border-t border-slate-100">
-          <div className="text-center mb-12">
-            <h3 className="text-xl font-display font-extrabold text-dark">Ils nous ont fait confiance</h3>
-            <div className="w-10 h-0.5 bg-primary mx-auto mt-3" />
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-6 md:gap-12 pb-10">
-            {CLIENTS.map((client, i) => (
+        {/* ── Groupes ── */}
+        <AnimatePresence mode="wait">
+          {PARTNERS.filter(
+            (g) => activeGroup === null || g.id === activeGroup
+          ).map((group, groupIdx) => {
+            const isVisible = activeGroup === null || activeGroup === group.id;
+            return (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.05 }}
-                viewport={{ once: true }}
-                className="flex flex-col items-center group cursor-default"
+                key={group.id}
+                variants={groupVariants}
+                initial="hidden"
+                animate={inView && isVisible ? 'visible' : 'hidden'}
+                exit={{ opacity: 0, x: -12, transition: { duration: 0.3 } }}
+                className="partners-group"
+                data-group={group.id}
+                style={{
+                  paddingBottom: 40,
+                  marginBottom: 8,
+                }}
               >
-                <span className="text-xl font-display font-black text-slate-200 group-hover:text-dark transition-colors uppercase tracking-widest">
-                  {client.name}
-                </span>
-                <span className="text-[7px] font-black text-slate-400 uppercase tracking-[0.2em] mt-0.5 group-hover:text-primary transition-colors">
-                  {client.sub}
-                </span>
+                {/* Header de groupe */}
+                <GroupHeader
+                  group={group}
+                  index={groupIdx}
+                  isActive={activeGroup === group.id || activeGroup === null}
+                />
+
+                {/* Grille de cartes avec stagger */}
+                <motion.div
+                  className="partners-row"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate={inView ? 'visible' : 'hidden'}
+                >
+                  {group.items.map((p) => (
+                    <PartnerCard
+                      key={p.name}
+                      p={p}
+                      accentColor={group.accentColor}
+                    />
+                  ))}
+                </motion.div>
               </motion.div>
-            ))}
-          </div>
-        </div>
+            );
+          })}
+        </AnimatePresence>
+
       </div>
     </section>
   );

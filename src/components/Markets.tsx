@@ -1,140 +1,178 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { MapPin, Target, TrendingUp } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { MapPin, TrendingUp, Target } from 'lucide-react';
 
-const ACTIVE_PRESENCE = [
-  { code: 'SN', country: 'Sénégal', status: 'Siège', active: true },
-  { code: 'GM', country: 'Gambie', status: 'Actif', active: true },
-  { code: 'GN', country: 'Guinée', status: 'Actif', active: true },
+/* Couleurs officielles des drapeaux, utilisées à faible opacité */
+const COUNTRIES_ACTIVE = [
+  { code: 'SN', name: 'Sénégal', status: 'Siège', flagUrl: 'https://flagcdn.com/w40/sn.png', colors: ['#009E49', '#FDEF42', '#E31B23'] },
+  { code: 'GM', name: 'Gambie', status: 'Actif', flagUrl: 'https://flagcdn.com/w40/gm.png', colors: ['#3A7728', '#0C1C8C', '#3A7728'] },
+  { code: 'GN', name: 'Guinée', status: 'Actif', flagUrl: 'https://flagcdn.com/w40/gn.png', colors: ['#CE1126', '#FCD116', '#009460'] },
 ];
 
-const DEPLOYMENTS = [
-  { code: 'ML', country: 'Mali', status: 'En cours' },
-  { code: 'BF', country: 'Burkina Faso', status: 'En cours' },
-  { code: 'NE', country: 'Niger', status: 'En cours' },
-  { code: 'MR', country: 'Mauritanie', status: 'En cours' },
-  { code: 'GW', country: 'Guinée-Bissau', status: 'Planifié' },
-  { code: 'CI', country: 'Côte d’Ivoire', status: 'Planifié' },
+const COUNTRIES_PENDING = [
+  { code: 'ML', name: 'Mali', status: 'En cours', flagUrl: 'https://flagcdn.com/w40/ml.png', colors: ['#14B53A', '#FCD116', '#CE1126'] },
+  { code: 'BF', name: 'Burkina Faso', status: 'En cours', flagUrl: 'https://flagcdn.com/w40/bf.png', colors: ['#009E49', '#EF2B2D'] },
+  { code: 'NE', name: 'Niger', status: 'En cours', flagUrl: 'https://flagcdn.com/w40/ne.png', colors: ['#0DB02B', '#FFFFFF', '#E05206'] },
+  { code: 'MR', name: 'Mauritanie', status: 'En cours', flagUrl: 'https://flagcdn.com/w40/mr.png', colors: ['#006233', '#FFC400'] },
+  { code: 'GW', name: 'Guinée-Bissau', status: 'Planifié', flagUrl: 'https://flagcdn.com/w40/gw.png', colors: ['#CE1126', '#FCD116', '#009E49'] },
+  { code: 'CI', name: "Côte d'Ivoire", status: 'Planifié', flagUrl: 'https://flagcdn.com/w40/ci.png', colors: ['#F77F00', '#FFFFFF', '#009E49'] },
 ];
 
-export const Markets = () => {
-  return (
-    <section id="sahel" className="py-24 bg-dark text-white relative overflow-hidden">
-      {/* Background patterns */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,#2E7D32_0%,transparent_50%)]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="text-center mb-20">
-          <span className="text-primary font-bold text-xs uppercase tracking-[0.3em] mb-4 block">NOTRE PRÉSENCE RÉGIONALE</span>
-          <h2 className="text-5xl lg:text-7xl font-display font-extrabold text-white mb-8">
-            Ancrage Sahel
-          </h2>
-          <div className="w-24 h-1 bg-primary/30 mx-auto rounded-full mb-8 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-primary rounded-full" />
-          </div>
-          <p className="text-slate-300 max-w-2xl mx-auto text-base lg:text-lg leading-relaxed">
-            Une couverture géographique en expansion pour servir les entreprises de toute la région sahélienne.
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
-          {/* Map Column */}
-          <div className="lg:col-span-7 relative group">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative rounded-3xl overflow-hidden border border-white/5 bg-slate-900/40 aspect-[4/3] flex items-center justify-center p-8"
-            >
-              {/* Map Illustration - Faking it with a stylized container as requested by image reference */}
-              <div className="absolute inset-0 opacity-40">
-                <img 
-                  src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200" 
-                  alt="West Africa Connectivity" 
-                  className="w-full h-full object-cover mix-blend-overlay"
-                />
-              </div>
-              
-              <div className="relative z-10 text-center">
-                <div className="inline-block mb-4">
-                  <div className="relative">
-                    <div className="absolute -inset-4 bg-primary/30 blur-2xl animate-pulse rounded-full" />
-                    <div className="w-6 h-6 bg-primary rounded-full shadow-[0_0_30px_#2E7D32] relative z-10 flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full" />
-                    </div>
-                  </div>
-                </div>
-                <h4 className="text-xl lg:text-2xl font-display font-black text-primary tracking-widest uppercase">
-                  WEST AFRICA & THE SAHEL
-                </h4>
-              </div>
-
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent" />
-            </motion.div>
-          </div>
-
-          {/* List Column */}
-          <div className="lg:col-span-5 space-y-12">
-            {/* Active Presence */}
-            <div>
-              <div className="flex items-center gap-3 mb-6 text-slate-100">
-                <MapPin className="w-5 h-5 text-primary" />
-                <h3 className="text-xl font-bold font-display tracking-tight">Présence active</h3>
-              </div>
-              <div className="space-y-3">
-                {ACTIVE_PRESENCE.map((item) => (
-                  <div key={item.code} className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group">
-                    <div className="flex items-center gap-4">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase w-6">{item.code}</span>
-                      <span className="font-bold text-slate-200 group-hover:text-white transition-colors">{item.country}</span>
-                    </div>
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-widest flex items-center gap-2">
-                       <span className="w-1.5 h-1.5 bg-primary rounded-full" />
-                       {item.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Deployments */}
-            <div>
-              <div className="flex items-center gap-3 mb-6 text-slate-100">
-                <TrendingUp className="w-5 h-5 text-primary" />
-                <h3 className="text-xl font-bold font-display tracking-tight">Déploiements 2026–2028</h3>
-              </div>
-              <div className="space-y-3">
-                {DEPLOYMENTS.map((item) => (
-                  <div key={item.code} className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group">
-                    <div className="flex items-center gap-4">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase w-6">{item.code}</span>
-                      <span className="font-bold text-slate-300 group-hover:text-white transition-colors">{item.country}</span>
-                    </div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                       <span className="w-1.5 h-1.5 bg-primary/50 rounded-full" />
-                       {item.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Objectif 2028 */}
-            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 mt-8 group hover:border-primary/30 transition-all">
-              <div className="flex items-center gap-3 mb-4">
-                <Target className="w-5 h-5 text-primary" />
-                <h4 className="text-sm font-bold text-slate-200">Objectif 2028</h4>
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                Consolider notre présence dans 6+ pays du Sahel avec des équipes locales, des partenariats stratégiques et un impact ESG mesurable dans chaque marché.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+/**
+ * Crée un dégradé linéaire ultra‑discret (opacité 15‑20 %)
+ * superposé à un fond sombre pour une lisibilité parfaite.
+ */
+const toSubtleGradient = (colors: string[]) => {
+  const stops = colors.map((c, i) => {
+    // Convertit la couleur hexadécimale en rgba avec 18% d'opacité
+    const r = parseInt(c.slice(1, 3), 16);
+    const g = parseInt(c.slice(3, 5), 16);
+    const b = parseInt(c.slice(5, 7), 16);
+    return `rgba(${r},${g},${b},0.18) ${(i / (colors.length - 1)) * 100}%`;
+  });
+  return `linear-gradient(135deg, ${stops.join(', ')})`;
 };
 
+const container = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+};
+
+const item = {
+  hidden: { opacity: 0, x: -30, scale: 0.9 },
+  visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.6, ease: [0.25, 1, 0.5, 1] as const } },
+};
+
+export const Markets: React.FC = () => (
+  <section id="sahel" className="section section--dark">
+    <div className="container">
+      <motion.div
+        className="section-head"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px 0px' }}
+        transition={{ duration: 0.8 }}
+      >
+        <span className="eyebrow" style={{ color: 'var(--gold-400)' }}>
+          <span className="bar" /> NOTRE PRÉSENCE RÉGIONALE
+        </span>
+        <h2 style={{ color: '#fff' }}>
+          Ancrage <span className="text-ital text-gold">Sahel.</span>
+        </h2>
+        <p>Une couverture géographique en expansion pour servir les entreprises de toute la région sahélienne.</p>
+      </motion.div>
+
+      <div className="sahel-grid">
+        <motion.div
+          className="sahel-map reveal"
+          initial={{ opacity: 0, scale: 0.85, rotateY: -15 }}
+          whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+        >
+          <img src="/assets/sahel-map.png" alt="West Africa & the Sahel" />
+          <div className="sahel-map-fade" />
+        </motion.div>
+
+        <div>
+          {/* Présence active */}
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={container}>
+            <motion.div className="sahel-subhead" variants={item}>
+              <span className="ic"><MapPin size={16} /></span> Présence active
+            </motion.div>
+            <div className="country-list">
+              {COUNTRIES_ACTIVE.map((c) => (
+                <motion.div
+                  className="country-row"
+                  key={c.code}
+                  variants={item}
+                  whileHover={{ scale: 1.02 }}
+                  style={{
+                    background: toSubtleGradient(c.colors),
+                    color: '#fff',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.4)',
+                  }}
+                >
+                  <div className="left">
+                    <span className="code">
+                      <img src={c.flagUrl} alt={`Drapeau ${c.name}`} style={{ width: 24, height: 'auto', marginRight: 8, verticalAlign: 'middle' }} />
+                      {c.code}
+                    </span>
+                    <span className="name">{c.name}</span>
+                  </div>
+                  <span className="status">
+                    <span className="d" style={{ background: '#fff' }} />
+                    {c.status}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Déploiements à venir */}
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={container} style={{ marginTop: 36 }}>
+            <motion.div className="sahel-subhead" variants={item}>
+              <span className="ic"><TrendingUp size={16} /></span> Déploiements 2026 – 2028
+            </motion.div>
+            <div className="country-list">
+              {COUNTRIES_PENDING.map((c) => (
+                <motion.div
+                  className="country-row pending"
+                  key={c.code}
+                  variants={item}
+                  whileHover={{ scale: 1.02 }}
+                  style={{
+                    background: toSubtleGradient(c.colors),
+                    color: '#fff',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.4)',
+                  }}
+                >
+                  <div className="left">
+                    <span className="code">
+                      <img src={c.flagUrl} alt={`Drapeau ${c.name}`} style={{ width: 24, height: 'auto', marginRight: 8, verticalAlign: 'middle' }} />
+                      {c.code}
+                    </span>
+                    <span className="name">{c.name}</span>
+                  </div>
+                  <span className="status">
+                    <span className="d" style={{ background: '#fff' }} />
+                    {c.status}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Objectif 2028 */}
+          <motion.div
+            className="sahel-objectif"
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            style={{ marginTop: 36, padding: '24px', borderRadius: 18 }}
+          >
+            <motion.div className="sahel-subhead" style={{ margin: 0, color: 'var(--gold-400)' }} whileHover={{ x: 4 }}>
+              <span className="ic"><Target size={16} /></span> Objectif 
+            </motion.div>
+            <p style={{ marginTop: 10, color: 'rgba(255,255,255,0.78)', fontSize: 13.5, lineHeight: 1.65 }}>
+              Consolider notre présence dans <strong style={{ color: '#fff' }}>6+ pays</strong> du Sahel avec des équipes locales, des partenariats stratégiques et un impact ESG mesurable.
+            </p>
+            <div style={{ display: 'flex', gap: 6, marginTop: 16, flexWrap: 'wrap' }}>
+              {COUNTRIES_ACTIVE.concat(COUNTRIES_PENDING).map(c => (
+                <motion.img
+                  key={c.code}
+                  src={c.flagUrl}
+                  alt={c.name}
+                  style={{ width: 28, height: 'auto', borderRadius: 4, boxShadow: '0 2px 6px rgba(0,0,0,0.3)', cursor: 'pointer', filter: 'saturate(0.7)' }}
+                  whileHover={{ scale: 1.3, filter: 'saturate(1.2) drop-shadow(0 0 6px rgba(201,161,75,0.8))', transition: { type: 'spring', stiffness: 300 } }}
+                  title={c.name}
+                />
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  </section>
+);

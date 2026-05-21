@@ -1,175 +1,240 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Play, Zap, Shield, Globe, CheckCircle2 } from 'lucide-react';
-import { cn } from '../lib/utils';
+import React, { useState, useEffect, useRef } from 'react';
+import { Play } from 'lucide-react';
 
-const SLIDES = [
+/* ─────────────────────────────────────────
+   URL de la vidéo (Supabase signed URL)
+───────────────────────────────────────── */
+const VIDEO_URL =
+  'https://qxxcxyoccysksywoigww.supabase.co/storage/v1/object/sign/teranga/mp_.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OGJkYTcxNy03Y2UxLTRiMjAtYWNhZS03NTMwOWJkMDBkMzEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZXJhbmdhL21wXy5tcDQiLCJpYXQiOjE3NzkzMDgzODIsImV4cCI6MTc3OTkxMzE4Mn0.7QaUEPM7oFsQo1nWHfKLQaDTsoKW0EcN5bNDwOFVA_Y';
+
+/* ─────────────────────────────────────────
+   Slides de texte — la vidéo est commune
+   à tous les slides
+───────────────────────────────────────── */
+interface Slide {
+  bracket: string;
+  pre: string;
+  line1: string;
+  accent1: string;
+  line2: string;
+  accent2: string;
+  lead: string;
+  floater: string;
+}
+
+const HERO_SLIDES: Slide[] = [
   {
-    title: "Votre partenaire en",
-    highlight: "Technologie & Énergie",
-    desc: "Solutions complètes pour l'Afrique de l'Ouest. Digital et énergétique, made in Africa.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=1200",
-    tag: "L'EXCELLENCE DIGITALE"
+    bracket: 'Bienvenue !',
+    pre: 'Teranga TE,',
+    line1: 'Votre',
+    accent1: 'Expertise,',
+    line2: 'Intégrée en',
+    accent2: 'Technologie.',
+    lead: "Solutions complètes pour l'Afrique de l'Ouest. Digital, énergie & renouvelables — made in Africa, avec la rigueur d'un standard international.",
+    floater: 'Direction Générale',
   },
   {
-    title: "Expertise en Solutions",
-    highlight: "Énergies Renouvelables",
-    desc: "Assurez la disponibilité et la qualité de votre puissance électrique 24h/7.",
-    image: "https://images.unsplash.com/photo-1509391366360-fe5bb658582f?auto=format&fit=crop&q=80&w=1200",
-    tag: "CONTINUITÉ TOTALE"
+    bracket: 'Impact Sahel',
+    pre: 'Continuité totale,',
+    line1: "L'énergie",
+    accent1: 'critique,',
+    line2: 'maîtrisée',
+    accent2: '24h/7.',
+    lead: "Onduleurs, groupes électrogènes, audit énergétique : nous sécurisons l'alimentation de vos sites industriels et data centers, partout au Sahel.",
+    floater: 'Énergie 24/7',
   },
   {
-    title: "Audit & Sécurité",
-    highlight: "Infrastructures Critiques",
-    desc: "SLA 98%+ garanti au Sénégal et dans toute la région du Sahel.",
-    image: "https://images.unsplash.com/photo-1541888941297-dc0702f37803?auto=format&fit=crop&q=80&w=1200",
-    tag: "CONFORMITÉ EN 81-20/50"
-  }
+    bracket: 'Innovation',
+    pre: 'Standards internationaux,',
+    line1: 'Audit,',
+    accent1: 'sécurité,',
+    line2: 'conformité',
+    accent2: 'EN 81-20/50.',
+    lead: 'SLA 98%+ contractuel. Notre équipe senior pilote vos installations selon les standards les plus exigeants.',
+    floater: 'SLA 98%+',
+  },
+  {
+    bracket: 'Énergie verte',
+    pre: 'Avenir durable,',
+    line1: 'Le',
+    accent1: 'solaire',
+    line2: 'au service',
+    accent2: 'du Sahel.',
+    lead: "EPC + financement, micro-réseaux, stockage batterie — une autonomie énergétique mesurable, et un impact ESG concret.",
+    floater: 'Solaire EPC',
+  },
 ];
 
-const EXPERTISES_MARQUEE = [
-  "Technologies de l'Information", 
-  "Solutions Énergétiques", 
-  "Énergies Renouvelables", 
-  "Contrôle Technique Lift", 
-  "Audit Énergétique", 
-  "Services Managés", 
-  "Support 24/7"
+const EXPERTISES_TICKER = [
+  "Technologies de l'Information",
+  'Solutions Énergétiques',
+  'Énergies Renouvelables',
+  'Contrôle Technique Lift',
+  'Audit Énergétique',
+  'Services Managés',
+  'Support 24/7',
+  'Infogérance',
 ];
 
-export const Hero = () => {
-  const [current, setCurrent] = useState(0);
+const scrollTo = (id: string) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 90;
+  window.scrollTo({ top, behavior: 'smooth' });
+};
 
+export const Hero: React.FC = () => {
+  const [i, setI] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  /* Auto-rotation des slides texte */
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % SLIDES.length);
-    }, 6000);
-    return () => clearInterval(timer);
+    const t = setInterval(() => setI((p) => (p + 1) % HERO_SLIDES.length), 5500);
+    return () => clearInterval(t);
   }, []);
 
+  /* Lecture automatique de la vidéo (contournement autoplay policy) */
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    vid.muted = true;           // obligatoire pour l'autoplay navigateur
+    vid.play().catch(() => {    // silencieux si le navigateur refuse
+      // fallback : lecture au premier clic utilisateur
+      const resume = () => { vid.play(); document.removeEventListener('click', resume); };
+      document.addEventListener('click', resume, { once: true });
+    });
+  }, []);
+
+  const s = HERO_SLIDES[i];
+
   return (
-    <section id="accueil" className="relative pt-32 lg:pt-40 pb-0 overflow-hidden bg-surface">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 pb-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div className="relative z-10">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.8, ease: "circOut" }}
-              >
-                {/* Bracket Label */}
-                <div className="relative inline-block mb-8">
-                  <div className="absolute -left-2 -top-2 w-3 h-3 border-t-4 border-l-4 border-primary" />
-                  <div className="absolute -right-2 -top-2 w-3 h-3 border-t-4 border-r-4 border-primary" />
-                  <div className="absolute -left-2 -bottom-2 w-3 h-3 border-b-4 border-l-4 border-primary" />
-                  <div className="absolute -right-2 -bottom-2 w-3 h-3 border-b-4 border-r-4 border-primary" />
-                  <span className="px-6 py-1.5 block text-dark font-bold text-base">
-                    {current === 0 ? "Bienvenue !" : current === 1 ? "Impact Sahel" : "Innovation"}
-                  </span>
-                </div>
+    <section id="accueil" className="hero">
+      <div className="container hero-inner">
 
-                <h1 className="text-4xl lg:text-6xl font-display font-black text-dark leading-[1.1] mb-6 tracking-tight">
-                  <span className="text-lg lg:text-xl block mb-2 font-bold text-muted">Teranga TE,</span>
-                  Votre <span className="text-primary">Expertise,</span><br />
-                  Intégrée en <br />
-                  Technologie.
-                </h1>
-
-                <p className="text-base text-muted font-medium mb-10 leading-relaxed max-w-lg">
-                  {SLIDES[current].desc}
-                </p>
-
-                <div className="flex flex-wrap gap-5 items-center">
-                  <button className="flex items-center gap-3 bg-dark text-white pl-6 pr-3 py-3.5 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-primary transition-all shadow-xl shadow-dark/10 group">
-                    Nos Services
-                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-dark group-hover:scale-110 transition-transform">
-                      <Play className="w-2.5 h-2.5 fill-current" />
-                    </div>
-                  </button>
-                  <button className="px-8 py-4 border-2 border-dark rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-dark hover:text-white transition-all">
-                    Nous Contacter
-                  </button>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+        {/* ── Colonne texte (inchangée) ── */}
+        <div>
+          <div className="hero-bracket" key={`br-${i}`}>
+            <span className="b-bl" />
+            <span className="b-br" />
+            {s.bracket}
           </div>
 
-          {/* Right Image Content */}
-          <div className="relative scale-90 md:scale-95">
-            {/* Background Blob */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full aspect-square bg-primary rounded-full opacity-100 z-0" />
-            
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                transition={{ duration: 0.8 }}
-                className="relative z-10 w-full aspect-square flex items-center justify-center"
-              >
-                <div className="w-[85%] h-[85%] rounded-full overflow-hidden border-[8px] border-white shadow-2xl relative">
-                  <img 
-                    src={current === 0 
-                      ? "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=800" 
-                      : "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800"} 
-                    alt="Team Teranga" 
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark/20 to-transparent" />
-                </div>
+          <h1 key={`h1-${i}`}>
+            <span className="pre">{s.pre}</span>
+            {s.line1} <span className="accent">{s.accent1}</span>
+            <br />
+            {s.line2} <span className="accent">{s.accent2}</span>
+          </h1>
 
-                {/* Floating Labels */}
-                <motion.div 
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                  className="absolute bottom-[20%] -left-8 bg-dark text-white px-5 py-2.5 rounded-xl shadow-2xl border-4 border-surface flex items-center gap-2"
-                >
-                  <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                  <span className="font-black text-[9px] uppercase tracking-widest">Expertise ICT</span>
-                </motion.div>
+          <p className="hero-lead" key={`lead-${i}`}>
+            {s.lead}
+          </p>
 
-                <motion.div 
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 5, repeat: Infinity }}
-                  className="absolute top-[30%] -right-6 bg-primary text-white px-5 py-2.5 rounded-xl shadow-2xl border-4 border-surface"
-                >
-                  <span className="font-black text-[9px] uppercase tracking-widest">SLA 98%+</span>
-                </motion.div>
-
-                {/* Circular Badge */}
-                <div className="absolute top-6 right-0 w-20 h-20 bg-dark rounded-full border-4 border-primary flex items-center justify-center p-2 shadow-2xl animate-spin-slow">
-                  <div className="text-center text-[7px] font-black text-white uppercase tracking-widest leading-none">
-                    • Teranga • <br /> Technology <br /> • Energy •
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+          <div className="hero-ctas">
+            <button className="btn btn--gold" onClick={() => scrollTo('expertises')}>
+              Nos services
+              <span className="arrow-circle">
+                <Play size={11} fill="currentColor" />
+              </span>
+            </button>
+            <button className="btn btn--ghost-light" onClick={() => scrollTo('contact')}>
+              Nous contacter
+            </button>
           </div>
         </div>
-      </div>
 
-      {/* Specific Bottom Marquee Banner */}
-      <div className="relative mt-12 pb-10">
-        <div className="absolute inset-0 bg-primary skew-y-[-2deg] translate-y-2 z-10" />
-        <div className="relative bg-dark py-6 z-20 skew-y-[-2deg] border-t border-primary/20 overflow-hidden">
-          <div className="flex whitespace-nowrap animate-marquee-fast hover:pause">
-            {[...EXPERTISES_MARQUEE, ...EXPERTISES_MARQUEE, ...EXPERTISES_MARQUEE].map((text, i) => (
-              <div key={i} className="flex items-center gap-10 mx-10 skew-y-[2deg]">
-                <span className="text-white font-display font-black text-2xl md:text-3xl uppercase tracking-tighter opacity-90">
-                  {text}
-                </span>
-                <span className="text-primary font-black text-3xl">*</span>
-              </div>
+        {/* ── Colonne vidéo (remplace le carousel d'images) ── */}
+        <div className="hero-side">
+          {/* Disque décoratif tournant (inchangé) */}
+          <div className="hero-disc" />
+
+          {/* Conteneur circulaire — même classe CSS qu'avant */}
+          <div className="hero-photo">
+            <video
+              ref={videoRef}
+              src={VIDEO_URL}
+              loop
+              muted
+              playsInline
+              autoPlay
+              preload="auto"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                /* Petit zoom Ken-Burns très subtil */
+                animation: 'hero-video-zoom 20s ease-in-out infinite alternate',
+              }}
+            />
+
+            {/* Overlay dégradé léger pour lisibilité si la vidéo est claire */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '50%',
+                background:
+                  'linear-gradient(160deg, rgba(15,26,46,0.15) 0%, rgba(15,26,46,0.35) 100%)',
+                pointerEvents: 'none',
+              }}
+            />
+          </div>
+
+          {/* Floaters — inchangés */}
+          <div className="hero-floater hero-floater--br float-y">
+            <span className="dotg" />
+            {s.floater}
+          </div>
+
+          <div
+            className="hero-floater hero-floater--right float-y"
+            style={{ animationDelay: '1.2s' }}
+          >
+            SLA 98%+
+          </div>
+
+          {/* Badge tournant — inchangé */}
+          <div className="hero-badge spin-slow">
+            • TERANGA •
+            <br />
+            TECHNOLOGY
+            <br />
+            • &amp; ENERGY •
+          </div>
+
+          {/* Dots de navigation (contrôlent le texte uniquement) */}
+          <div className="hero-dots">
+            {HERO_SLIDES.map((_, idx) => (
+              <button
+                key={idx}
+                className={idx === i ? 'on' : ''}
+                onClick={() => setI(idx)}
+                aria-label={`Slide ${idx + 1}`}
+              />
             ))}
           </div>
         </div>
       </div>
+
+      {/* ── Ticker strip — inchangé ── */}
+      <div className="hero-strip">
+        <div className="hero-strip-track">
+          {[...EXPERTISES_TICKER, ...EXPERTISES_TICKER, ...EXPERTISES_TICKER].map((t, idx) => (
+            <React.Fragment key={idx}>
+              <span>{t}</span>
+              <span className="star">✦</span>
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Keyframe Ken-Burns injecté en ligne (évite de toucher teranga.css) ── */}
+      <style>{`
+        @keyframes hero-video-zoom {
+          from { transform: scale(1);    }
+          to   { transform: scale(1.06); }
+        }
+      `}</style>
     </section>
   );
 };

@@ -1,144 +1,128 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import {
-  Menu,
-  X,
-  Phone,
-  Mail,
-  MapPin,
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Search,
-  Zap,
-  Moon,
-  Sun,
-} from "lucide-react";
-import { cn } from "../lib/utils";
+import React, { useState, useEffect } from 'react';
+import { Menu, X, Globe, Phone } from 'lucide-react';
 
-export const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+const NAV_ITEMS = [
+  { name: 'Accueil',    id: 'accueil' },
+  { name: 'À propos',   id: 'apropos' },
+  { name: 'Expertises', id: 'expertises' },
+  { name: 'Offres',     id: 'offres' },
+  { name: 'Références', id: 'references' },
+  { name: 'Sahel',      id: 'sahel' },
+  { name: 'Contact',    id: 'contact' },
+  { name: 'Carrières',  id: 'carrieres' },
+];
+
+function useActiveSection(ids: string[]) {
+  const [active, setActive] = useState(ids[0]);
+  useEffect(() => {
+    const handler = () => {
+      const y = window.scrollY + 180;
+      let cur = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= y) cur = id;
+      }
+      setActive(cur);
+    };
+    handler();
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, [ids]);
+  return active;
+}
+
+export const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const active = useActiveSection(NAV_ITEMS.map((n) => n.id));
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    const savedMode = localStorage.getItem("darkMode") === "true";
-    setIsDarkMode(savedMode);
-    if (savedMode) document.documentElement.classList.add("dark");
-  }, []);
-
-  const toggleDarkMode = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    localStorage.setItem("darkMode", String(newMode));
-    if (newMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top, behavior: 'smooth' });
   };
 
   return (
-    <header
-      className={cn(
-        "fixed top-6 left-0 right-0 z-50 transition-all duration-500 px-12",
-      )}
-    >
-      <nav
-        className={cn(
-          "max-w-7xl mx-auto rounded-full transition-all duration-500 border border-white/10 shadow-2xl overflow-hidden px-12 py-3",
-          scrolled ? "bg-dark/90 backdrop-blur-xl" : "bg-dark",
-        )}
-      >
-        <div className="flex justify-between items-center">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-primary/20">
-              <Zap className="text-dark w-5 h-5 fill-current" />
+    <>
+      <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
+        <div className="nav-inner">
+          <a
+            href="#accueil"
+            className="nav-logo"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollTo('accueil');
+            }}
+          >
+            <div className="logo-pill">
+              <img src="/assets/teranga-logo.png" alt="Teranga Technology & Energy" style={{ height: 36 }} />
             </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-sm font-display font-black text-white tracking-tight uppercase">
-                TERANGA <span className="text-primary">TE</span>
-              </span>
-            </div>
-          </div>
+          </a>
 
-          {/* Navigation Links */}
-          <div className="hidden lg:flex items-center gap-8">
-            {[
-              { name: "Accueil", href: "/" },
-              { name: "À propos", href: "#a-propos" },
-              { name: "Expertises", href: "#expertises" },
-              { name: "Offres", href: "#offres" },
-              { name: "Références", href: "#references" },
-              { name: "Sahel", href: "#sahel" },
-              { name: "Contact", href: "#contact" },
-              { name: "Carrières", href: "#carrieres" },
-            ].map((item) => (
+          <nav className="nav-links">
+            {NAV_ITEMS.map((it, idx) => (
               <a
-                key={item.name}
-                href={item.href}
-                className="text-xs font-black text-white hover:text-primary transition-colors uppercase tracking-widest px-2 py-1"
+                key={it.id}
+                href={`#${it.id}`}
+                className={`nav-link ${active === it.id ? 'active' : ''} ${idx >= 6 ? 'optional' : ''}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollTo(it.id);
+                }}
               >
-                {item.name}
+                {it.name}
               </a>
             ))}
+          </nav>
+
+          <div className="nav-right">
+            <span className="lang-pill">
+              <Globe size={13} /> EN
+            </span>
+            <a
+              href="#contact"
+              className="nav-cta"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollTo('contact');
+              }}
+            >
+              <Phone size={14} />
+              Contactez-nous
+            </a>
+            <button
+              className="nav-burger"
+              onClick={() => setMobileOpen((o) => !o)}
+              aria-label="Menu"
+            >
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="lg:hidden p-2 text-white"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
-          </button>
         </div>
-      </nav>
+      </header>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="lg:hidden absolute top-[110%] left-6 right-6 bg-dark rounded-3xl shadow-2xl border border-white/10 overflow-hidden z-50"
+      <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`}>
+        {NAV_ITEMS.map((it) => (
+          <a
+            key={it.id}
+            href={`#${it.id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollTo(it.id);
+              setMobileOpen(false);
+            }}
           >
-            <div className="flex flex-col p-8 gap-6">
-              {[
-                { name: "Accueil", href: "/" },
-                { name: "À propos", href: "#a-propos" },
-                { name: "Expertises", href: "#expertises" },
-                { name: "Offres", href: "#offres" },
-                { name: "Références", href: "#references" },
-                { name: "Sahel", href: "#sahel" },
-                { name: "Contact", href: "#contact" },
-                { name: "Carrières", href: "#carrieres" },
-              ].map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-xs font-black text-white hover:text-primary transition-colors uppercase tracking-widest"
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+            {it.name}
+          </a>
+        ))}
+      </div>
+    </>
   );
 };
