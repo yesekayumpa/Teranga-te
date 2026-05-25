@@ -6,7 +6,7 @@ export const About: React.FC = () => (
       <div className="section-head">
         <span className="eyebrow"><span className="bar" />QUI SOMMES-NOUS</span>
         <h2 style={{ fontFamily: 'var(--font-display)', marginTop: 16 }}>
-          À propos de{' '}
+          À propos de
           <span className="text-ital" style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 400 }}>
             Teranga TE
           </span>
