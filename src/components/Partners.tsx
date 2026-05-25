@@ -46,7 +46,7 @@ const PARTNERS: PartnerGroup[] = [
     subtitle: 'Managed Print Services',
     accentColor: '#5E2A78',
     items: [
-      { name: 'Ricoh', logo: '/assets/logo partenaires/impression/ricoh.png', color: '#D7000F' },
+      { name: 'Ricoh', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/image173_b629c911.png', color: '#D7000F' },
       { name: 'Riso', logo: '/assets/logo partenaires/impression/riso.png', color: '#5E2A78' },
       { name: 'Epson', logo: '/assets/logo partenaires/impression/epson.png', color: '#0033A0' },
       { name: 'Canon', logo: '/assets/logo partenaires/impression/canon.png', color: '#D71920' },
@@ -62,7 +62,7 @@ const PARTNERS: PartnerGroup[] = [
       { name: 'GE', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/ge-logo_51b1241f.png', color: '#005EB8' },
       { name: 'Promac', logo: '/assets/logo partenaires/energie/promac.png', color: '#C8102E' },
       { name: 'Kohler', logo: '/assets/logo partenaires/groupe electrogene/kohler.png', color: '#1a1a1a' },
-      { name: 'Honeywell', logo: '/assets/logo partenaires/energie/honeywell.png', color: '#E2231A' },
+      { name: 'Honeywell', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/honeywell-logo_4f7980e1.png', color: '#E2231A' },
       { name: 'Cummins', logo: '/assets/logo partenaires/groupe electrogene/cummins.png', color: '#E12325' },
       { name: 'FG Wilson', logo: '/assets/logo partenaires/groupe electrogene/fg-wilson.png', color: '#003E7E' },
       { name: 'Himoinsa', logo: '/assets/logo partenaires/groupe electrogene/himonisa.png', color: '#D6261B' },
