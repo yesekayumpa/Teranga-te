@@ -106,7 +106,7 @@ export const About: React.FC = () => (
             }}
           >
             <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.22em', textTransform: 'uppercase', color: 'var(--gold-500)', marginBottom: 6 }}>
-              VISION 2028
+              VISION
             </div>
             <h3 style={{ fontSize: 22, fontWeight: 800, color: '#fff', marginBottom: 10, letterSpacing: '-.02em' }}>
               Référence technologique du Sahel
