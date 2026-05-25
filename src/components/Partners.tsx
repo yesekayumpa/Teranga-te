@@ -60,7 +60,7 @@ const PARTNERS: PartnerGroup[] = [
     accentColor: '#E12325',
     items: [
       { name: 'GE', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/ge-logo_51b1241f.png', color: '#005EB8' },
-      { name: 'Promac', logo: '/assets/logo partenaires/energie/promac.png', color: '#C8102E' },
+      { name: 'Pramac', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/pramac-logo_9b0008fa.jpg', color: '#C8102E' },
       { name: 'Kohler', logo: '/assets/logo partenaires/groupe electrogene/kohler.png', color: '#1a1a1a' },
       { name: 'Honeywell', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/honeywell-logo_4f7980e1.png', color: '#E2231A' },
       { name: 'Cummins', logo: '/assets/logo partenaires/groupe electrogene/cummins.png', color: '#E12325' },
