@@ -16,7 +16,7 @@ export const Contact: React.FC = () => {
     exit: (dir: number) => ({ x: dir < 0 ? 200 : -200, opacity: 0 }),
   };
 
-  // Adresse AfriRH
+  // Adresse AfriRH (Valide pour Avenue Cheikh Anta Diop, Dakar)
   const afriRHAddress = 'Immeuble Sokhna Anta, 2e étage, Avenue Cheikh Anta Diop, Dakar';
   const mapsQuery = encodeURIComponent(afriRHAddress);
 
@@ -109,7 +109,7 @@ export const Contact: React.FC = () => {
               {step === 1 && (
                 <motion.div key="step1" custom={direction} variants={variants} initial="enter" animate="center" exit="exit">
                   <h3 style={{ fontSize: 26, marginBottom: 28, fontWeight: 700 }}>Votre profil</h3>
-                  <div className="form-field"><label>Nom &amp; prénom</label><input type="text" placeholder="Votre nom" /></div>
+                  <div className="form-field"><label>Nom & prénom</label><input type="text" placeholder="Votre nom" /></div>
                   <div className="form-field"><label>Entreprise / Institution</label><input type="text" placeholder="Nom de votre société" /></div>
                   <div className="form-field"><label>Email professionnel</label><input type="email" placeholder="vous@entreprise.com" /></div>
                   <motion.button className="btn btn--gold" style={{ width: '100%', justifyContent: 'center', marginTop: 12 }} onClick={next} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -121,7 +121,7 @@ export const Contact: React.FC = () => {
               {step === 2 && (
                 <motion.div key="step2" custom={direction} variants={variants} initial="enter" animate="center" exit="exit">
                   <h3 style={{ fontSize: 26, marginBottom: 28, fontWeight: 700 }}>Vos besoins</h3>
-                  <div className="form-field"><label>Domaine principal</label><select><option>ICT — Technologies de l'Information</option><option>Énergie &amp; puissance critique</option><option>Énergies renouvelables</option><option>Contrôle technique / Audit</option></select></div>
+                  <div className="form-field"><label>Domaine principal</label><select><option>ICT — Technologies de l'Information</option><option>Énergie & puissance critique</option><option>Énergies renouvelables</option><option>Contrôle technique / Audit</option></select></div>
                   <div className="form-field"><label>Formule de service</label><select><option>Premium — SLA 99%+ Support 24/7</option><option>Confort — Maintenance préventive</option><option>Essentiel — Maintenance corrective</option><option>Sur-mesure — Projet spécifique</option></select></div>
                   <div className="form-row">
                     <motion.button className="btn-back" onClick={back} whileHover={{ x: -4 }} whileTap={{ scale: 0.95 }}><ChevronLeft size={20} /></motion.button>
@@ -177,7 +177,7 @@ export const Contact: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Google Maps embed – AfriRH */}
+        {/* Google Maps embed */}
         <motion.div
           className="maps-block reveal"
           initial={{ opacity: 0, y: 30 }}
@@ -205,7 +205,7 @@ export const Contact: React.FC = () => {
           </div>
           <div className="maps-embed">
             <iframe
-              src={`https://www.google.com/maps?q=${mapsQuery}&z=16&output=embed`}
+              src={`https://maps.google.com/maps?q=${mapsQuery}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
               title="AfriRH — Dakar"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
