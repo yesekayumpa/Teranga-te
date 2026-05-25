@@ -221,7 +221,7 @@ export const Gallery: React.FC = () => (
             ) : (
               <div
                 style={{
-                  fontSize: 22,
+                  fontSize: 17,
 
                   fontWeight: 800,
 
