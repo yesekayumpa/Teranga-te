@@ -27,7 +27,7 @@ const EXPERTISES: Expertise[] = [
       'Câblage réseau structuré',
       'Maintenance réseaux & serveurs',
     ],
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1400',
+    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/expertise-ict-fBaDApo4qym68m9DBUzyBE.webp',
   },
   {
     id: 'energie',
@@ -42,7 +42,7 @@ const EXPERTISES: Expertise[] = [
       'Groupes électrogènes industriels',
       'Régulateurs de tension',
     ],
-    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1400',
+    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/expertise-energy-QxbZZfUAeoVkPzsMTwjhyn.webp',
   },
   {
     id: 'renouvelables',
@@ -57,7 +57,7 @@ const EXPERTISES: Expertise[] = [
       'Solar Home System',
       'Micro-réseaux & stockage batterie',
     ],
-    image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=1400',
+    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/expertise-solar-VHKtkagtzLM9gKGVKD772C.webp',
   },
   {
     id: 'lift',
@@ -72,7 +72,7 @@ const EXPERTISES: Expertise[] = [
       'Conformité EN 81-20 / EN 81-50',
       'Audit sécurité ascenseurs',
     ],
-    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1400',
+    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/inspection-ascenseurs_8f6624e3.png',
   },
 ];
 

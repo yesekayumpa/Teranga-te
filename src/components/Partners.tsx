@@ -31,7 +31,7 @@ const PARTNERS: PartnerGroup[] = [
     items: [
       { name: 'Cisco', logo: '/assets/logo partenaires/virtualisation/cisco.png', color: '#1BA0D7' },
       { name: 'Fortinet', logo: '/assets/logo partenaires/virtualisation/fortinet.png', color: '#EE3124' },
-      { name: 'HP', logo: '/assets/logo partenaires/virtualisation/hp.png', color: '#0096D6' }, // si absent → fallback texte
+      { name: 'HP', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/image171_f57b395b.png', color: '#0096D6' }, // si absent → fallback texte
       { name: 'Microsoft', logo: '/assets/logo partenaires/virtualisation/microsoft.png', color: '#737373' },
       { name: 'VMware', logo: '/assets/logo partenaires/virtualisation/vmware.png', color: '#607078' },
       { name: 'IBM', logo: '/assets/logo partenaires/virtualisation/ibm.png', color: '#054ADA' },
@@ -59,7 +59,7 @@ const PARTNERS: PartnerGroup[] = [
     subtitle: 'Groupes électrogènes & onduleurs',
     accentColor: '#E12325',
     items: [
-      { name: 'GE', logo: '/assets/logo partenaires/energie/ge.png', color: '#005EB8' },
+      { name: 'GE', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/ge-logo_51b1241f.png', color: '#005EB8' },
       { name: 'Promac', logo: '/assets/logo partenaires/energie/promac.png', color: '#C8102E' },
       { name: 'Kohler', logo: '/assets/logo partenaires/groupe electrogene/kohler.png', color: '#1a1a1a' },
       { name: 'Honeywell', logo: '/assets/logo partenaires/energie/honeywell.png', color: '#E2231A' },

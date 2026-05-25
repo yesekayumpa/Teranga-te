@@ -20,7 +20,7 @@ export const OurImpact: React.FC = () => (
     <div className="container">
       <div className="section-head reveal" data-reveal>
         <span className="eyebrow"><span className="bar" />L'ADN TERANGA</span>
-        <h2>Nos valeurs fondatrices</h2>
+        {/* <h2>Nos valeurs fondatrices</h2> */}
         <p>Quatre principes guident chaque décision et chaque projet que nous menons.</p>
       </div>
 

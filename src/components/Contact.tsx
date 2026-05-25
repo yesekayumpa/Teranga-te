@@ -16,6 +16,10 @@ export const Contact: React.FC = () => {
     exit: (dir: number) => ({ x: dir < 0 ? 200 : -200, opacity: 0 }),
   };
 
+  // Adresse AfriRH
+  const afriRHAddress = 'Immeuble Sokhna Anta, 2e étage, Avenue Cheikh Anta Diop, Dakar';
+  const mapsQuery = encodeURIComponent(afriRHAddress);
+
   return (
     <section id="contact" className="section section--cream">
       <div className="container">
@@ -60,7 +64,7 @@ export const Contact: React.FC = () => {
 
             <div className="contact-info">
               {[
-                { icon: <MapPin size={20} />, label: 'Adresse', value: '3 Liberté 6 extension\nDakar — Sénégal' },
+                { icon: <MapPin size={20} />, label: 'Adresse', value: afriRHAddress },
                 { icon: <Phone size={20} />, label: 'Téléphone', value: '+221 77 337 26 28' },
                 { icon: <Mail size={20} />, label: 'Email', value: 'contact@teranga-te.com' },
               ].map((item, idx) => (
@@ -173,7 +177,7 @@ export const Contact: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Google Maps embed */}
+        {/* Google Maps embed – AfriRH */}
         <motion.div
           className="maps-block reveal"
           initial={{ opacity: 0, y: 30 }}
@@ -185,11 +189,11 @@ export const Contact: React.FC = () => {
             <span className="ic"><MapPin size={18} /></span>
             <div>
               <div className="t">Notre localisation</div>
-              <div className="a">3 Liberté 6 extension, Dakar, Sénégal</div>
+              <div className="a">{afriRHAddress}</div>
             </div>
             <motion.a
               className="maps-cta"
-              href="https://www.google.com/maps/search/?api=1&query=Libert%C3%A9+6+extension+Dakar"
+              href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.03 }}
@@ -201,8 +205,8 @@ export const Contact: React.FC = () => {
           </div>
           <div className="maps-embed">
             <iframe
-              src="https://www.google.com/maps?q=Libert%C3%A9+6+extension,+Dakar,+S%C3%A9n%C3%A9gal&z=16&output=embed"
-              title="Teranga TE — Dakar"
+              src={`https://www.google.com/maps?q=${mapsQuery}&z=16&output=embed`}
+              title="AfriRH — Dakar"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
