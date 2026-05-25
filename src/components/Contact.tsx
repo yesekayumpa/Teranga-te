@@ -16,7 +16,7 @@ export const Contact: React.FC = () => {
     exit: (dir: number) => ({ x: dir < 0 ? 200 : -200, opacity: 0 }),
   };
 
-  // Correction de l'adresse officielle d'Afri RH Dakar
+  // Adresse officielle Afri RH Dakar
   const afriRHAddress = 'Afri RH, Rue LIB-12, Résidence Adja Coura, Liberté 6 Extension, Dakar';
   const mapsQuery = encodeURIComponent(afriRHAddress);
 
@@ -177,7 +177,8 @@ export const Contact: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Google Maps block nettoyé et fonctionnel */}
+      
+        {/* Bloc Google Maps avec le vrai curseur rouge */}
         <motion.div
           className="maps-block reveal"
           initial={{ opacity: 0, y: 30 }}
@@ -193,7 +194,8 @@ export const Contact: React.FC = () => {
             </div>
             <motion.a
               className="maps-cta"
-              href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
+              // Lien externe vers Google Maps (ouvre un nouvel onglet avec le pin)
+              href={`https://www.google.com/maps?q=${mapsQuery}`}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.03 }}
@@ -205,11 +207,13 @@ export const Contact: React.FC = () => {
           </div>
           <div className="maps-embed">
             <iframe
-              src={`https://maps.google.com/maps?q=${mapsQuery}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+              // La vraie URL d'intégration qui génère le marqueur rouge
+              src={`https://maps.google.com/maps?q=${mapsQuery}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
               title="AfriRH — Dakar"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
+              style={{ width: '100%', height: '100%', border: 0 }}
             />
           </div>
         </motion.div>
