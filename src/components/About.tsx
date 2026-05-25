@@ -48,9 +48,7 @@ export const About: React.FC = () => (
           <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--gold-600)', marginBottom: 6 }}>
             Le mot du Directeur Général
           </div>
-          <p className="about-quote" style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 15, color: 'var(--ink)', marginBottom: 0, border: 'none', padding: 0, background: 'none' }}>
-            Le mot du Directeur Général
-          </p>
+          
           <p style={{ color: 'var(--slate)', fontSize: 14, lineHeight: 1.75, marginTop: 12 }}>
             « Chez Teranga TE, nous croyons que l'Afrique de l'Ouest mérite des services
             technologiques et énergétiques de classe mondiale, délivrés avec la chaleur et la

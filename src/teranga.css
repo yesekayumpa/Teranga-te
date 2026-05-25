@@ -1327,7 +1327,7 @@ p {
 }
 
 .about-quote::before {
-    content: "“";
+    content: "";
     font-family: var(--font-serif);
     position: absolute;
     top: -28px;
