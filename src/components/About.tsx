@@ -6,10 +6,10 @@ export const About: React.FC = () => (
       <div className="section-head">
         <span className="eyebrow"><span className="bar" />QUI SOMMES-NOUS</span>
         <h2 style={{ fontFamily: 'var(--font-display)', marginTop: 16 }}>
-          À propos de
-          <span className="text-ital" style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 400 }}>
-            Teranga TE
-          </span>
+          À propos de Teranga TE
+          {/* <span className="text-ital" style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 400 }}>
+           
+          </span> */}
         </h2>
         <div className="dot-divider" style={{ margin: '12px auto' }}>
           <div className="d" /><div className="d" /><div className="d" />
