@@ -59,10 +59,17 @@ const CLIENTS: Client[] = [
 ];
 
 export const Gallery: React.FC = () => (
-  <section id="references" className="section section--cream">
+  <section
+    id="references"
+    className="section section--cream"
+  >
     <div className="container">
+
       {/* HEADER */}
-      <div className="section-head reveal" data-reveal>
+      <div
+        className="section-head reveal"
+        data-reveal
+      >
         <span className="eyebrow">
           <span className="bar" />
           ILS NOUS FONT CONFIANCE
@@ -76,8 +83,9 @@ export const Gallery: React.FC = () => (
         </h2>
 
         <p>
-          Des leaders du Sénégal et du Sahel qui nous confient
-          la sécurisation de leurs infrastructures critiques.
+          Des leaders du Sénégal et du Sahel
+          qui nous confient la sécurisation
+          de leurs infrastructures critiques.
         </p>
       </div>
 
@@ -85,9 +93,12 @@ export const Gallery: React.FC = () => (
       <div
         style={{
           display: 'grid',
+
           gridTemplateColumns:
             'repeat(auto-fit, minmax(260px, 1fr))',
+
           gap: 26,
+
           marginTop: 52,
         }}
       >
@@ -97,23 +108,30 @@ export const Gallery: React.FC = () => (
             className="reveal"
             data-reveal
             style={{
-              transitionDelay: `${(idx % 4) * 70}ms`,
+              transitionDelay:
+                `${(idx % 4) * 70}ms`,
+
               position: 'relative',
+
               overflow: 'hidden',
 
               background: '#FFFFFF',
 
-              border: '1px solid #EFE7DC',
+              border:
+                '1px solid #EFE7DC',
 
               borderRadius: 28,
 
-              minHeight: 165,
+              minHeight: 140,
 
-              padding: '28px 24px',
+              padding: '22px 20px',
 
               display: 'flex',
+
               flexDirection: 'column',
+
               alignItems: 'center',
+
               justifyContent: 'center',
 
               textAlign: 'center',
@@ -129,7 +147,7 @@ export const Gallery: React.FC = () => (
                 'translateY(-6px)';
 
               e.currentTarget.style.boxShadow =
-                `0 18px 40px rgba(15,23,42,0.10)`;
+                '0 18px 40px rgba(15,23,42,0.10)';
 
               e.currentTarget.style.borderColor =
                 `${c.accent}40`;
@@ -149,8 +167,12 @@ export const Gallery: React.FC = () => (
             <div
               style={{
                 position: 'absolute',
+
                 inset: 0,
-                background: `radial-gradient(circle at top, ${c.accent}08 0%, transparent 60%)`,
+
+                background:
+                  `radial-gradient(circle at top, ${c.accent}08 0%, transparent 60%)`,
+
                 pointerEvents: 'none',
               }}
             />
@@ -162,13 +184,17 @@ export const Gallery: React.FC = () => (
                 alt={c.name}
                 style={{
                   width: 'auto',
-                  maxWidth: 150,
-                  maxHeight: 58,
+
+                  maxWidth: 110,
+
+                  maxHeight: 42,
+
                   objectFit: 'contain',
 
-                  marginBottom: 20,
+                  marginBottom: 14,
 
                   position: 'relative',
+
                   zIndex: 2,
 
                   transition:
@@ -179,10 +205,10 @@ export const Gallery: React.FC = () => (
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform =
-                    'scale(1.06)';
+                    'scale(1.04)';
 
                   e.currentTarget.style.filter =
-                    `drop-shadow(0 6px 16px ${c.accent}40)`;
+                    `drop-shadow(0 4px 12px ${c.accent}40)`;
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform =
@@ -195,10 +221,13 @@ export const Gallery: React.FC = () => (
             ) : (
               <div
                 style={{
-                  fontSize: 28,
+                  fontSize: 22,
+
                   fontWeight: 800,
+
                   color: c.accent,
-                  marginBottom: 16,
+
+                  marginBottom: 12,
                 }}
               >
                 {c.name}
@@ -208,26 +237,33 @@ export const Gallery: React.FC = () => (
             {/* Sous-titre */}
             <div
               style={{
-                fontSize: 18,
+                fontSize: 15,
+
                 fontWeight: 500,
+
                 color: '#7A8AA0',
 
-                lineHeight: 1.4,
+                lineHeight: 1.35,
 
                 position: 'relative',
+
                 zIndex: 2,
               }}
             >
               {c.sub}
             </div>
 
-            {/* Accent bar */}
+            {/* Barre accent */}
             <span
               style={{
                 position: 'absolute',
+
                 bottom: 0,
+
                 left: 0,
+
                 right: 0,
+
                 height: 4,
 
                 background: c.accent,
