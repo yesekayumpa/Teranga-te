@@ -16,8 +16,8 @@ export const Contact: React.FC = () => {
     exit: (dir: number) => ({ x: dir < 0 ? 200 : -200, opacity: 0 }),
   };
 
-  // Adresse AfriRH (Valide pour Avenue Cheikh Anta Diop, Dakar)
-  const afriRHAddress = 'Immeuble Sokhna Anta, 2e étage, Avenue Cheikh Anta Diop, Dakar';
+  // Correction de l'adresse officielle d'Afri RH Dakar
+  const afriRHAddress = 'Afri RH, Rue LIB-12, Résidence Adja Coura, Liberté 6 Extension, Dakar';
   const mapsQuery = encodeURIComponent(afriRHAddress);
 
   return (
@@ -177,7 +177,7 @@ export const Contact: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Google Maps embed */}
+        {/* Google Maps block nettoyé et fonctionnel */}
         <motion.div
           className="maps-block reveal"
           initial={{ opacity: 0, y: 30 }}
@@ -205,7 +205,7 @@ export const Contact: React.FC = () => {
           </div>
           <div className="maps-embed">
             <iframe
-              src={`https://maps.google.com/maps?q=${mapsQuery}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
+              src={`https://maps.google.com/maps?q=${mapsQuery}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
               title="AfriRH — Dakar"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
