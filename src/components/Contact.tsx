@@ -7,6 +7,7 @@ import {
 export const Contact: React.FC = () => {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(1);
+
   const next = () => { setDirection(1); setStep((s) => Math.min(s + 1, 4)); };
   const back = () => { setDirection(-1); setStep((s) => Math.max(s - 1, 1)); };
 
@@ -16,9 +17,11 @@ export const Contact: React.FC = () => {
     exit: (dir: number) => ({ x: dir < 0 ? 200 : -200, opacity: 0 }),
   };
 
-  // Adresse officielle Afri RH Dakar
+  // Adresse officielle Afri RH Dakar (utilisée uniquement pour le marqueur Google Maps)
   const afriRHAddress = 'Afri RH, Rue LIB-12, Résidence Adja Coura, Liberté 6 Extension, Dakar';
-  const mapsQuery = encodeURIComponent(afriRHAddress);
+  // Étiquette affichée pour Teranga Technology & Energy
+  const displayAddress = 'Teranga Technology & Energy, Rue LIB-12, Résidence Adja Coura, Liberté 6 Extension, Dakar';
+  const mapsQuery = encodeURIComponent(afriRHAddress); // on garde le repère d'origine pour la carte
 
   return (
     <section id="contact" className="section section--cream">
@@ -64,7 +67,7 @@ export const Contact: React.FC = () => {
 
             <div className="contact-info">
               {[
-                { icon: <MapPin size={20} />, label: 'Adresse', value: afriRHAddress },
+                { icon: <MapPin size={20} />, label: 'Adresse', value: displayAddress },
                 { icon: <Phone size={20} />, label: 'Téléphone', value: '+221 77 337 26 28' },
                 { icon: <Mail size={20} />, label: 'Email', value: 'contact@teranga-te.com' },
               ].map((item, idx) => (
@@ -177,8 +180,7 @@ export const Contact: React.FC = () => {
           </div>
         </motion.div>
 
-      
-        {/* Bloc Google Maps avec le vrai curseur rouge */}
+        {/* Bloc Google Maps avec l'adresse réelle pour le marqueur, affichage modifié */}
         <motion.div
           className="maps-block reveal"
           initial={{ opacity: 0, y: 30 }}
@@ -190,12 +192,11 @@ export const Contact: React.FC = () => {
             <span className="ic"><MapPin size={18} /></span>
             <div>
               <div className="t">Notre localisation</div>
-              <div className="a">{afriRHAddress}</div>
+              <div className="a">{displayAddress}</div>  {/* Affichage modifié */}
             </div>
             <motion.a
               className="maps-cta"
-              // Lien externe vers Google Maps (ouvre un nouvel onglet avec le pin)
-              href={`https://www.google.com/maps?q=${mapsQuery}`}
+              href={`https://www.google.com/maps?q=${mapsQuery}`}  /* Lien inchangé, pointe toujours sur Afri RH */
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.03 }}
@@ -207,9 +208,8 @@ export const Contact: React.FC = () => {
           </div>
           <div className="maps-embed">
             <iframe
-              // La vraie URL d'intégration qui génère le marqueur rouge
               src={`https://maps.google.com/maps?q=${mapsQuery}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-              title="AfriRH — Dakar"
+              title="Teranga Technology & Energy — Dakar"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen

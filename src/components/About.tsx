@@ -5,12 +5,12 @@ export const About: React.FC = () => (
     <div className="container">
       <div className="section-head reveal" data-reveal>
         <span className="eyebrow"><span className="bar" />QUI SOMMES-NOUS</span>
-        <h2>À propos de Teranga TE</h2>
+        <h2>À propos de Teranga Technology & Energy</h2>
         <div className="dot-divider" style={{ margin: '12px auto' }}>
           <div className="d" /><div className="d" /><div className="d" />
         </div>
         <p>
-          Fondée en 2026 à Dakar, Teranga TE incarne la rencontre entre expertise technique de
+          Fondée en 2026 à Dakar, Teranga Technology & Energy incarne la rencontre entre expertise technique de
           haut niveau et excellence RH au service du Sahel.
         </p>
       </div>
@@ -52,7 +52,7 @@ export const About: React.FC = () => (
           <div style={{ paddingLeft: 20, borderLeft: '3px solid var(--gold-500)' }}>
             <h3>Notre Histoire</h3>
             <p>
-              Fondée par <strong>Papa Moussa TINE</strong> et <strong>AfriRH</strong>, Teranga TE est née de la conviction que l'Afrique de l'Ouest mérite des services managés de haut niveau, alliant réactivité locale et standards internationaux.
+              Fondée en 2026, Teranga TE est née de la conviction que l'Afrique de l'Ouest mérite des services managés de haut niveau, alliant réactivité locale et standards internationaux.
             </p>
             <p style={{ marginTop: 12 }}>
               Avec un modèle financier flexible (CAPEX ou OPEX), nous nous adaptons à la structure de chaque client, des TPE aux grands groupes multi-sites.
