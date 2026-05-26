@@ -56,6 +56,12 @@ const CLIENTS: Client[] = [
     accent: '#00338D',
     logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/s4TCDTV7TKKT_725f6646.png',
   },
+    {
+    name: 'NOVAGO',
+    sub: 'Mobilité Professionnelle', 
+    accent: '#2E4A7A',              
+    logo: 'https://www.hitech.fr/wp-content/uploads/2024/08/marche-location-vehicule-afrique.webp',  
+  }
 ];
 
 export const Gallery: React.FC = () => (

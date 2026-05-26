@@ -27,7 +27,7 @@ export const About: React.FC = () => (
             Le mot du Directeur Général
           </div>
           <p>
-            « Chez Teranga TE, nous croyons que l'Afrique de l'Ouest mérite des services technologiques et énergétiques de classe mondiale, délivrés avec la chaleur et la proximité qui font la force de notre continent.
+            « Chez Teranga Technology & Energy, nous croyons que l'Afrique de l'Ouest mérite des services technologiques et énergétiques de classe mondiale, délivrés avec la chaleur et la proximité qui font la force de notre continent.
           </p>
           <p style={{ marginTop: 12 }}>
             Notre ambition est simple : être le partenaire unique qui transforme la complexité technique en avantage compétitif pour nos clients. Chaque projet que nous menons porte notre signature — l'excellence technique alliée à l'hospitalité sénégalaise, la <em>Teranga</em>.
@@ -42,7 +42,7 @@ export const About: React.FC = () => (
             <div>
               <div className="name">Papa Moussa TINE</div>
               <div style={{ color: 'var(--gold-600)', fontSize: 12, fontWeight: 700 }}>Managing Director</div>
-              <div className="role">Fondateur de Teranga TE</div>
+              <div className="role">Fondateur de Teranga Technology & Energy</div>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@ export const About: React.FC = () => (
           <div style={{ paddingLeft: 20, borderLeft: '3px solid var(--gold-500)' }}>
             <h3>Notre Histoire</h3>
             <p>
-              Fondée en 2026, Teranga TE est née de la conviction que l'Afrique de l'Ouest mérite des services managés de haut niveau, alliant réactivité locale et standards internationaux.
+              Fondée en 2026, Teranga Technology & Energy est née de la conviction que l'Afrique de l'Ouest mérite des services managés de haut niveau, alliant réactivité locale et standards internationaux.
             </p>
             <p style={{ marginTop: 12 }}>
               Avec un modèle financier flexible (CAPEX ou OPEX), nous nous adaptons à la structure de chaque client, des TPE aux grands groupes multi-sites.
