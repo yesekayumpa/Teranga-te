@@ -1,43 +1,12 @@
 import React from 'react';
 import { Users, Building2, Globe, ShieldCheck, Clock, Zap } from 'lucide-react';
-
-const STATS_CONTENT = {
-  fr: {
-    eyebrow: 'TERANGA TE EN CHIFFRES',
-    titlePrefix: 'Nos ',
-    titleItal: 'chiffres clés.',
-    items: [
-      { v: '6',    lbl: 'Collaborateurs',   sub: 'Experts certifiés' },
-      { v: '8',    lbl: 'Clients',          sub: 'Entreprises' },
-      { v: '6+',   lbl: 'Pays au Sahel',    sub: 'Couverture régionale' },
-      { v: '98%',  lbl: 'SLA Garanti',      sub: 'Disponibilité' },
-      { v: '24/7', lbl: 'Support',          sub: 'Assistance continue' },
-      { v: '4',    lbl: 'Expertises',       sub: 'Domaines complémentaires' },
-    ],
-  },
-  en: {
-    eyebrow: 'TERANGA TE IN NUMBERS',
-    titlePrefix: 'Our ',
-    titleItal: 'key figures.',
-    items: [
-      { v: '6',    lbl: 'Team members',     sub: 'Certified experts' },
-      { v: '8',    lbl: 'Clients',          sub: 'Businesses' },
-      { v: '6+',   lbl: 'Sahel countries',  sub: 'Regional coverage' },
-      { v: '98%',  lbl: 'SLA Guaranteed',   sub: 'Availability' },
-      { v: '24/7', lbl: 'Support',          sub: 'Continuous assistance' },
-      { v: '4',    lbl: 'Expertise areas',  sub: 'Complementary domains' },
-    ],
-  },
-};
+import { useI18n } from '../context/I18nContext';
 
 const ICONS = [Users, Building2, Globe, ShieldCheck, Clock, Zap];
 
-interface StatsSectionProps {
-  lang?: 'fr' | 'en';
-}
-
-export const StatsSection: React.FC<StatsSectionProps> = ({ lang = 'fr' }) => {
-  const content = STATS_CONTENT[lang] ?? STATS_CONTENT.fr;
+export const StatsSection: React.FC = () => {
+  const { t } = useI18n();
+  const stats = t.stats;
 
   return (
     <section className="stats-bar">
@@ -54,16 +23,16 @@ export const StatsSection: React.FC<StatsSectionProps> = ({ lang = 'fr' }) => {
         <div className="section-head reveal" data-reveal style={{ marginBottom: 56 }}>
           <span className="eyebrow" style={{ color: 'var(--gold-400)' }}>
             <span className="bar" />
-            {content.eyebrow}
+            {stats.eyebrow}
           </span>
           <h2 style={{ color: '#fff' }}>
-            {content.titlePrefix}
-            <span className="text-gold text-ital">{content.titleItal}</span>
+            {stats.title}
+            <span className="text-gold text-ital"> {stats.titleItal}</span>
           </h2>
         </div>
 
         <div className="stats-grid">
-          {content.items.map((item, idx) => {
+          {stats.items.map((item, idx) => {
             const Ico = ICONS[idx] ?? Users;
             return (
               <div

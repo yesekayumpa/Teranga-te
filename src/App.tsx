@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
       <Hero />
       <About />
       <OurImpact />
-      <StatsSection lang={lang} />
+      <StatsSection />
       <ExpertiseSection />
       <Services  />
       <Gallery  />
