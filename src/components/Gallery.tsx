@@ -1,5 +1,6 @@
 import React from 'react';
 
+/* ---------- données clients (noms propres, non traduits) ---------- */
 interface Client {
   name: string;
   sub: string;
@@ -56,230 +57,172 @@ const CLIENTS: Client[] = [
     accent: '#00338D',
     logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/s4TCDTV7TKKT_725f6646.png',
   },
-    {
+  {
     name: 'NOVAGO',
-    sub: 'Mobilité Professionnelle', 
-    accent: '#2E4A7A',              
-    logo: 'https://www.hitech.fr/wp-content/uploads/2024/08/marche-location-vehicule-afrique.webp',  
-  }
+    sub: 'Mobilité Professionnelle',
+    accent: '#2E4A7A',
+    logo: 'https://www.hitech.fr/wp-content/uploads/2024/08/marche-location-vehicule-afrique.webp',
+  },
 ];
 
-export const Gallery: React.FC = () => (
-  <section
-    id="references"
-    className="section section--cream"
-  >
-    <div className="container">
+/* ---------- contenu traduit ---------- */
+const CONTENT = {
+  fr: {
+    eyebrow: 'ILS NOUS FONT CONFIANCE',
+    titlePrefix: 'Nos ',
+    titleItal: 'clients.',
+    intro: 'Des leaders du Sénégal et du Sahel qui nous confient la sécurisation de leurs infrastructures critiques.',
+  },
+  en: {
+    eyebrow: 'THEY TRUST US',
+    titlePrefix: 'Our ',
+    titleItal: 'clients.',
+    intro: 'Leaders from Senegal and the Sahel entrust us with the security of their critical infrastructure.',
+  },
+};
 
-      {/* HEADER */}
-      <div
-        className="section-head reveal"
-        data-reveal
-      >
-        <span className="eyebrow">
-          <span className="bar" />
-          ILS NOUS FONT CONFIANCE
-        </span>
+interface GalleryProps {
+  lang?: 'fr' | 'en';
+}
 
-        <h2>
-          Nos{' '}
-          <span className="text-ital text-gold">
-            clients.
+export const Gallery: React.FC<GalleryProps> = ({ lang = 'fr' }) => {
+  const t = CONTENT[lang] ?? CONTENT.fr;
+
+  return (
+    <section id="references" className="section section--cream">
+      <div className="container">
+        {/* HEADER */}
+        <div className="section-head reveal" data-reveal>
+          <span className="eyebrow">
+            <span className="bar" />
+            {t.eyebrow}
           </span>
-        </h2>
+          <h2>
+            {t.titlePrefix}<span className="text-ital text-gold">{t.titleItal}</span>
+          </h2>
+          <p>{t.intro}</p>
+        </div>
 
-        <p>
-          Des leaders du Sénégal et du Sahel
-          qui nous confient la sécurisation
-          de leurs infrastructures critiques.
-        </p>
-      </div>
-
-      {/* GRID */}
-      <div
-        style={{
-          display: 'grid',
-
-          gridTemplateColumns:
-            'repeat(auto-fit, minmax(260px, 1fr))',
-
-          gap: 26,
-
-          marginTop: 52,
-        }}
-      >
-        {CLIENTS.map((c, idx) => (
-          <div
-            key={c.name}
-            className="reveal"
-            data-reveal
-            style={{
-              transitionDelay:
-                `${(idx % 4) * 70}ms`,
-
-              position: 'relative',
-
-              overflow: 'hidden',
-
-              background: '#FFFFFF',
-
-              border:
-                '1px solid #EFE7DC',
-
-              borderRadius: 28,
-
-              minHeight: 140,
-
-              padding: '22px 20px',
-
-              display: 'flex',
-
-              flexDirection: 'column',
-
-              alignItems: 'center',
-
-              justifyContent: 'center',
-
-              textAlign: 'center',
-
-              transition:
-                'transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease',
-
-              boxShadow:
-                '0 2px 10px rgba(15,23,42,0.03)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform =
-                'translateY(-6px)';
-
-              e.currentTarget.style.boxShadow =
-                '0 18px 40px rgba(15,23,42,0.10)';
-
-              e.currentTarget.style.borderColor =
-                `${c.accent}40`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform =
-                'translateY(0px)';
-
-              e.currentTarget.style.boxShadow =
-                '0 2px 10px rgba(15,23,42,0.03)';
-
-              e.currentTarget.style.borderColor =
-                '#EFE7DC';
-            }}
-          >
-            {/* Glow subtil */}
+        {/* GRID – exactement le même style qu'avant */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: 26,
+            marginTop: 52,
+          }}
+        >
+          {CLIENTS.map((c, idx) => (
             <div
+              key={c.name}
+              className="reveal"
+              data-reveal
               style={{
-                position: 'absolute',
-
-                inset: 0,
-
-                background:
-                  `radial-gradient(circle at top, ${c.accent}08 0%, transparent 60%)`,
-
-                pointerEvents: 'none',
-              }}
-            />
-
-            {/* Logo */}
-            {c.logo ? (
-              <img
-                src={c.logo}
-                alt={c.name}
-                style={{
-                  width: 'auto',
-
-                  maxWidth: 110,
-
-                  maxHeight: 42,
-
-                  objectFit: 'contain',
-
-                  marginBottom: 14,
-
-                  position: 'relative',
-
-                  zIndex: 2,
-
-                  transition:
-                    'transform 0.35s ease, filter 0.35s ease',
-
-                  filter:
-                    'grayscale(0.05)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform =
-                    'scale(1.04)';
-
-                  e.currentTarget.style.filter =
-                    `drop-shadow(0 4px 12px ${c.accent}40)`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform =
-                    'scale(1)';
-
-                  e.currentTarget.style.filter =
-                    'grayscale(0.05)';
-                }}
-              />
-            ) : (
-              <div
-                style={{
-                  fontSize: 17,
-
-                  fontWeight: 800,
-
-                  color: c.accent,
-
-                  marginBottom: 12,
-                }}
-              >
-                {c.name}
-              </div>
-            )}
-
-            {/* Sous-titre */}
-            <div
-              style={{
-                fontSize: 15,
-
-                fontWeight: 500,
-
-                color: '#7A8AA0',
-
-                lineHeight: 1.35,
-
+                transitionDelay: `${(idx % 4) * 70}ms`,
                 position: 'relative',
-
-                zIndex: 2,
+                overflow: 'hidden',
+                background: '#FFFFFF',
+                border: '1px solid #EFE7DC',
+                borderRadius: 28,
+                minHeight: 140,
+                padding: '22px 20px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                transition: 'transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease',
+                boxShadow: '0 2px 10px rgba(15,23,42,0.03)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-6px)';
+                e.currentTarget.style.boxShadow = '0 18px 40px rgba(15,23,42,0.10)';
+                e.currentTarget.style.borderColor = `${c.accent}40`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0px)';
+                e.currentTarget.style.boxShadow = '0 2px 10px rgba(15,23,42,0.03)';
+                e.currentTarget.style.borderColor = '#EFE7DC';
               }}
             >
-              {c.sub}
+              {/* Glow subtil */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: `radial-gradient(circle at top, ${c.accent}08 0%, transparent 60%)`,
+                  pointerEvents: 'none',
+                }}
+              />
+
+              {/* Logo */}
+              {c.logo ? (
+                <img
+                  src={c.logo}
+                  alt={c.name}
+                  style={{
+                    width: 'auto',
+                    maxWidth: 110,
+                    maxHeight: 42,
+                    objectFit: 'contain',
+                    marginBottom: 14,
+                    position: 'relative',
+                    zIndex: 2,
+                    transition: 'transform 0.35s ease, filter 0.35s ease',
+                    filter: 'grayscale(0.05)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.04)';
+                    e.currentTarget.style.filter = `drop-shadow(0 4px 12px ${c.accent}40)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.filter = 'grayscale(0.05)';
+                  }}
+                />
+              ) : (
+                <div
+                  style={{
+                    fontSize: 17,
+                    fontWeight: 800,
+                    color: c.accent,
+                    marginBottom: 12,
+                  }}
+                >
+                  {c.name}
+                </div>
+              )}
+
+              {/* Sous-titre (non traduit, car propre à chaque entreprise) */}
+              <div
+                style={{
+                  fontSize: 15,
+                  fontWeight: 500,
+                  color: '#7A8AA0',
+                  lineHeight: 1.35,
+                  position: 'relative',
+                  zIndex: 2,
+                }}
+              >
+                {c.sub}
+              </div>
+
+              {/* Barre accent */}
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: 4,
+                  background: c.accent,
+                  opacity: 0.95,
+                }}
+              />
             </div>
-
-            {/* Barre accent */}
-            <span
-              style={{
-                position: 'absolute',
-
-                bottom: 0,
-
-                left: 0,
-
-                right: 0,
-
-                height: 4,
-
-                background: c.accent,
-
-                opacity: 0.95,
-              }}
-            />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};

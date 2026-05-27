@@ -1,9 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 
-/* ══════════════════════════════════════════════════
-   TYPES
-══════════════════════════════════════════════════ */
+/* ---------- types ---------- */
 interface PartnerItem {
   name: string;
   slug?: string | null;
@@ -13,25 +11,18 @@ interface PartnerItem {
 
 interface PartnerGroup {
   id: string;
-  title: string;
-  subtitle: string;
-  accentColor: string;
   items: PartnerItem[];
+  // les clés de traduction seront ajoutées plus tard
 }
 
-/* ══════════════════════════════════════════════════
-   DONNÉES
-══════════════════════════════════════════════════ */
-const PARTNERS: PartnerGroup[] = [
+/* ---------- données partenaires (noms, logos) ---------- */
+const PARTNERS_DATA: PartnerGroup[] = [
   {
     id: 'ict',
-    title: 'ICT',
-    subtitle: 'Réseaux, sécurité, postes & serveurs',
-    accentColor: '#1BA0D7',
     items: [
       { name: 'Cisco', logo: '/assets/logo partenaires/virtualisation/cisco.png', color: '#1BA0D7' },
       { name: 'Fortinet', logo: '/assets/logo partenaires/virtualisation/fortinet.png', color: '#EE3124' },
-      { name: 'HP', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/image171_f57b395b.png', color: '#0096D6' }, // si absent → fallback texte
+      { name: 'HP', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/image171_f57b395b.png', color: '#0096D6' },
       { name: 'Microsoft', logo: '/assets/logo partenaires/virtualisation/microsoft.png', color: '#737373' },
       { name: 'VMware', logo: '/assets/logo partenaires/virtualisation/vmware.png', color: '#607078' },
       { name: 'IBM', logo: '/assets/logo partenaires/virtualisation/ibm.png', color: '#054ADA' },
@@ -39,12 +30,8 @@ const PARTNERS: PartnerGroup[] = [
       { name: 'Proxmox', logo: '/assets/logo partenaires/virtualisation/proxmox.png', color: '#E57000' },
     ],
   },
-
   {
     id: 'impression',
-    title: 'Impression',
-    subtitle: 'Managed Print Services',
-    accentColor: '#5E2A78',
     items: [
       { name: 'Ricoh', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/image173_b629c911.png', color: '#D7000F' },
       { name: 'Riso', logo: '/assets/logo partenaires/impression/riso.png', color: '#5E2A78' },
@@ -52,12 +39,8 @@ const PARTNERS: PartnerGroup[] = [
       { name: 'Canon', logo: '/assets/logo partenaires/impression/canon.png', color: '#D71920' },
     ],
   },
-
   {
     id: 'energie',
-    title: 'Énergie CFO',
-    subtitle: 'Groupes électrogènes & onduleurs',
-    accentColor: '#E12325',
     items: [
       { name: 'GE', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/ge-logo_51b1241f.png', color: '#005EB8' },
       { name: 'Pramac', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/pramac-logo_9b0008fa.jpg', color: '#C8102E' },
@@ -73,12 +56,8 @@ const PARTNERS: PartnerGroup[] = [
       { name: 'Socomec', logo: '/assets/logo partenaires/energie/socomec.png', color: '#003D7A' },
     ],
   },
-
   {
     id: 'renouvelables',
-    title: 'Énergies Renouvelables',
-    subtitle: 'Solaire & stockage',
-    accentColor: '#3DCD58',
     items: [
       { name: 'Huawei', logo: '/assets/logo partenaires/energie/huawei.png', color: '#C7000B' },
       { name: 'Jinko', logo: '/assets/logo partenaires/energie/jinko.png', color: '#0066B3' },
@@ -89,59 +68,71 @@ const PARTNERS: PartnerGroup[] = [
     ],
   },
 ];
-/* ══════════════════════════════════════════════════
-   VARIANTS FRAMER MOTION
-══════════════════════════════════════════════════ */
+
+/* ---------- contenu traduit ---------- */
+const CONTENT = {
+  fr: {
+    eyebrow: 'ÉCOSYSTÈME PARTENAIRES',
+    titlePrefix: 'Nos ',
+    titleItal: 'partenaires technologiques.',
+    intro: 'Nous collaborons avec les leaders mondiaux pour garantir des solutions fiables et performantes.',
+    filterAll: 'Tous',
+    partnerCount: (n: number) => `${n} partenaires`,
+    groups: {
+      ict: { title: 'ICT', subtitle: 'Réseaux, sécurité, postes & serveurs', accentColor: '#1BA0D7' },
+      impression: { title: 'Impression', subtitle: 'Managed Print Services', accentColor: '#5E2A78' },
+      energie: { title: 'Énergie CFO', subtitle: 'Groupes électrogènes & onduleurs', accentColor: '#E12325' },
+      renouvelables: { title: 'Énergies Renouvelables', subtitle: 'Solaire & stockage', accentColor: '#3DCD58' },
+    },
+  },
+  en: {
+    eyebrow: 'PARTNER ECOSYSTEM',
+    titlePrefix: 'Our ',
+    titleItal: 'technology partners.',
+    intro: 'We collaborate with world leaders to guarantee reliable and efficient solutions.',
+    filterAll: 'All',
+    partnerCount: (n: number) => `${n} partners`,
+    groups: {
+      ict: { title: 'ICT', subtitle: 'Networks, security, workstations & servers', accentColor: '#1BA0D7' },
+      impression: { title: 'Print', subtitle: 'Managed Print Services', accentColor: '#5E2A78' },
+      energie: { title: 'CFO Energy', subtitle: 'Generators & UPS', accentColor: '#E12325' },
+      renouvelables: { title: 'Renewables', subtitle: 'Solar & storage', accentColor: '#3DCD58' },
+    },
+  },
+};
+
+/* ---------- composants internes (inchangés) ---------- */
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.1 },
-  },
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
 };
 
 const cardVariants = {
   hidden: { opacity: 0, y: 24, scale: 0.96 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.55, ease: [0.25, 1, 0.5, 1] },
-  },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: [0.25, 1, 0.5, 1] as unknown as any } },
 };
 
 const groupVariants = {
   hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
+  // cast ease to any to satisfy framer-motion TypeScript types for cubic bezier arrays
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.25, 1, 0.5, 1] as unknown as any } },
 };
 
-/* ══════════════════════════════════════════════════
-   PARTNER CARD
-   — 3D tilt + shimmer traversant + scale logo
-   — Sans aucun effet de lumière radiale
-══════════════════════════════════════════════════ */
-const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({
-  p,
-  accentColor,
-}) => {
+const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({ p, accentColor }) => {
   const [err, setErr] = useState(false);
-  const [tilt, setTilt]   = useState({ rx: 0, ry: 0 });
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
   const [hovered, setHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
-  const showImg =  Boolean(p.logo) && !err; 
+  const showImg = Boolean(p.logo) && !err;
 
-  /* Tilt 3D au survol — remplace l'effet lumière */
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const cx   = rect.left + rect.width  / 2;
-    const cy   = rect.top  + rect.height / 2;
-    const dx   = (e.clientX - cx) / (rect.width  / 2);   // -1 → +1
-    const dy   = (e.clientY - cy) / (rect.height / 2);   // -1 → +1
-    setTilt({ rx: -dy * 8, ry: dx * 8 });                // max ±8°
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+    setTilt({ rx: -dy * 8, ry: dx * 8 });
   };
 
   const resetTilt = () => {
@@ -156,12 +147,8 @@ const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={resetTilt}
-      style={{
-        perspective: 600,
-        transformStyle: 'preserve-3d',
-      }}
+      style={{ perspective: 600, transformStyle: 'preserve-3d' }}
     >
-      {/* Carte réelle */}
       <motion.div
         animate={{
           rotateX: tilt.rx,
@@ -188,7 +175,7 @@ const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({
           cursor: 'default',
         }}
       >
-        {/* ── Shimmer traversant (horizontal) — pas de radial ── */}
+        {/* Shimmer */}
         <motion.div
           animate={{ x: hovered ? '250%' : '-120%' }}
           initial={{ x: '-120%' }}
@@ -196,14 +183,12 @@ const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({
           style={{
             position: 'absolute',
             inset: 0,
-            background:
-              'linear-gradient(105deg, transparent 30%, rgba(201,161,75,0.18) 50%, transparent 70%)',
+            background: 'linear-gradient(105deg, transparent 30%, rgba(201,161,75,0.18) 50%, transparent 70%)',
             pointerEvents: 'none',
             zIndex: 0,
           }}
         />
-
-        {/* ── Liseré coloré en bas qui monte au hover ── */}
+        {/* Liseré coloré */}
         <motion.div
           animate={{ scaleY: hovered ? 1 : 0 }}
           initial={{ scaleY: 0 }}
@@ -220,13 +205,9 @@ const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({
           }}
           transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
         />
-
-        {/* ── Logo / texte de fallback ── */}
+        {/* Logo */}
         <motion.div
-          animate={{
-            y:     hovered ? -3 : 0,
-            scale: hovered ? 1.12 : 1,
-          }}
+          animate={{ y: hovered ? -3 : 0, scale: hovered ? 1.12 : 1 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           style={{ position: 'relative', zIndex: 2 }}
         >
@@ -242,9 +223,7 @@ const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({
                 height: 'auto',
                 objectFit: 'contain',
                 display: 'block',
-                filter: hovered
-                  ? `grayscale(0) drop-shadow(0 4px 10px ${p.color}55)`
-                  : 'grayscale(0.25)',
+                filter: hovered ? `grayscale(0) drop-shadow(0 4px 10px ${p.color}55)` : 'grayscale(0.25)',
                 transition: 'filter 0.35s ease',
               }}
             />
@@ -264,21 +243,10 @@ const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({
             </span>
           )}
         </motion.div>
-
-        {/* ── Nom sous le logo ── */}
         <motion.span
-          animate={{
-            color: hovered ? accentColor : '#8A93A6',
-            y:     hovered ? 1 : 0,
-          }}
+          animate={{ color: hovered ? accentColor : '#8A93A6', y: hovered ? 1 : 0 }}
           transition={{ duration: 0.25 }}
-          style={{
-            fontSize: 11,
-            fontWeight: 600,
-            position: 'relative',
-            zIndex: 2,
-            letterSpacing: '0.02em',
-          }}
+          style={{ fontSize: 11, fontWeight: 600, position: 'relative', zIndex: 2, letterSpacing: '0.02em' }}
         >
           {p.name}
         </motion.span>
@@ -287,30 +255,24 @@ const PartnerCard: React.FC<{ p: PartnerItem; accentColor: string }> = ({
   );
 };
 
-/* ══════════════════════════════════════════════════
-   GROUP HEADER
-   — Numéro + titre + accent bar animée
-══════════════════════════════════════════════════ */
-const GroupHeader: React.FC<{
+interface GroupHeaderProps {
   group: PartnerGroup;
   index: number;
   isActive: boolean;
-}> = ({ group, index, isActive }) => (
-  <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 16,
-      marginBottom: 28,
-    }}
-  >
-    {/* Numéro */}
+  accentColor: string;
+  title: string;
+  subtitle: string;
+  partnerCount: string;
+}
+
+const GroupHeader: React.FC<GroupHeaderProps> = ({ group, index, isActive, accentColor, title, subtitle, partnerCount }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28 }}>
     <span
       style={{
         fontFamily: 'var(--font-display)',
         fontWeight: 800,
         fontSize: 11,
-        color: group.accentColor,
+        color: accentColor,
         opacity: 0.6,
         letterSpacing: '0.12em',
         minWidth: 24,
@@ -318,8 +280,6 @@ const GroupHeader: React.FC<{
     >
       {String(index + 1).padStart(2, '0')}
     </span>
-
-    {/* Titre + sous-titre */}
     <div>
       <h4
         style={{
@@ -327,57 +287,43 @@ const GroupHeader: React.FC<{
           fontWeight: 800,
           letterSpacing: '0.22em',
           textTransform: 'uppercase',
-          color: group.accentColor,
+          color: accentColor,
           margin: 0,
           lineHeight: 1,
         }}
       >
-        {group.title}
+        {title}
       </h4>
-      <p
-        style={{
-          fontSize: 11,
-          color: 'var(--slate-2)',
-          marginTop: 4,
-          letterSpacing: '0.04em',
-        }}
-      >
-        {group.subtitle}
+      <p style={{ fontSize: 11, color: 'var(--slate-2)', marginTop: 4, letterSpacing: '0.04em' }}>
+        {subtitle}
       </p>
     </div>
-
-    {/* Ligne décorative */}
     <motion.div
       animate={{ scaleX: isActive ? 1 : 0.4, opacity: isActive ? 1 : 0.3 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       style={{
         flex: 1,
         height: 1,
-        background: `linear-gradient(90deg, ${group.accentColor}, transparent)`,
+        background: `linear-gradient(90deg, ${accentColor}, transparent)`,
         transformOrigin: 'left',
         borderRadius: 1,
       }}
     />
-
-    {/* Compteur */}
     <span
-      style={{
-        fontSize: 11,
-        fontWeight: 700,
-        color: 'var(--slate-2)',
-        letterSpacing: '0.06em',
-        whiteSpace: 'nowrap',
-      }}
+      style={{ fontSize: 11, fontWeight: 700, color: 'var(--slate-2)', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}
     >
-      {group.items.length} partenaires
+      {partnerCount}
     </span>
   </div>
 );
 
-/* ══════════════════════════════════════════════════
-   COMPOSANT PRINCIPAL
-══════════════════════════════════════════════════ */
-export const Partners: React.FC = () => {
+/* ---------- composant principal ---------- */
+interface PartnersProps {
+  lang?: 'fr' | 'en';
+}
+
+export const Partners: React.FC<PartnersProps> = ({ lang = 'fr' }) => {
+  const t = CONTENT[lang] ?? CONTENT.fr;
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef, { once: true, margin: '-80px 0px' });
@@ -385,8 +331,7 @@ export const Partners: React.FC = () => {
   return (
     <section ref={sectionRef} className="section section--paper">
       <div className="container">
-
-        {/* ── Header section ── */}
+        {/* Header */}
         <motion.div
           className="section-head"
           initial={{ opacity: 0, y: 24 }}
@@ -395,32 +340,21 @@ export const Partners: React.FC = () => {
         >
           <span className="eyebrow">
             <span className="bar" />
-            ÉCOSYSTÈME PARTENAIRES
+            {t.eyebrow}
           </span>
           <h2>
-            Nos{' '}
-            <span className="text-ital text-gold">partenaires technologiques.</span>
+            {t.titlePrefix}<span className="text-ital text-gold">{t.titleItal}</span>
           </h2>
-          <p>
-            Nous collaborons avec les leaders mondiaux pour garantir des solutions
-            fiables et performantes.
-          </p>
+          <p>{t.intro}</p>
         </motion.div>
 
-        {/* ── Filtre rapide (pills) ── */}
+        {/* Pills de filtrage */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: 10,
-            flexWrap: 'wrap',
-            marginBottom: 56,
-          }}
+          style={{ display: 'flex', justifyContent: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 56 }}
         >
-          {/* Pill "Tous" */}
           <motion.button
             onClick={() => setActiveGroup(null)}
             whileHover={{ y: -2 }}
@@ -438,59 +372,54 @@ export const Partners: React.FC = () => {
               transition: 'all 0.25s ease',
             }}
           >
-            Tous
+            {t.filterAll}
           </motion.button>
 
-          {PARTNERS.map((g) => (
-            <motion.button
-              key={g.id}
-              onClick={() => setActiveGroup(activeGroup === g.id ? null : g.id)}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.96 }}
-              style={{
-                padding: '9px 18px',
-                borderRadius: 999,
-                border: `1.5px solid ${
-                  activeGroup === g.id ? g.accentColor : 'var(--line)'
-                }`,
-                background:
-                  activeGroup === g.id
-                    ? `${g.accentColor}18`
-                    : '#fff',
-                color:
-                  activeGroup === g.id ? g.accentColor : 'var(--slate)',
-                fontSize: 12,
-                fontWeight: 700,
-                letterSpacing: '0.04em',
-                cursor: 'pointer',
-                transition: 'all 0.25s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-              }}
-            >
-              {/* Pastille colorée */}
-              <span
+          {PARTNERS_DATA.map((g) => {
+            const grp = t.groups[g.id as keyof typeof t.groups];
+            return (
+              <motion.button
+                key={g.id}
+                onClick={() => setActiveGroup(activeGroup === g.id ? null : g.id)}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.96 }}
                 style={{
-                  width: 7,
-                  height: 7,
-                  borderRadius: '50%',
-                  background: g.accentColor,
-                  flexShrink: 0,
-                  opacity: activeGroup === g.id ? 1 : 0.45,
+                  padding: '9px 18px',
+                  borderRadius: 999,
+                  border: `1.5px solid ${activeGroup === g.id ? grp.accentColor : 'var(--line)'}`,
+                  background: activeGroup === g.id ? `${grp.accentColor}18` : '#fff',
+                  color: activeGroup === g.id ? grp.accentColor : 'var(--slate)',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  letterSpacing: '0.04em',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
                 }}
-              />
-              {g.title}
-            </motion.button>
-          ))}
+              >
+                <span
+                  style={{
+                    width: 7,
+                    height: 7,
+                    borderRadius: '50%',
+                    background: grp.accentColor,
+                    flexShrink: 0,
+                    opacity: activeGroup === g.id ? 1 : 0.45,
+                  }}
+                />
+                {grp.title}
+              </motion.button>
+            );
+          })}
         </motion.div>
 
-        {/* ── Groupes ── */}
+        {/* Groupes */}
         <AnimatePresence mode="wait">
-          {PARTNERS.filter(
-            (g) => activeGroup === null || g.id === activeGroup
-          ).map((group, groupIdx) => {
+          {PARTNERS_DATA.filter((g) => activeGroup === null || g.id === activeGroup).map((group, groupIdx) => {
             const isVisible = activeGroup === null || activeGroup === group.id;
+            const grp = t.groups[group.id as keyof typeof t.groups];
             return (
               <motion.div
                 key={group.id}
@@ -500,19 +429,17 @@ export const Partners: React.FC = () => {
                 exit={{ opacity: 0, x: -12, transition: { duration: 0.3 } }}
                 className="partners-group"
                 data-group={group.id}
-                style={{
-                  paddingBottom: 40,
-                  marginBottom: 8,
-                }}
+                style={{ paddingBottom: 40, marginBottom: 8 }}
               >
-                {/* Header de groupe */}
                 <GroupHeader
                   group={group}
                   index={groupIdx}
                   isActive={activeGroup === group.id || activeGroup === null}
+                  accentColor={grp.accentColor}
+                  title={grp.title}
+                  subtitle={grp.subtitle}
+                  partnerCount={t.partnerCount(group.items.length)}
                 />
-
-                {/* Grille de cartes avec stagger */}
                 <motion.div
                   className="partners-row"
                   variants={containerVariants}
@@ -520,18 +447,13 @@ export const Partners: React.FC = () => {
                   animate={inView ? 'visible' : 'hidden'}
                 >
                   {group.items.map((p) => (
-                    <PartnerCard
-                      key={p.name}
-                      p={p}
-                      accentColor={group.accentColor}
-                    />
+                    <PartnerCard key={p.name} p={p} accentColor={grp.accentColor} />
                   ))}
                 </motion.div>
               </motion.div>
             );
           })}
         </AnimatePresence>
-
       </div>
     </section>
   );
