@@ -27,9 +27,9 @@ const HomePage: React.FC = () => {
       <OurImpact />
       <StatsSection lang={lang} />
       <ExpertiseSection />
-      <Services />
-      <Gallery />
-      <Partners />
+      <Services lang={lang} />
+      <Gallery lang={lang} />
+      <Partners lang={lang} />
       <Markets lang={lang} />
       <MapSection />
       <Contact />
