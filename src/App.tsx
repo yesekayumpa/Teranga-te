@@ -1,8 +1,6 @@
-/* App.tsx — Teranga TE refonte
- * Drop-in replacement. Keeps your router; HomePage = the new design.
- */
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { I18nProvider } from './context/I18nContext';
 
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -39,7 +37,6 @@ export default function App() {
   const location = useLocation();
 
   React.useEffect(() => {
-    // Scroll to top on route change; smooth scroll for in-page hashes
     if (location.hash) {
       const el = document.getElementById(location.hash.slice(1));
       if (el) {
@@ -51,18 +48,10 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [location]);
 
-  // Scroll-reveal observer (matches `[data-reveal]` markup in components)
   React.useEffect(() => {
     const els = document.querySelectorAll('[data-reveal]');
     const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-            io.unobserve(e.target);
-          }
-        });
-      },
+      (entries) => { entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); },
       { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
     );
     els.forEach((el) => io.observe(el));
@@ -70,14 +59,17 @@ export default function App() {
   });
 
   return (
-    <div className="relative min-h-screen">
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="*" element={<HomePage />} />
-      </Routes>
-      <Footer />
-      <WhatsAppButton />
-    </div>
+    // I18nProvider au niveau racine — tous les composants ont accès à useI18n()
+    <I18nProvider>
+      <div className="relative min-h-screen">
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<HomePage />} />
+        </Routes>
+        <Footer />
+        <WhatsAppButton />
+      </div>
+    </I18nProvider>
   );
 }

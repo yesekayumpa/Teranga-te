@@ -1,80 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play } from 'lucide-react';
+import { useI18n } from '../context/I18nContext';
 
-/* ─────────────────────────────────────────
-   URL de la vidéo (Supabase signed URL)
-───────────────────────────────────────── */
 const VIDEO_URL =
   'https://qxxcxyoccysksywoigww.supabase.co/storage/v1/object/sign/teranga/mp_.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OGJkYTcxNy03Y2UxLTRiMjAtYWNhZS03NTMwOWJkMDBkMzEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZXJhbmdhL21wXy5tcDQiLCJpYXQiOjE3NzkzMDgzODIsImV4cCI6MTc3OTkxMzE4Mn0.7QaUEPM7oFsQo1nWHfKLQaDTsoKW0EcN5bNDwOFVA_Y';
-
-/* ─────────────────────────────────────────
-   Slides de texte — la vidéo est commune
-   à tous les slides
-───────────────────────────────────────── */
-interface Slide {
-  bracket: string;
-  pre: string;
-  line1: string;
-  accent1: string;
-  line2: string;
-  accent2: string;
-  lead: string;
-  floater: string;
-}
-
-const HERO_SLIDES: Slide[] = [
-  {
-    bracket: 'Bienvenue !',
-    pre: 'Teranga TE,',
-    line1: 'Votre',
-    accent1: 'Expertise,',
-    line2: 'Intégrée en',
-    accent2: 'Technologie.',
-    lead: "Solutions complètes pour l'Afrique de l'Ouest. Digital, énergie & renouvelables — made in Africa, avec la rigueur d'un standard international.",
-    floater: 'Direction Générale',
-  },
-  {
-    bracket: 'Impact Sahel',
-    pre: 'Continuité totale,',
-    line1: "L'énergie",
-    accent1: 'critique,',
-    line2: 'maîtrisée',
-    accent2: '24h/7.',
-    lead: "Onduleurs, groupes électrogènes, audit énergétique : nous sécurisons l'alimentation de vos sites industriels et data centers, partout au Sahel.",
-    floater: 'Énergie 24/7',
-  },
-  {
-    bracket: 'Innovation',
-    pre: 'Standards internationaux,',
-    line1: 'Audit,',
-    accent1: 'sécurité,',
-    line2: 'conformité',
-    accent2: 'EN 81-20/50.',
-    lead: 'SLA 98%+ contractuel. Notre équipe senior pilote vos installations selon les standards les plus exigeants.',
-    floater: 'SLA 98%+',
-  },
-  {
-    bracket: 'Énergie verte',
-    pre: 'Avenir durable,',
-    line1: 'Le',
-    accent1: 'solaire',
-    line2: 'au service',
-    accent2: 'du Sahel.',
-    lead: "EPC + financement, micro-réseaux, stockage batterie — une autonomie énergétique mesurable, et un impact ESG concret.",
-    floater: 'Solaire EPC',
-  },
-];
-
-const EXPERTISES_TICKER = [
-  "Technologies de l'Information",
-  'Solutions Énergétiques',
-  'Énergies Renouvelables',
-  'Contrôle Technique Lift',
-  'Audit Énergétique',
-  'Services Managés',
-  'Support 24/7',
-  'Infogérance',
-];
 
 const scrollTo = (id: string) => {
   const el = document.getElementById(id);
@@ -84,35 +13,51 @@ const scrollTo = (id: string) => {
 };
 
 export const Hero: React.FC = () => {
+  const { t } = useI18n();
+  const slides = t.hero.slides;
+
   const [i, setI] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  /* Auto-rotation des slides texte */
+  /* Auto-rotation slides */
   useEffect(() => {
-    const t = setInterval(() => setI((p) => (p + 1) % HERO_SLIDES.length), 5500);
-    return () => clearInterval(t);
-  }, []);
+    const timer = setInterval(() => setI((p) => (p + 1) % slides.length), 5500);
+    return () => clearInterval(timer);
+  }, [slides.length]);
 
-  /* Lecture automatique de la vidéo (contournement autoplay policy) */
+  /* Autoplay video */
   useEffect(() => {
     const vid = videoRef.current;
     if (!vid) return;
-    vid.muted = true;           // obligatoire pour l'autoplay navigateur
-    vid.play().catch(() => {    // silencieux si le navigateur refuse
-      // fallback : lecture au premier clic utilisateur
+    vid.muted = true;
+    vid.play().catch(() => {
       const resume = () => { vid.play(); document.removeEventListener('click', resume); };
       document.addEventListener('click', resume, { once: true });
     });
   }, []);
 
-  const s = HERO_SLIDES[i];
+  const s = slides[i];
 
   return (
-    <section id="accueil" className="hero">
-      <div className="container hero-inner">
+    <section id="accueil" className="hero hero--fullvideo">
 
-        {/* ── Colonne texte (inchangée) ── */}
-        <div>
+      {/* ── Vidéo plein-écran en arrière-plan ────────────────────── */}
+      <div className="hero-video-bg">
+        <video
+          ref={videoRef}
+          src={VIDEO_URL}
+          loop muted playsInline autoPlay preload="auto"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+        {/* Overlay sombre dégradé — lisibilité du texte */}
+        <div className="hero-video-overlay" />
+      </div>
+
+      {/* ── Contenu centré par-dessus la vidéo ───────────────────── */}
+      <div className="container hero-inner hero-inner--fullvideo">
+
+        {/* Colonne texte */}
+        <div className="hero-text-col">
           <div className="hero-bracket" key={`br-${i}`}>
             <span className="b-bl" />
             <span className="b-br" />
@@ -132,79 +77,19 @@ export const Hero: React.FC = () => {
 
           <div className="hero-ctas">
             <button className="btn btn--gold" onClick={() => scrollTo('expertises')}>
-              Nos services
+              {t.hero.ctaServices}
               <span className="arrow-circle">
                 <Play size={11} fill="currentColor" />
               </span>
             </button>
             <button className="btn btn--ghost-light" onClick={() => scrollTo('contact')}>
-              Nous contacter
+              {t.hero.ctaContact}
             </button>
           </div>
-        </div>
 
-        {/* ── Colonne vidéo (remplace le carousel d'images) ── */}
-        <div className="hero-side">
-          {/* Disque décoratif tournant (inchangé) */}
-          <div className="hero-disc" />
-
-          {/* Conteneur circulaire — même classe CSS qu'avant */}
-          <div className="hero-photo">
-            <video
-              ref={videoRef}
-              src={VIDEO_URL}
-              loop
-              muted
-              playsInline
-              autoPlay
-              preload="auto"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                /* Petit zoom Ken-Burns très subtil */
-                animation: 'hero-video-zoom 20s ease-in-out infinite alternate',
-              }}
-            />
-
-            {/* Overlay dégradé léger pour lisibilité si la vidéo est claire */}
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                borderRadius: '50%',
-                background:
-                  'linear-gradient(160deg, rgba(15,26,46,0.15) 0%, rgba(15,26,46,0.35) 100%)',
-                pointerEvents: 'none',
-              }}
-            />
-          </div>
-
-          {/* Floaters — inchangés */}
-          <div className="hero-floater hero-floater--br float-y">
-            <span className="dotg" />
-            {s.floater}
-          </div>
-
-          <div
-            className="hero-floater hero-floater--right float-y"
-            style={{ animationDelay: '1.2s' }}
-          >
-            SLA 98%+
-          </div>
-
-          {/* Badge tournant — inchangé */}
-          <div className="hero-badge spin-slow">
-            • TERANGA •
-            <br />
-            TECHNOLOGY
-            <br />
-            • &amp; ENERGY •
-          </div>
-
-          {/* Dots de navigation (contrôlent le texte uniquement) */}
-          <div className="hero-dots">
-            {HERO_SLIDES.map((_, idx) => (
+          {/* Dots navigation */}
+          <div className="hero-dots hero-dots--inline">
+            {slides.map((_, idx) => (
               <button
                 key={idx}
                 className={idx === i ? 'on' : ''}
@@ -214,25 +99,133 @@ export const Hero: React.FC = () => {
             ))}
           </div>
         </div>
+
+        {/* Floaters & Badge — toujours présents, positionnés par CSS */}
+        <div className="hero-side hero-side--overlay" aria-hidden="true">
+          <div className="hero-floater hero-floater--br float-y">
+            <span className="dotg" />
+            {s.floater}
+          </div>
+          <div className="hero-floater hero-floater--right float-y" style={{ animationDelay: '1.2s' }}>
+            SLA 98%+
+          </div>
+          <div className="hero-badge spin-slow">
+            • TERANGA •<br />TECHNOLOGY<br />• &amp; ENERGY •
+          </div>
+        </div>
       </div>
 
-      {/* ── Ticker strip — inchangé ── */}
+      {/* ── Ticker strip ─────────────────────────────────────────── */}
       <div className="hero-strip">
         <div className="hero-strip-track">
-          {[...EXPERTISES_TICKER, ...EXPERTISES_TICKER, ...EXPERTISES_TICKER].map((t, idx) => (
+          {[...t.hero.ticker, ...t.hero.ticker, ...t.hero.ticker].map((text, idx) => (
             <React.Fragment key={idx}>
-              <span>{t}</span>
+              <span>{text}</span>
               <span className="star">✦</span>
             </React.Fragment>
           ))}
         </div>
       </div>
 
-      {/* ── Keyframe Ken-Burns injecté en ligne (évite de toucher teranga.css) ── */}
       <style>{`
-        @keyframes hero-video-zoom {
-          from { transform: scale(1);    }
-          to   { transform: scale(1.06); }
+        /* ── Plein-écran vidéo ───────────────────────────────── */
+        .hero--fullvideo {
+          position: relative;
+          min-height: 100vh;
+          padding: 0;
+          background: #0b111e;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        .hero-video-bg {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+        }
+
+        .hero-video-overlay {
+          position: absolute;
+          inset: 0;
+          /* Dégradé: très sombre à gauche/bas pour le texte, semi-transparent à droite */
+          background: linear-gradient(
+            105deg,
+            rgba(11, 17, 30, 0.82) 0%,
+            rgba(11, 17, 30, 0.65) 45%,
+            rgba(11, 17, 30, 0.30) 100%
+          );
+        }
+
+        /* ── Inner layout ───────────────────────────────────── */
+        .hero-inner--fullvideo {
+          position: relative;
+          z-index: 2;
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-top: 160px;
+          padding-bottom: 80px;
+          gap: 40px;
+        }
+
+        /* ── Colonne texte ──────────────────────────────────── */
+        .hero-text-col {
+          max-width: 680px;
+          flex: 1;
+        }
+
+        /* Override couleurs — texte blanc sur fond sombre */
+        .hero--fullvideo h1,
+        .hero--fullvideo .hero-lead,
+        .hero--fullvideo .hero-bracket {
+          color: #fff;
+        }
+        .hero--fullvideo .hero-lead {
+          color: rgba(255,255,255,0.82);
+        }
+        .hero--fullvideo h1 .pre {
+          color: rgba(255,255,255,0.55);
+        }
+
+        /* ── Floaters overlay ───────────────────────────────── */
+        .hero-side--overlay {
+          position: relative;
+          width: 280px;
+          flex-shrink: 0;
+          align-self: stretch;
+          display: block;
+        }
+
+        /* ── Dots inline (sous les CTAs) ────────────────────── */
+        .hero-dots--inline {
+          position: static;
+          transform: none;
+          left: auto;
+          bottom: auto;
+          margin-top: 32px;
+          justify-content: flex-start;
+        }
+
+        /* ── Mobile ─────────────────────────────────────────── */
+        @media (max-width: 768px) {
+          .hero-inner--fullvideo {
+            flex-direction: column;
+            align-items: flex-start;
+            padding-top: 120px;
+            padding-bottom: 60px;
+          }
+          .hero-side--overlay {
+            display: none;
+          }
+          .hero-video-overlay {
+            background: rgba(11, 17, 30, 0.70);
+          }
+          .hero-dots--inline {
+            justify-content: center;
+            width: 100%;
+          }
         }
       `}</style>
     </section>
