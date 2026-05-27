@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { I18nProvider } from './context/I18nContext';
+import { I18nProvider, useI18n } from './context/I18nContext';
 
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -17,21 +17,25 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppFab';
 
-const HomePage: React.FC = () => (
-  <main>
-    <Hero />
-    <About />
-    <OurImpact />
-    <StatsSection />
-    <ExpertiseSection />
-    <Services />
-    <Gallery />
-    <Partners />
-    <Markets />
-    <MapSection />
-    <Contact />
-  </main>
-);
+const HomePage: React.FC = () => {
+  const { lang } = useI18n();   // Récupère la langue active
+
+  return (
+    <main>
+      <Hero />
+      <About />
+      <OurImpact />
+      <StatsSection lang={lang} />
+      <ExpertiseSection />
+      <Services />
+      <Gallery />
+      <Partners />
+      <Markets lang={lang} />
+      <MapSection />
+      <Contact />
+    </main>
+  );
+};
 
 export default function App() {
   const location = useLocation();
@@ -51,7 +55,14 @@ export default function App() {
   React.useEffect(() => {
     const els = document.querySelectorAll('[data-reveal]');
     const io = new IntersectionObserver(
-      (entries) => { entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); },
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
       { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
     );
     els.forEach((el) => io.observe(el));
@@ -59,7 +70,6 @@ export default function App() {
   });
 
   return (
-    // I18nProvider au niveau racine — tous les composants ont accès à useI18n()
     <I18nProvider>
       <div className="relative min-h-screen">
         <Header />
