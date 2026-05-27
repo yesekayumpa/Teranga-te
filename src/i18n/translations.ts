@@ -100,12 +100,24 @@ export const translations = {
         },
       },
     },
-    gallery: {
-      eyebrow: 'ILS NOUS FONT CONFIANCE',
-      titlePrefix: 'Nos ',
-      titleItal: 'clients.',
-      intro: 'Des leaders du Sénégal et du Sahel qui nous confient la sécurisation de leurs infrastructures critiques.',
-    },
+    // dans l'objet fr, à l'intérieur de gallery: { ... }
+gallery: {
+  eyebrow: 'ILS NOUS FONT CONFIANCE',
+  titlePrefix: 'Nos ',
+  titleItal: 'clients.',
+  intro: 'Des leaders du Sénégal et du Sahel qui nous confient la sécurisation de leurs infrastructures critiques.',
+  clients: {
+    'AFRI-RH': { sub: 'RH & Conseil' },
+    'AFRILAND': { sub: 'Immobilier & Bâtiment' },
+    'GODIFA': { sub: 'Technologies & Innovation' },
+    'ICP': { sub: 'Conseil & Projets' },
+    'NBW': { sub: 'Service Juridique' },
+    'AL AMINE': { sub: 'GED & Archivage' },
+    'KAI': { sub: 'Transport & Mobilité' },
+    'KPMG': { sub: 'Audit & Conseil' },
+    'NOVAGO': { sub: 'Mobilité Professionnelle' },
+  }
+},
     partners: {
       eyebrow: 'ÉCOSYSTÈME PARTENAIRES',
       titlePrefix: 'Nos ',
@@ -256,11 +268,22 @@ export const translations = {
       },
     },
     gallery: {
-      eyebrow: 'THEY TRUST US',
-      titlePrefix: 'Our ',
-      titleItal: 'clients.',
-      intro: 'Leaders from Senegal and the Sahel entrust us with the security of their critical infrastructure.',
-    },
+  eyebrow: 'THEY TRUST US',
+  titlePrefix: 'Our ',
+  titleItal: 'clients.',
+  intro: 'Leaders from Senegal and the Sahel entrust us with the security of their critical infrastructure.',
+  clients: {
+    'AFRI-RH': { sub: 'HR & Consulting' },
+    'AFRILAND': { sub: 'Real Estate & Construction' },
+    'GODIFA': { sub: 'Technology & Innovation' },
+    'ICP': { sub: 'Consulting & Projects' },
+    'NBW': { sub: 'Legal Service' },
+    'AL AMINE': { sub: 'GED & Archiving' },
+    'KAI': { sub: 'Transport & Mobility' },
+    'KPMG': { sub: 'Audit & Consulting' },
+    'NOVAGO': { sub: 'Professional Mobility' },
+  }
+},
     partners: {
       eyebrow: 'PARTNER ECOSYSTEM',
       titlePrefix: 'Our ',
