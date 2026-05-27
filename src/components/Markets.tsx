@@ -52,7 +52,7 @@ const CONTENT = {
       'Niger': 'Niger',
       'Mauritania': 'Mauritanie',
       'Guinea-Bissau': 'Guinée-Bissau',
-      "Côte d'Ivoire": "Côte d'Ivoire",
+      "Ivory Coast": "Côte d'Ivoire",
     },
     statusLabels: {
       'HQ': 'Siège',

@@ -51,6 +51,75 @@ export const translations = {
         {id:'lift',label:'Contrôle Technique',title:'Sécurité & Conformité',quote:'La sécurité verticale, une exigence non négociable.',desc:'Garantissez la conformité et la sécurité de vos équipements selon les standards internationaux les plus exigeants — EN 81-20 / EN 81-50.',points:['Inspection & certification','Contrôles périodiques','Conformité EN 81-20 / EN 81-50','Audit sécurité ascenseurs']},
       ],
     },
+    services: {
+      eyebrow: 'NOS FORMULES DE SERVICE',
+      titlePrefix: 'Un modèle adapté à ',
+      titleItal: 'vos enjeux.',
+      intro: "Quatre formules pensées pour s'aligner sur la criticité de votre infrastructure et votre budget.",
+      cta: 'Demander une offre',
+      recommended: 'Recommandé',
+      formulas: {
+        essential: {
+          name: 'Essentiel',
+          sub: 'Maintenance corrective sur appel',
+          features: [
+            'Intervention sous 4h ouvrées',
+            'Accès au portail de ticketing',
+            'Pièces de rechange facturées en sus',
+          ],
+        },
+        comfort: {
+          name: 'Confort',
+          sub: 'Maintenance Préventive & Corrective',
+          features: [
+            "Interventions illimitées (main d'œuvre)",
+            'Visites de contrôle trimestrielles',
+            'Stock de consignation',
+            'Pièces majeures en option',
+          ],
+        },
+        premium: {
+          name: 'Premium',
+          sub: 'Support & Supervision 24h/7',
+          features: [
+            'SLA garanti — disponibilité > 99%',
+            'Technicien dédié & Account Manager',
+            'Stock de consignation sur site',
+            'Plan de progrès annuel inclus',
+          ],
+        },
+        custom: {
+          name: 'Sur-mesure',
+          sub: 'Architecture multi-sites régionale',
+          features: [
+            'KPI spécifiques & reporting personnalisé',
+            'Engagement de résultats',
+            'Gestion de projet & gouvernance',
+            'Architecture multi-sites / régionale',
+          ],
+        },
+      },
+    },
+    gallery: {
+      eyebrow: 'ILS NOUS FONT CONFIANCE',
+      titlePrefix: 'Nos ',
+      titleItal: 'clients.',
+      intro: 'Des leaders du Sénégal et du Sahel qui nous confient la sécurisation de leurs infrastructures critiques.',
+    },
+    partners: {
+      eyebrow: 'ÉCOSYSTÈME PARTENAIRES',
+      titlePrefix: 'Nos ',
+      titleItal: 'partenaires technologiques.',
+      intro: 'Nous collaborons avec les leaders mondiaux pour garantir des solutions fiables et performantes.',
+      filterAll: 'Tous',
+      partnerCount: (n: number) => `${n} partenaires`,
+      groups: {
+        ict: { title: 'ICT', subtitle: 'Réseaux, sécurité, postes & serveurs' },
+        impression: { title: 'Impression', subtitle: 'Managed Print Services' },
+        energie: { title: 'Énergie CFO', subtitle: 'Groupes électrogènes & onduleurs' },
+        renouvelables: { title: 'Énergies Renouvelables', subtitle: 'Solaire & stockage' },
+      },
+    },
     contact: {
       eyebrow:'AUDIT TECHNIQUE', title:'Prêt à sécuriser votre', titleItal:'infrastructure ?',
       intro:"Obtenez un audit préliminaire ou un devis personnalisé. Notre équipe d'experts vous répondra sous 24 h.",
@@ -136,6 +205,75 @@ export const translations = {
         {id:'renouvelables',label:'Renewables',title:'Solar & Sustainable Energy',quote:"The Sahel's future is built on clean energy.",desc:"Photovoltaic solutions for measurable energy autonomy and a controlled carbon footprint — from residential to industrial.",points:['EPC — Engineering, Procurement, Construction','EPC + Structured financing','Solar Home System','Micro-grids & battery storage']},
         {id:'lift',label:'Technical Control',title:'Safety & Compliance',quote:'Vertical safety — a non-negotiable requirement.',desc:'Guarantee the compliance and safety of your equipment to the most demanding international standards — EN 81-20 / EN 81-50.',points:['Inspection & certification','Periodic inspections','EN 81-20 / EN 81-50 compliance','Lift safety audit']},
       ],
+    },
+    services: {
+      eyebrow: 'OUR SERVICE PLANS',
+      titlePrefix: 'A model tailored to ',
+      titleItal: 'your challenges.',
+      intro: 'Four plans designed to match the criticality of your infrastructure and your budget.',
+      cta: 'Request a quote',
+      recommended: 'Recommended',
+      formulas: {
+        essential: {
+          name: 'Essential',
+          sub: 'On-call corrective maintenance',
+          features: [
+            'Response within 4 business hours',
+            'Ticketing portal access',
+            'Spare parts invoiced separately',
+          ],
+        },
+        comfort: {
+          name: 'Comfort',
+          sub: 'Preventive & Corrective Maintenance',
+          features: [
+            'Unlimited interventions (labour)',
+            'Quarterly inspection visits',
+            'Consignment stock',
+            'Major parts optional',
+          ],
+        },
+        premium: {
+          name: 'Premium',
+          sub: '24/7 Support & Supervision',
+          features: [
+            'SLA guaranteed — availability > 99%',
+            'Dedicated technician & Account Manager',
+            'On-site consignment stock',
+            'Annual improvement plan included',
+          ],
+        },
+        custom: {
+          name: 'Custom',
+          sub: 'Regional multi-site architecture',
+          features: [
+            'Specific KPIs & customised reporting',
+            'Performance commitments',
+            'Project management & governance',
+            'Regional / multi-site architecture',
+          ],
+        },
+      },
+    },
+    gallery: {
+      eyebrow: 'THEY TRUST US',
+      titlePrefix: 'Our ',
+      titleItal: 'clients.',
+      intro: 'Leaders from Senegal and the Sahel entrust us with the security of their critical infrastructure.',
+    },
+    partners: {
+      eyebrow: 'PARTNER ECOSYSTEM',
+      titlePrefix: 'Our ',
+      titleItal: 'technology partners.',
+      intro: 'We collaborate with world leaders to guarantee reliable and efficient solutions.',
+      filterAll: 'All',
+      partnerCount: (n: number) => `${n} partners`,
+      groups: {
+        ict: { title: 'ICT', subtitle: 'Networks, security, workstations & servers' },
+        impression: { title: 'Print', subtitle: 'Managed Print Services' },
+        energie: { title: 'CFO Energy', subtitle: 'Generators & UPS' },
+        renouvelables: { title: 'Renewables', subtitle: 'Solar & storage' },
+      },
     },
     contact: {
       eyebrow:'TECHNICAL AUDIT', title:'Ready to secure your', titleItal:'infrastructure?',

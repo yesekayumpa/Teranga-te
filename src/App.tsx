@@ -27,9 +27,9 @@ const HomePage: React.FC = () => {
       <OurImpact />
       <StatsSection lang={lang} />
       <ExpertiseSection />
-      <Services lang={lang} />
-      <Gallery lang={lang} />
-      <Partners lang={lang} />
+      <Services  />
+      <Gallery  />
+      <Partners  />
       <Markets lang={lang} />
       <MapSection />
       <Contact />
@@ -38,22 +38,33 @@ const HomePage: React.FC = () => {
 };
 
 export default function App() {
+  return (
+    <I18nProvider>
+      <AppContent />
+    </I18nProvider>
+  );
+}
+
+function AppContent() {
   const location = useLocation();
 
   React.useEffect(() => {
     if (location.hash) {
       const el = document.getElementById(location.hash.slice(1));
+
       if (el) {
         const top = el.getBoundingClientRect().top + window.scrollY - 90;
         window.scrollTo({ top, behavior: 'smooth' });
         return;
       }
     }
+
     window.scrollTo(0, 0);
   }, [location]);
 
   React.useEffect(() => {
     const els = document.querySelectorAll('[data-reveal]');
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -65,21 +76,23 @@ export default function App() {
       },
       { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
     );
+
     els.forEach((el) => io.observe(el));
+
     return () => io.disconnect();
-  });
+  }, []);
 
   return (
-    <I18nProvider>
-      <div className="relative min-h-screen">
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="*" element={<HomePage />} />
-        </Routes>
-        <Footer />
-        <WhatsAppButton />
-      </div>
-    </I18nProvider>
+    <div className="relative min-h-screen">
+      <Header />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<HomePage />} />
+      </Routes>
+
+      <Footer />
+      <WhatsAppButton />
+    </div>
   );
 }
