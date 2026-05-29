@@ -145,6 +145,17 @@ export const Footer: React.FC = () => {
               <a href="#" aria-label="Facebook Teranga" style={socialStyle}><Facebook size={14} /></a>
               <a href="#" aria-label="Instagram Teranga" style={socialStyle}><Instagram size={14} /></a>
             </div>
+
+            <div style={{ marginTop: 16, textAlign: 'left' }}>
+              <img
+                src="https://quickchart.io/qr?size=100&text=https://teranga-te.vercel.app&margin=2"
+                alt="QR code vers teranga-te.vercel.app"
+                style={{ width: 80, height: 80, display: 'block', borderRadius: 12, marginBottom: 8 }}
+              />
+              <span style={{ fontSize: 10, color: PALETTE.muted, wordBreak: 'break-all' }}>
+                teranga-te.vercel.app
+              </span>
+            </div>
           </div>
 
           {/* Colonne 2 : Navigation */}
