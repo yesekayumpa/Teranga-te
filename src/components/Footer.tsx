@@ -81,43 +81,44 @@ export const Footer: React.FC = () => {
           marginBottom: 20
         }}>
           {/* Colonne 1 : Logo style "pill" + texte */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <a href="#accueil" aria-label="Retour à l'accueil" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', color: 'inherit' }}>
-              {/* Logo-pill */}
-              <div
-                className="logo-pill"
-                style={{
-                  background: '#fff',
-                  borderRadius: 999,
-                  padding: '6px 14px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
-                  transition: 'box-shadow 0.3s ease, transform 0.3s ease',
-                  cursor: 'pointer'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-1px)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.25)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
-                }}
-              >
-                <img
-                  src="/assets/teranga-logo.png"
-                  alt="Teranga Technology & Energy"
-                  style={{ height: logoImgHeight, width: 'auto', display: 'block' }}
-                />
-              </div>
-              {/* Texte à côté */}
-              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-                <span style={{ fontSize: isMobile ? 15 : 16, fontWeight: 800, color: PALETTE.text }}>TERANGA</span>
-                <span style={{ fontSize: isMobile ? 15 : 16, fontWeight: 800, color: PALETTE.text }}>Technology & Energy</span>
-              </div>
-            </a>
-
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <div style={{ marginBottom: 8 }}>
+                <a href="#accueil" aria-label="Retour à l'accueil" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', color: 'inherit' }}>
+                  {/* Logo-pill */}
+                  <div
+                    className="logo-pill"
+                    style={{
+                      background: '#fff',
+                      borderRadius: 999,
+                      padding: '6px 14px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
+                      transition: 'box-shadow 0.3s ease, transform 0.3s ease',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.25)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
+                    }}
+                  >
+                    <img
+                      src="/assets/teranga-logo.png"
+                      alt="Teranga Technology & Energy"
+                      style={{ height: logoImgHeight, width: 'auto', display: 'block' }}
+                    />
+                  </div>
+                  {/* Texte à côté */}
+                  <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+                    <span style={{ fontSize: isMobile ? 15 : 16, fontWeight: 800, color: PALETTE.text }}>TERANGA</span>
+                    <span style={{ fontSize: isMobile ? 15 : 16, fontWeight: 800, color: PALETTE.text }}>Technology & Energy</span>
+                  </div>
+                </a>
+            </div>
             <p style={{ color: PALETTE.muted, fontSize: footerFontSize, lineHeight: 1.55, maxWidth: 380, margin: 0 }}>
               Votre partenaire intégré en Technologie, Énergie et Solutions Innovantes pour le Sahel.
             </p>
@@ -166,23 +167,23 @@ export const Footer: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <FooterHeading label="NOS EXPERTISES" />
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <li style={{ fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>ICT</li>
-              <li style={{ fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergie</li>
-              <li style={{ fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergies Renouvelables</li>
-              <li style={{ fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Contrôle Technique Lift</li>
+              <li><span style={{ display: 'inline-block', padding: '4px 6px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>ICT</span></li>
+              <li><span style={{ display: 'inline-block', padding: '4px 6px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergie</span></li>
+              <li><span style={{ display: 'inline-block', padding: '4px 6px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergies Renouvelables</span></li>
+              <li><span style={{ display: 'inline-block', padding: '4px 6px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Contrôle Technique Lift</span></li>
             </ul>
           </div>
 
           {/* Colonne 4 : Contact */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <FooterHeading label="CONTACT" />
-            <address style={{ fontStyle: 'normal', color: PALETTE.muted, display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <a href="tel:+221773372628" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>+221 77 337 26 28</span></a>
-              <a href="tel:+221338435927" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>+221 33 843 59 27</span></a>
-              <a href="mailto:moussa.tine@teranga-te.com" style={contactItemStyle}><Mail size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>moussa.tine@teranga-te.com</span></a>
-              <div style={contactItemStyle}><MapPin size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>3 Liberté 6 extension, Dakar</span></div>
-              <a href="https://www.teranga-te.com" target="_blank" rel="noopener noreferrer" style={contactItemStyle}><Globe size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>www.teranga-te.com</span></a>
-            </address>
+           <address style={{ fontStyle: 'normal', color: PALETTE.muted, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <a href="tel:+221773372628" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>+221 77 337 26 28</span></a>
+            <a href="tel:+221338435927" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>+221 33 843 59 27</span></a>
+            <a href="mailto:moussa.tine@teranga-te.com" style={contactItemStyle}><Mail size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>moussa.tine@teranga-te.com</span></a>
+            <div style={contactItemStyle}><MapPin size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>3 Liberté 6 extension, Dakar</span></div>
+            <a href="https://www.teranga-te.com" target="_blank" rel="noopener noreferrer" style={contactItemStyle}><Globe size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>www.teranga-te.com</span></a>
+          </address>
           </div>
         </div>
 
@@ -226,7 +227,7 @@ const contactItemStyle: React.CSSProperties = {
   gap: 8,
   color: 'inherit',
   textDecoration: 'none',
-  padding: '6px 8px',
+  padding: '4px 6px',
   borderRadius: 8,
   transition: 'background 160ms ease, transform 160ms ease'
 };
