@@ -156,8 +156,19 @@ gallery: {
       eyebrow:'NOTRE PRÉSENCE RÉGIONALE', title:'Ancrage', titleItal:'Sahel.',
       intro:'Une couverture géographique en expansion pour servir les entreprises de toute la région sahélienne.',
       activeLabel:'Présence active', pendingLabel:'En développement',
-      active:[{code:'SN',name:'Sénégal',status:'Siège'},{code:'GM',name:'Gambie',status:'Actif'},{code:'GN',name:'Guinée',status:'Actif'}],
-      pending:[{code:'ML',name:'Mali',status:'En cours'},{code:'BF',name:'Burkina Faso',status:'En cours'},{code:'NE',name:'Niger',status:'En cours'},{code:'MR',name:'Mauritanie',status:'En cours'},{code:'GW',name:'Guinée-Bissau',status:'Planifié'},{code:'CI',name:"Côte d'Ivoire",status:'Planifié'}],
+    active:[
+        {code:'SN',name:'Sénégal',status:'Siège',flagUrl:'https://flagcdn.com/w40/sn.png',colors:['#009E49','#FDEF42','#E31B23']},
+        {code:'GM',name:'Gambie',status:'Actif',flagUrl:'https://flagcdn.com/w40/gm.png',colors:['#3A7728','#0C1C8C','#3A7728']},
+        {code:'GN',name:'Guinée',status:'Actif',flagUrl:'https://flagcdn.com/w40/gn.png',colors:['#CE1126','#FCD116','#009460']}
+      ],
+      pending:[
+        {code:'ML',name:'Mali',status:'En cours',flagUrl:'https://flagcdn.com/w40/ml.png',colors:['#14B53A','#FCD116','#CE1126']},
+        {code:'BF',name:'Burkina Faso',status:'En cours',flagUrl:'https://flagcdn.com/w40/bf.png',colors:['#009E49','#EF2B2D']},
+        {code:'NE',name:'Niger',status:'En cours',flagUrl:'https://flagcdn.com/w40/ne.png',colors:['#0DB02B','#FFFFFF','#E05206']},
+        {code:'MR',name:'Mauritanie',status:'En cours',flagUrl:'https://flagcdn.com/w40/mr.png',colors:['#006233','#FFC400']},
+        {code:'GW',name:'Guinée-Bissau',status:'Planifié',flagUrl:'https://flagcdn.com/w40/gw.png',colors:['#CE1126','#FCD116','#009E49']},
+        {code:'CI',name:"Côte d'Ivoire",status:'Planifié',flagUrl:'https://flagcdn.com/w40/ci.png',colors:['#F77F00','#FFFFFF','#009E49']}
+      ],
     },
     footer: {
       tagline:'Partenaire technologique de référence dans le Sahel. Nous sécurisons vos infrastructures critiques via des solutions ICT, Énergie et Renouvelables.',
@@ -322,8 +333,19 @@ gallery: {
       eyebrow:'OUR REGIONAL PRESENCE', title:'Sahel', titleItal:'Footprint.',
       intro:'An expanding geographic coverage to serve businesses across the entire Sahelian region.',
       activeLabel:'Active presence', pendingLabel:'In development',
-      active:[{code:'SN',name:'Senegal',status:'HQ'},{code:'GM',name:'Gambia',status:'Active'},{code:'GN',name:'Guinea',status:'Active'}],
-      pending:[{code:'ML',name:'Mali',status:'In progress'},{code:'BF',name:'Burkina Faso',status:'In progress'},{code:'NE',name:'Niger',status:'In progress'},{code:'MR',name:'Mauritania',status:'In progress'},{code:'GW',name:'Guinea-Bissau',status:'Planned'},{code:'CI',name:"Ivory Coast",status:'Planned'}],
+     active:[
+        {code:'SN',name:'Senegal',status:'HQ',flagUrl:'https://flagcdn.com/w40/sn.png',colors:['#009E49','#FDEF42','#E31B23']},
+        {code:'GM',name:'Gambia',status:'Active',flagUrl:'https://flagcdn.com/w40/gm.png',colors:['#3A7728','#0C1C8C','#3A7728']},
+        {code:'GN',name:'Guinea',status:'Active',flagUrl:'https://flagcdn.com/w40/gn.png',colors:['#CE1126','#FCD116','#009460']}
+      ],
+      pending:[
+        {code:'ML',name:'Mali',status:'In progress',flagUrl:'https://flagcdn.com/w40/ml.png',colors:['#14B53A','#FCD116','#CE1126']},
+        {code:'BF',name:'Burkina Faso',status:'In progress',flagUrl:'https://flagcdn.com/w40/bf.png',colors:['#009E49','#EF2B2D']},
+        {code:'NE',name:'Niger',status:'In progress',flagUrl:'https://flagcdn.com/w40/ne.png',colors:['#0DB02B','#FFFFFF','#E05206']},
+        {code:'MR',name:'Mauritania',status:'In progress',flagUrl:'https://flagcdn.com/w40/mr.png',colors:['#006233','#FFC400']},
+        {code:'GW',name:'Guinea-Bissau',status:'Planned',flagUrl:'https://flagcdn.com/w40/gw.png',colors:['#CE1126','#FCD116','#009E49']},
+        {code:'CI',name:"Ivory Coast",status:'Planned',flagUrl:'https://flagcdn.com/w40/ci.png',colors:['#F77F00','#FFFFFF','#009E49']}
+      ],
     },
     footer: {
       tagline:'Reference technology partner in the Sahel. We secure your critical infrastructure through ICT, Energy and Renewable solutions.',
