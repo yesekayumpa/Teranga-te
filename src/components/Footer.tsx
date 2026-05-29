@@ -58,15 +58,15 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   const gridTemplate = isDesktop ? '1.2fr 1fr 1fr 1fr' : isTablet ? '1fr 1fr' : '1fr';
-  const logoSize = isMobile ? 56 : 76; // réduit pour diminuer l'espace blanc
-  const footerFontSize = isMobile ? 12 : 13; // légèrement diminué
+  const footerFontSize = isMobile ? 12 : 13;
+  const logoImgHeight = isMobile ? 32 : 36;
 
   return (
     <footer style={{
       position: 'relative',
       backgroundColor: PALETTE.bg,
       color: PALETTE.text,
-      paddingTop: isMobile ? 28 : 52,   // réduit l'espace vertical global
+      paddingTop: isMobile ? 28 : 52,
       paddingBottom: 32,
       overflow: 'hidden',
       borderTopLeftRadius: isMobile ? 16 : 28,
@@ -77,30 +77,41 @@ export const Footer: React.FC = () => {
           display: 'grid',
           gridTemplateColumns: gridTemplate,
           gap: isMobile ? 20 : 32,
-          alignItems: 'start',           // garantit l'alignement top des colonnes
+          alignItems: 'start',
           marginBottom: 20
         }}>
-
-          {/* Colonne 1 : Logo réduit et texte aligné */}
+          {/* Colonne 1 : Logo style "pill" + texte */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <a href="#accueil" aria-label="Retour à l'accueil" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', color: 'inherit' }}>
-              <div style={{
-                width: logoSize,
-                height: logoSize,
-                borderRadius: 14,
-                background: PALETTE.text,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 10px 22px rgba(0,0,0,0.28)',
-                overflow: 'hidden',
-                flexShrink: 0,
-                border: `2px solid ${PALETTE.card}`
-              }}>
-                <img src="/assets/teranga-logo.png" alt="Teranga TE logo" style={{ width: '78%', height: '78%', objectFit: 'contain', display: 'block' }} />
+              {/* Logo-pill */}
+              <div
+                className="logo-pill"
+                style={{
+                  background: '#fff',
+                  borderRadius: 999,
+                  padding: '6px 14px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
+                  transition: 'box-shadow 0.3s ease, transform 0.3s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.25)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
+                }}
+              >
+                <img
+                  src="/assets/teranga-logo.png"
+                  alt="Teranga Technology & Energy"
+                  style={{ height: logoImgHeight, width: 'auto', display: 'block' }}
+                />
               </div>
-
-              {/* TERANGA and Technology & Energy same size/weight */}
+              {/* Texte à côté */}
               <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
                 <span style={{ fontSize: isMobile ? 15 : 16, fontWeight: 800, color: PALETTE.text }}>TERANGA</span>
                 <span style={{ fontSize: isMobile ? 15 : 16, fontWeight: 800, color: PALETTE.text }}>Technology & Energy</span>
@@ -162,7 +173,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Colonne 4 : Contact avec icônes */}
+          {/* Colonne 4 : Contact */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <FooterHeading label="CONTACT" />
             <address style={{ fontStyle: 'normal', color: PALETTE.muted, display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -173,13 +184,10 @@ export const Footer: React.FC = () => {
               <a href="https://www.teranga-te.com" target="_blank" rel="noopener noreferrer" style={contactItemStyle}><Globe size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>www.teranga-te.com</span></a>
             </address>
           </div>
-
         </div>
 
-        {/* Decorative line */}
         <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${PALETTE.primary}, transparent)`, margin: '20px 0', borderRadius: 2 }} />
 
-        {/* Copyright */}
         <div style={{ textAlign: 'center', color: PALETTE.muted, fontSize: isMobile ? 11 : 12, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
           <p style={{ margin: 0 }}>&copy; {currentYear} TERANGA Technology & Energy</p>
         </div>
@@ -188,7 +196,7 @@ export const Footer: React.FC = () => {
   );
 };
 
-// Shared styles
+// Styles partagés (inchangés)
 const linkStyle: React.CSSProperties = {
   color: 'inherit',
   textDecoration: 'none',
