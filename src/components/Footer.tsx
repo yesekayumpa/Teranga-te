@@ -1,13 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Linkedin, Twitter, Facebook, Instagram, Phone, Mail, MapPin, Globe } from 'lucide-react';
+import { Linkedin, Twitter, Facebook, Instagram, Phone, Mail, MapPin, Globe } from 'lucide-react';
 
 const PALETTE = {
   bg: '#2C3D58',
   primary: '#C29941',
   text: '#FAF7F2',
   muted: 'rgba(250,247,242,0.72)',
-  border: 'rgba(250,247,242,0.12)',
   card: 'rgba(250,247,242,0.06)',
 };
 
@@ -31,18 +30,17 @@ const FooterHeading: React.FC<{label: string}> = ({ label }) => (
   <h4 style={{
     fontWeight: 800,
     fontSize: 12,
-    marginBottom: 16,
+    margin: 0,
+    marginBottom: 12,
     textTransform: 'uppercase',
     letterSpacing: '0.18em',
     color: PALETTE.text,
-    position: 'relative',
-    display: 'inline-block'
+    lineHeight: 1
   }}>
     {label}
     <span style={{
-      position: 'absolute',
-      bottom: -8,
-      left: 0,
+      display: 'block',
+      marginTop: 10,
       height: 3,
       width: 48,
       background: PALETTE.primary,
@@ -59,42 +57,42 @@ export const Footer: React.FC = () => {
   const isDesktop = bp === 'desktop';
   const currentYear = new Date().getFullYear();
 
-  // Grid template: logo column slightly wider on large screens
-  const gridTemplate = isDesktop ? '1.4fr 1fr 1fr 1fr' : isTablet ? '1fr 1fr' : '1fr';
+  const gridTemplate = isDesktop ? '1.2fr 1fr 1fr 1fr' : isTablet ? '1fr 1fr' : '1fr';
+  const logoSize = isMobile ? 56 : 76; // réduit pour diminuer l'espace blanc
+  const footerFontSize = isMobile ? 12 : 13; // légèrement diminué
 
   return (
     <footer style={{
       position: 'relative',
       backgroundColor: PALETTE.bg,
       color: PALETTE.text,
-      paddingTop: isMobile ? 36 : 64,
-      paddingBottom: 36,
+      paddingTop: isMobile ? 28 : 52,   // réduit l'espace vertical global
+      paddingBottom: 32,
       overflow: 'hidden',
-      borderTopLeftRadius: isMobile ? 18 : 32,
-      borderTopRightRadius: isMobile ? 18 : 32,
-      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.02)'
+      borderTopLeftRadius: isMobile ? 16 : 28,
+      borderTopRightRadius: isMobile ? 16 : 28,
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: isMobile ? '0 16px' : '0 28px', position: 'relative', zIndex: 10 }}>
         <div style={{
           display: 'grid',
           gridTemplateColumns: gridTemplate,
-          gap: isMobile ? 24 : 36,
-          alignItems: 'start',
-          marginBottom: 24
+          gap: isMobile ? 20 : 32,
+          alignItems: 'start',           // garantit l'alignement top des colonnes
+          marginBottom: 20
         }}>
 
-          {/* Column 1 Logo */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {/* Colonne 1 : Logo réduit et texte aligné */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <a href="#accueil" aria-label="Retour à l'accueil" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', color: 'inherit' }}>
               <div style={{
-                width: isMobile ? 64 : 96,
-                height: isMobile ? 64 : 96,
-                borderRadius: 18,
+                width: logoSize,
+                height: logoSize,
+                borderRadius: 14,
                 background: PALETTE.text,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 12px 30px rgba(0,0,0,0.32)',
+                boxShadow: '0 10px 22px rgba(0,0,0,0.28)',
                 overflow: 'hidden',
                 flexShrink: 0,
                 border: `2px solid ${PALETTE.card}`
@@ -102,14 +100,14 @@ export const Footer: React.FC = () => {
                 <img src="/assets/teranga-logo.png" alt="Teranga TE logo" style={{ width: '78%', height: '78%', objectFit: 'contain', display: 'block' }} />
               </div>
 
-              {/* Teranga and Technology & Energy same size and weight */}
+              {/* TERANGA and Technology & Energy same size/weight */}
               <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-                <span style={{ fontSize: isMobile ? 16 : 18, fontWeight: 800, letterSpacing: '-0.6px', color: PALETTE.text }}>TERANGA</span>
-                <span style={{ fontSize: isMobile ? 16 : 18, fontWeight: 800, letterSpacing: '-0.6px', color: PALETTE.text }}>Technology & Energy</span>
+                <span style={{ fontSize: isMobile ? 15 : 16, fontWeight: 800, color: PALETTE.text }}>TERANGA</span>
+                <span style={{ fontSize: isMobile ? 15 : 16, fontWeight: 800, color: PALETTE.text }}>Technology & Energy</span>
               </div>
             </a>
 
-            <p style={{ color: PALETTE.muted, fontSize: 13, lineHeight: 1.6, maxWidth: 380 }}>
+            <p style={{ color: PALETTE.muted, fontSize: footerFontSize, lineHeight: 1.55, maxWidth: 380, margin: 0 }}>
               Votre partenaire intégré en Technologie, Énergie et Solutions Innovantes pour le Sahel.
             </p>
 
@@ -119,70 +117,70 @@ export const Footer: React.FC = () => {
               gap: 10,
               background: PALETTE.primary,
               color: PALETTE.bg,
-              padding: '10px 18px',
+              padding: '9px 16px',
               borderRadius: 999,
               fontWeight: 800,
-              fontSize: 13,
+              fontSize: footerFontSize,
               textDecoration: 'none',
-              boxShadow: '0 10px 30px rgba(194,153,65,0.16)'
+              boxShadow: '0 8px 24px rgba(194,153,65,0.14)'
             }}>
-              <Phone size={16} /> Contactez-nous
+              <Phone size={14} /> Contactez-nous
             </a>
 
-            <div style={{ display: 'flex', gap: 10, marginTop: 6 }}>
-              <a href="#" aria-label="LinkedIn Teranga" style={socialStyle}><Linkedin size={16} /></a>
-              <a href="#" aria-label="Twitter Teranga" style={socialStyle}><Twitter size={16} /></a>
-              <a href="#" aria-label="Facebook Teranga" style={socialStyle}><Facebook size={16} /></a>
-              <a href="#" aria-label="Instagram Teranga" style={socialStyle}><Instagram size={16} /></a>
+            <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
+              <a href="#" aria-label="LinkedIn Teranga" style={socialStyle}><Linkedin size={14} /></a>
+              <a href="#" aria-label="Twitter Teranga" style={socialStyle}><Twitter size={14} /></a>
+              <a href="#" aria-label="Facebook Teranga" style={socialStyle}><Facebook size={14} /></a>
+              <a href="#" aria-label="Instagram Teranga" style={socialStyle}><Instagram size={14} /></a>
             </div>
           </div>
 
-          {/* Column 2 Navigation */}
-          <div>
+          {/* Colonne 2 : Navigation */}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <FooterHeading label="NAVIGATION" />
             <nav aria-label="Navigation footer">
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, color: PALETTE.muted }}>
-                <li><a href="#accueil" style={linkStyle}>Accueil</a></li>
-                <li><a href="#apropos" style={linkStyle}>À propos</a></li>
-                <li><a href="#expertises" style={linkStyle}>Expertises</a></li>
-                <li><a href="#references" style={linkStyle}>Références</a></li>
-                <li><a href="#sahel" style={linkStyle}>Sahel</a></li>
-                <li><a href="#contact" style={linkStyle}>Contact</a></li>
-                <li><a href="#carrieres" style={linkStyle}>Carrières</a></li>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <li><a href="#accueil" style={{ ...linkStyle, fontSize: footerFontSize }}>Accueil</a></li>
+                <li><a href="#apropos" style={{ ...linkStyle, fontSize: footerFontSize }}>À propos</a></li>
+                <li><a href="#expertises" style={{ ...linkStyle, fontSize: footerFontSize }}>Expertises</a></li>
+                <li><a href="#references" style={{ ...linkStyle, fontSize: footerFontSize }}>Références</a></li>
+                <li><a href="#sahel" style={{ ...linkStyle, fontSize: footerFontSize }}>Sahel</a></li>
+                <li><a href="#contact" style={{ ...linkStyle, fontSize: footerFontSize }}>Contact</a></li>
+                <li><a href="#carrieres" style={{ ...linkStyle, fontSize: footerFontSize }}>Carrières</a></li>
               </ul>
             </nav>
           </div>
 
-          {/* Column 3 Expertises */}
-          <div>
+          {/* Colonne 3 : Expertises */}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <FooterHeading label="NOS EXPERTISES" />
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10, color: PALETTE.muted }}>
-              <li style={{ fontWeight: 700, color: PALETTE.text }}>ICT</li>
-              <li style={{ fontWeight: 700, color: PALETTE.text }}>Énergie</li>
-              <li style={{ fontWeight: 700, color: PALETTE.text }}>Énergies Renouvelables</li>
-              <li style={{ fontWeight: 700, color: PALETTE.text }}>Contrôle Technique Lift</li>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <li style={{ fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>ICT</li>
+              <li style={{ fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergie</li>
+              <li style={{ fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergies Renouvelables</li>
+              <li style={{ fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Contrôle Technique Lift</li>
             </ul>
           </div>
 
-          {/* Column 4 Contact with icons */}
-          <div>
+          {/* Colonne 4 : Contact avec icônes */}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <FooterHeading label="CONTACT" />
-            <address style={{ fontStyle: 'normal', color: PALETTE.muted, display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <a href="tel:+221773372628" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8 }}>+221 77 337 26 28</span></a>
-              <a href="tel:+221338435927" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8 }}>+221 33 843 59 27</span></a>
-              <a href="mailto:moussa.tine@teranga-te.com" style={contactItemStyle}><Mail size={14} /> <span style={{ marginLeft: 8 }}>moussa.tine@teranga-te.com</span></a>
-              <div style={contactItemStyle}><MapPin size={14} /> <span style={{ marginLeft: 8 }}>3 Liberté 6 extension, Dakar</span></div>
-              <a href="https://www.teranga-te.com" target="_blank" rel="noopener noreferrer" style={contactItemStyle}><Globe size={14} /> <span style={{ marginLeft: 8 }}>www.teranga-te.com</span></a>
+            <address style={{ fontStyle: 'normal', color: PALETTE.muted, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <a href="tel:+221773372628" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>+221 77 337 26 28</span></a>
+              <a href="tel:+221338435927" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>+221 33 843 59 27</span></a>
+              <a href="mailto:moussa.tine@teranga-te.com" style={contactItemStyle}><Mail size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>moussa.tine@teranga-te.com</span></a>
+              <div style={contactItemStyle}><MapPin size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>3 Liberté 6 extension, Dakar</span></div>
+              <a href="https://www.teranga-te.com" target="_blank" rel="noopener noreferrer" style={contactItemStyle}><Globe size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>www.teranga-te.com</span></a>
             </address>
           </div>
 
         </div>
 
         {/* Decorative line */}
-        <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${PALETTE.primary}, transparent)`, margin: '24px 0', borderRadius: 2 }} />
+        <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${PALETTE.primary}, transparent)`, margin: '20px 0', borderRadius: 2 }} />
 
         {/* Copyright */}
-        <div style={{ textAlign: 'center', color: PALETTE.muted, fontSize: isMobile ? 11 : 12, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <div style={{ textAlign: 'center', color: PALETTE.muted, fontSize: isMobile ? 11 : 12, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
           <p style={{ margin: 0 }}>&copy; {currentYear} TERANGA Technology & Energy</p>
         </div>
       </div>
@@ -198,13 +196,12 @@ const linkStyle: React.CSSProperties = {
   borderRadius: 6,
   display: 'inline-block',
   transition: 'color 160ms ease, background 160ms ease, transform 160ms ease',
-  fontSize: 13,
   outline: 'none'
 };
 
 const socialStyle: React.CSSProperties = {
-  width: 40,
-  height: 40,
+  width: 36,
+  height: 36,
   borderRadius: 10,
   background: PALETTE.card,
   display: 'inline-flex',
@@ -223,13 +220,5 @@ const contactItemStyle: React.CSSProperties = {
   textDecoration: 'none',
   padding: '6px 8px',
   borderRadius: 8,
-  transition: 'background 160ms ease, transform 160ms ease',
-  fontSize: 13
+  transition: 'background 160ms ease, transform 160ms ease'
 };
-
-/* Global focus suggestion (add to your global CSS)
-a:focus, button:focus {
-  box-shadow: 0 0 0 4px rgba(194,153,65,0.14);
-  transform: translateY(-1px);
-}
-*/
