@@ -167,10 +167,10 @@ export const Footer: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <FooterHeading label="NOS EXPERTISES" />
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <li><span style={{ display: 'inline-block', padding: '4px 6px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>ICT</span></li>
-              <li><span style={{ display: 'inline-block', padding: '4px 6px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergie</span></li>
-              <li><span style={{ display: 'inline-block', padding: '4px 6px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergies Renouvelables</span></li>
-              <li><span style={{ display: 'inline-block', padding: '4px 6px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Contrôle Technique Lift</span></li>
+              <li><span style={{ display: 'inline-block', padding: '6px 8px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>ICT</span></li>
+              <li><span style={{ display: 'inline-block', padding: '6px 8px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergie</span></li>
+              <li><span style={{ display: 'inline-block', padding: '6px 8px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Énergies Renouvelables</span></li>
+              <li><span style={{ display: 'inline-block', padding: '6px 8px', fontWeight: 700, color: PALETTE.text, fontSize: footerFontSize }}>Contrôle Technique Lift</span></li>
             </ul>
           </div>
 
@@ -201,7 +201,7 @@ export const Footer: React.FC = () => {
 const linkStyle: React.CSSProperties = {
   color: 'inherit',
   textDecoration: 'none',
-  padding: '4px 6px',
+  padding: '6px 8px',
   borderRadius: 6,
   display: 'inline-block',
   transition: 'color 160ms ease, background 160ms ease, transform 160ms ease',
