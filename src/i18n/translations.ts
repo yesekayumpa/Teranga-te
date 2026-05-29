@@ -14,7 +14,7 @@ export const translations = {
         { bracket:'Innovation', pre:'Standards internationaux,', line1:'Audit,', accent1:'sécurité,', line2:'conformité', accent2:'EN 81-20/50.', lead:'SLA 98%+ contractuel. Notre équipe senior pilote vos installations selon les standards les plus exigeants.', floater:'SLA 98%+' },
         { bracket:'Énergie verte', pre:'Avenir durable,', line1:'Le', accent1:'solaire', line2:'au service', accent2:'du Sahel.', lead:"EPC + financement, micro-réseaux, stockage batterie — une autonomie énergétique mesurable, et un impact ESG concret.", floater:'Solaire EPC' },
       ],
-      ticker:["Technologies de l'Information",'Solutions Énergétiques','Énergies Renouvelables','Contrôle Technique Lift','Audit Énergétique','Services Managés','Support 24/7','Infogérance'],
+      ticker:["Technologies de l'Information",'CFO, CFA & CVC','Énergies Renouvelables','Contrôle Technique Lift','Audit Énergétique','Services Managés','Support 24/7','Infogérance'],
       ctaServices:'Nos services', ctaContact:'Nous contacter',
     },
     about: {
@@ -31,13 +31,13 @@ export const translations = {
       stats:[{v:'6',l:'Collaborateurs'},{v:'8',l:'Clients'},{v:'98%',l:'SLA garanti'},{v:'24/7',l:'Support'}],
     },
     impact: {
-      eyebrow1:"L'ADN TERANGA", intro1:'Quatre principes guident chaque décision et chaque projet que nous menons.',
+      eyebrow1:"L'ADN DE TERANGA TECHNOLOGY & ENERGY", intro1:'Quatre principes guident chaque décision et chaque projet que nous menons.',
       eyebrow2:'NOTRE FORCE', title2:'Les 4 piliers qui nous définissent',
       dna:[{title:'Excellence Technique',desc:'Standards internationaux appliqués localement avec rigueur et expertise.'},{title:'Teranga (Hospitalité)',desc:"L'hospitalité sénégalaise au cœur de chaque relation client et partenaire."},{title:'Engagement ESG',desc:'Impact environnemental et social mesurable dans chacun de nos projets.'},{title:'Ancrage Sahélien',desc:'Connaissance profonde du terrain et des réalités locales du Sahel.'}],
       pillars:[{title:'Partenaire Unique',desc:'Approche multi-domaines intégrée pour une gestion simplifiée.'},{title:'SLA 98%+',desc:'Engagement de niveau de service garanti par contrat.'},{title:'Équipe Senior',desc:'Une force pluridisciplinaire & certifiée à votre service.'},{title:'Support 24/7',desc:'Disponibilité technique continue pour vos opérations critiques.'}],
     },
     stats: {
-      eyebrow:'TERANGA TE EN CHIFFRES', title:'Nos', titleItal:'chiffres clés.',
+      eyebrow:'TERANGA TECHNOLOGY & ENERGY EN CHIFFRES', title:'Nos', titleItal:'chiffres clés.',
       items:[{v:'6',lbl:'Collaborateurs',sub:'Experts certifiés'},{v:'8',lbl:'Clients',sub:'Entreprises'},{v:'6+',lbl:'Pays au Sahel',sub:'Couverture régionale'},{v:'98%',lbl:'SLA Garanti',sub:'Disponibilité'},{v:'24/7',lbl:'Support',sub:'Assistance continue'},{v:'4',lbl:'Expertises',sub:'Domaines complémentaires'}],
     },
     expertises: {
@@ -128,7 +128,7 @@ gallery: {
       groups: {
         ict: { title: 'ICT', subtitle: 'Réseaux, sécurité, postes & serveurs' },
         impression: { title: 'Impression', subtitle: 'Managed Print Services' },
-        energie: { title: 'Énergie CFO', subtitle: 'Groupes électrogènes & onduleurs' },
+        energie: { title: 'Énergie CFO, CFA & CVC', subtitle: 'Groupes électrogènes & onduleurs' },
         renouvelables: { title: 'Énergies Renouvelables', subtitle: 'Solaire & stockage' },
       },
     },
@@ -181,7 +181,7 @@ gallery: {
         { bracket:'Innovation', pre:'International standards,', line1:'Audit,', accent1:'safety,', line2:'compliance', accent2:'EN 81-20/50.', lead:'Contractual 98%+ SLA. Our senior team operates your installations to the highest standards.', floater:'SLA 98%+' },
         { bracket:'Green Energy', pre:'Sustainable future,', line1:'Solar', accent1:'power', line2:'serving', accent2:'the Sahel.', lead:"EPC + financing, micro-grids, battery storage — measurable energy autonomy with a concrete ESG impact.", floater:'Solar EPC' },
       ],
-      ticker:['Information Technology','Energy Solutions','Renewable Energy','Lift Technical Control','Energy Audit','Managed Services','24/7 Support','IT Outsourcing'],
+      ticker:['Information Technology','CFO, CFA & CVC','Renewable Energy','Lift Technical Control','Energy Audit','Managed Services','24/7 Support','IT Outsourcing'],
       ctaServices:'Our services', ctaContact:'Contact us',
     },
     about: {
@@ -198,13 +198,13 @@ gallery: {
       stats:[{v:'6',l:'Team members'},{v:'8',l:'Clients'},{v:'98%',l:'SLA guaranteed'},{v:'24/7',l:'Support'}],
     },
     impact: {
-      eyebrow1:'THE TERANGA DNA', intro1:'Four principles guide every decision and every project we undertake.',
+      eyebrow1:'THE TERANGA TECHNOLOGY & ENERGY DNA', intro1:'Four principles guide every decision and every project we undertake.',
       eyebrow2:'OUR STRENGTHS', title2:'The 4 pillars that define us',
       dna:[{title:'Technical Excellence',desc:'International standards applied locally with rigour and expertise.'},{title:'Teranga (Hospitality)',desc:"Senegalese hospitality at the heart of every client and partner relationship."},{title:'ESG Commitment',desc:'Measurable environmental and social impact in each of our projects.'},{title:'Sahelian Roots',desc:'Deep knowledge of the field and local realities of the Sahel.'}],
       pillars:[{title:'Single Partner',desc:'Integrated multi-domain approach for simplified management.'},{title:'SLA 98%+',desc:'Service level commitment guaranteed by contract.'},{title:'Senior Team',desc:'A multidisciplinary & certified force at your service.'},{title:'24/7 Support',desc:'Continuous technical availability for your critical operations.'}],
     },
     stats: {
-      eyebrow:'TERANGA TE IN NUMBERS', title:'Our', titleItal:'key figures.',
+      eyebrow:'TERANGA TECHNOLOGY & ENERGY IN NUMBERS', title:'Our', titleItal:'key figures.',
       items:[{v:'6',lbl:'Team members',sub:'Certified experts'},{v:'8',lbl:'Clients',sub:'Businesses'},{v:'6+',lbl:'Sahel countries',sub:'Regional coverage'},{v:'98%',lbl:'SLA Guaranteed',sub:'Availability'},{v:'24/7',lbl:'Support',sub:'Continuous assistance'},{v:'4',lbl:'Expertise areas',sub:'Complementary domains'}],
     },
     expertises: {
@@ -294,7 +294,7 @@ gallery: {
       groups: {
         ict: { title: 'ICT', subtitle: 'Networks, security, workstations & servers' },
         impression: { title: 'Print', subtitle: 'Managed Print Services' },
-        energie: { title: 'CFO Energy', subtitle: 'Generators & UPS' },
+        energie: { title: 'CFO, CFA & CVC Energy', subtitle: 'Generators & UPS' },
         renouvelables: { title: 'Renewables', subtitle: 'Solar & storage' },
       },
     },
@@ -323,7 +323,7 @@ gallery: {
       intro:'An expanding geographic coverage to serve businesses across the entire Sahelian region.',
       activeLabel:'Active presence', pendingLabel:'In development',
       active:[{code:'SN',name:'Senegal',status:'HQ'},{code:'GM',name:'Gambia',status:'Active'},{code:'GN',name:'Guinea',status:'Active'}],
-      pending:[{code:'ML',name:'Mali',status:'In progress'},{code:'BF',name:'Burkina Faso',status:'In progress'},{code:'NE',name:'Niger',status:'In progress'},{code:'MR',name:'Mauritania',status:'In progress'},{code:'GW',name:'Guinea-Bissau',status:'Planned'},{code:'CI',name:"Côte d'Ivoire",status:'Planned'}],
+      pending:[{code:'ML',name:'Mali',status:'In progress'},{code:'BF',name:'Burkina Faso',status:'In progress'},{code:'NE',name:'Niger',status:'In progress'},{code:'MR',name:'Mauritania',status:'In progress'},{code:'GW',name:'Guinea-Bissau',status:'Planned'},{code:'CI',name:"Ivory Coast",status:'Planned'}],
     },
     footer: {
       tagline:'Reference technology partner in the Sahel. We secure your critical infrastructure through ICT, Energy and Renewable solutions.',

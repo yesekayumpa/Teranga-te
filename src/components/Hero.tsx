@@ -101,7 +101,7 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Floaters & Badge — toujours présents, positionnés par CSS */}
-        <div className="hero-side hero-side--overlay" aria-hidden="true">
+        {/* <div className="hero-side hero-side--overlay" aria-hidden="true">
           <div className="hero-floater hero-floater--br float-y">
             <span className="dotg" />
             {s.floater}
@@ -112,7 +112,7 @@ export const Hero: React.FC = () => {
           <div className="hero-badge spin-slow">
             • TERANGA •<br />TECHNOLOGY<br />• &amp; ENERGY •
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* ── Ticker strip ─────────────────────────────────────────── */}

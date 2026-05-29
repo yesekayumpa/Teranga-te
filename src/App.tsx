@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
       <Services  />
       <Gallery  />
       <Partners  />
-      <Markets lang={lang} />
+      <Markets />
       <MapSection />
       <Contact />
     </main>

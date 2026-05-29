@@ -11,7 +11,7 @@ export const About: React.FC = () => {
           <span className="eyebrow"><span className="bar" />{a.eyebrow}</span>
           <h2>{a.title}</h2>
           <div className="dot-divider" style={{ margin: '12px auto' }}><div className="d" /><div className="d" /><div className="d" /></div>
-          <p>{a.intro}</p>
+          {/* <p>{a.intro}</p> */}
         </div>
         <div className="about-grid reveal" data-reveal>
           <div className="about-quote" style={{ borderTop: '4px solid var(--navy-900)' }}>
@@ -39,16 +39,16 @@ export const About: React.FC = () => {
             </div>
             <div style={{ background:'var(--navy-900)',borderRadius:20,padding:'28px 32px',color:'#fff' }}>
               <div style={{ fontSize:10,fontWeight:800,letterSpacing:'.22em',textTransform:'uppercase',color:'var(--gold-500)',marginBottom:6 }}>{a.visionLabel}</div>
-              <h3 style={{ fontSize:22,fontWeight:800,color:'#fff',marginBottom:10,letterSpacing:'-.02em' }}>{a.visionTitle}</h3>
+              {/* <h3 style={{ fontSize:22,fontWeight:800,color:'#fff',marginBottom:10,letterSpacing:'-.02em' }}>{a.visionTitle}</h3> */}
               <p style={{ fontSize:13,color:'rgba(255,255,255,.65)',lineHeight:1.65,marginBottom:24 }}>{a.visionDesc}</p>
-              <div style={{ display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8,textAlign:'center' }}>
+              {/* <div style={{ display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8,textAlign:'center' }}>
                 {a.stats.map(({ v, l }) => (
                   <div key={l}>
                     <div style={{ fontSize:26,fontWeight:800,color:'var(--gold-400)',letterSpacing:'-.02em',lineHeight:1 }}>{v}</div>
                     <div style={{ fontSize:11,color:'rgba(255,255,255,.55)',marginTop:4 }}>{l}</div>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

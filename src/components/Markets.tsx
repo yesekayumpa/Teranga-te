@@ -1,22 +1,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, TrendingUp, Target } from 'lucide-react';
+import { useI18n } from '../context/I18nContext';
+
 
 /* ---------- données fixes (drapeaux, couleurs) ---------- */
 const COUNTRIES_ACTIVE = [
-  { code: 'SN', nameKey: 'Senegal',      statusKey: 'HQ',        flagUrl: 'https://flagcdn.com/w40/sn.png', colors: ['#009E49', '#FDEF42', '#E31B23'] },
-  { code: 'GM', nameKey: 'Gambia',       statusKey: 'Active',    flagUrl: 'https://flagcdn.com/w40/gm.png', colors: ['#3A7728', '#0C1C8C', '#3A7728'] },
-  { code: 'GN', nameKey: 'Guinea',       statusKey: 'Active',    flagUrl: 'https://flagcdn.com/w40/gn.png', colors: ['#CE1126', '#FCD116', '#009460'] },
+  { code: 'SN', nameKey: 'Senegal',      statusKey: 'HQ',       flagUrl: 'https://flagcdn.com/w40/sn.png', colors: ['#009E49', '#FDEF42', '#E31B23'] },
+  { code: 'GM', nameKey: 'Gambia',       statusKey: 'Active',   flagUrl: 'https://flagcdn.com/w40/gm.png', colors: ['#3A7728', '#0C1C8C', '#3A7728'] },
+  { code: 'GN', nameKey: 'Guinea',       statusKey: 'Active',   flagUrl: 'https://flagcdn.com/w40/gn.png', colors: ['#CE1126', '#FCD116', '#009460'] },
 ];
 
+
 const COUNTRIES_PENDING = [
-  { code: 'ML', nameKey: 'Mali',            statusKey: 'In progress', flagUrl: 'https://flagcdn.com/w40/ml.png', colors: ['#14B53A', '#FCD116', '#CE1126'] },
-  { code: 'BF', nameKey: 'Burkina Faso',    statusKey: 'In progress', flagUrl: 'https://flagcdn.com/w40/bf.png', colors: ['#009E49', '#EF2B2D'] },
-  { code: 'NE', nameKey: 'Niger',           statusKey: 'In progress', flagUrl: 'https://flagcdn.com/w40/ne.png', colors: ['#0DB02B', '#FFFFFF', '#E05206'] },
-  { code: 'MR', nameKey: 'Mauritania',      statusKey: 'In progress', flagUrl: 'https://flagcdn.com/w40/mr.png', colors: ['#006233', '#FFC400'] },
-  { code: 'GW', nameKey: 'Guinea-Bissau',   statusKey: 'Planned',     flagUrl: 'https://flagcdn.com/w40/gw.png', colors: ['#CE1126', '#FCD116', '#009E49'] },
-  { code: 'CI', nameKey: "Côte d'Ivoire",   statusKey: 'Planned',     flagUrl: 'https://flagcdn.com/w40/ci.png', colors: ['#F77F00', '#FFFFFF', '#009E49'] },
+  { code: 'ML', nameKey: 'Mali',           statusKey: 'In progress', flagUrl: 'https://flagcdn.com/w40/ml.png', colors: ['#14B53A', '#FCD116', '#CE1126'] },
+  { code: 'BF', nameKey: 'Burkina Faso',   statusKey: 'In progress', flagUrl: 'https://flagcdn.com/w40/bf.png', colors: ['#009E49', '#EF2B2D'] },
+  { code: 'NE', nameKey: 'Niger',          statusKey: 'In progress', flagUrl: 'https://flagcdn.com/w40/ne.png', colors: ['#0DB02B', '#FFFFFF', '#E05206'] },
+  { code: 'MR', nameKey: 'Mauritania',     statusKey: 'In progress', flagUrl: 'https://flagcdn.com/w40/mr.png', colors: ['#006233', '#FFC400'] },
+  { code: 'GW', nameKey: 'Guinea-Bissau',  statusKey: 'Planned',     flagUrl: 'https://flagcdn.com/w40/gw.png', colors: ['#CE1126', '#FCD116', '#009E49'] },
+  { code: 'CI', nameKey: "Cote d'Ivoire",  statusKey: 'Planned',     flagUrl: 'https://flagcdn.com/w40/ci.png', colors: ['#F77F00', '#FFFFFF', '#009E49'] },
 ];
+
 
 const toSubtleGradient = (colors: string[]) => {
   const stops = colors.map((c, i) => {
@@ -28,88 +32,27 @@ const toSubtleGradient = (colors: string[]) => {
   return `linear-gradient(135deg, ${stops.join(', ')})`;
 };
 
-/* ---------- contenu traduit (issu de vos traductions) ---------- */
-const CONTENT = {
-  fr: {
-    eyebrow: 'NOTRE PRÉSENCE RÉGIONALE',
-    title: 'Ancrage ',
-    titleItal: 'Sahel.',
-    intro: 'Une couverture géographique en expansion pour servir les entreprises de toute la région sahélienne.',
-    activeLabel: 'Présence active',
-    pendingLabel: 'Déploiements 2026 – 2028',
-    objectiveTitle: 'Objectif',
-    objectiveText: (
-      <>
-        Consolider notre présence dans <strong style={{ color: '#fff' }}>6+ pays</strong> du Sahel avec des équipes locales, des partenariats stratégiques et un impact ESG mesurable.
-      </>
-    ),
-    countryNames: {
-      'Senegal': 'Sénégal',
-      'Gambia': 'Gambie',
-      'Guinea': 'Guinée',
-      'Mali': 'Mali',
-      'Burkina Faso': 'Burkina Faso',
-      'Niger': 'Niger',
-      'Mauritania': 'Mauritanie',
-      'Guinea-Bissau': 'Guinée-Bissau',
-      "Ivory Coast": "Côte d'Ivoire",
-    },
-    statusLabels: {
-      'HQ': 'Siège',
-      'Active': 'Actif',
-      'In progress': 'En cours',
-      'Planned': 'Planifié',
-    },
-  },
-  en: {
-    eyebrow: 'OUR REGIONAL PRESENCE',
-    title: 'Sahel ',
-    titleItal: 'Footprint.',
-    intro: 'An expanding geographic coverage to serve businesses across the entire Sahelian region.',
-    activeLabel: 'Active presence',
-    pendingLabel: '2026–2028 Deployment',
-    objectiveTitle: 'Objective',
-    objectiveText: (
-      <>
-        Consolidate our presence in <strong style={{ color: '#fff' }}>6+ countries</strong> of the Sahel with local teams, strategic partnerships and measurable ESG impact.
-      </>
-    ),
-    countryNames: {
-      'Senegal': 'Senegal',
-      'Gambia': 'Gambia',
-      'Guinea': 'Guinea',
-      'Mali': 'Mali',
-      'Burkina Faso': 'Burkina Faso',
-      'Niger': 'Niger',
-      'Mauritania': 'Mauritania',
-      'Guinea-Bissau': 'Guinea-Bissau',
-      "Côte d'Ivoire": "Côte d'Ivoire",
-    },
-    statusLabels: {
-      'HQ': 'HQ',
-      'Active': 'Active',
-      'In progress': 'In progress',
-      'Planned': 'Planned',
-    },
-  },
-};
 
 const container = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 
+
 const item = {
   hidden: { opacity: 0, x: -30, scale: 0.9 },
   visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.6, ease: [0.25, 1, 0.5, 1] as const } },
 };
 
-interface MarketsProps {
-  lang: 'fr' | 'en';
-}
 
-export const Markets: React.FC<MarketsProps> = ({ lang }) => {
-  const t = CONTENT[lang];
+interface MarketsProps {}
+
+
+export const Markets: React.FC<MarketsProps> = () => {
+  const { lang, t } = useI18n();
+  // t is a translations object, not a function
+  const markets = t.markets;
+
 
   return (
     <section id="sahel" className="section section--dark">
@@ -122,13 +65,14 @@ export const Markets: React.FC<MarketsProps> = ({ lang }) => {
           transition={{ duration: 0.8 }}
         >
           <span className="eyebrow" style={{ color: 'var(--gold-400)' }}>
-            <span className="bar" /> {t.eyebrow}
+            <span className="bar" /> {markets.eyebrow}
           </span>
           <h2 style={{ color: '#fff' }}>
-            {t.title}<span className="text-ital text-gold">{t.titleItal}</span>
+            {markets.title}<span className="text-ital text-gold">{markets.titleItal}</span>
           </h2>
-          <p>{t.intro}</p>
+          <p>{markets.intro}</p>
         </motion.div>
+
 
         <div className="sahel-grid">
           <motion.div
@@ -142,74 +86,77 @@ export const Markets: React.FC<MarketsProps> = ({ lang }) => {
             <div className="sahel-map-fade" />
           </motion.div>
 
+
           <div>
             {/* Présence active */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={container}>
               <motion.div className="sahel-subhead" variants={item}>
-                <span className="ic"><MapPin size={16} /></span> {t.activeLabel}
+                <span className="ic"><MapPin size={16} /></span> {markets.activeLabel}
               </motion.div>
               <div className="country-list">
-                {COUNTRIES_ACTIVE.map((c) => (
+                {markets.active.map((c) => (
                   <motion.div
                     className="country-row"
                     key={c.code}
                     variants={item}
                     whileHover={{ scale: 1.02 }}
-                    style={{
-                      background: toSubtleGradient(c.colors),
+                      style={{
+                      background: toSubtleGradient(((c as any).colors as string[]) || ['#fff']),
                       color: '#fff',
                       textShadow: '0 1px 2px rgba(0,0,0,0.4)',
                     }}
                   >
                     <div className="left">
                       <span className="code">
-                        <img src={c.flagUrl} alt={`Drapeau ${c.nameKey}`} style={{ width: 24, height: 'auto', marginRight: 8, verticalAlign: 'middle' }} />
+                        <img src={(c as any).flagUrl} alt={`Flag ${(c as any).name}`} style={{ width: 24, height: 'auto', marginRight: 8, verticalAlign: 'middle' }} />
                         {c.code}
                       </span>
-                      <span className="name">{t.countryNames[c.nameKey as keyof typeof t.countryNames]}</span>
+                      <span className="name">{c.name}</span>
                     </div>
                     <span className="status">
                       <span className="d" style={{ background: '#fff' }} />
-                      {t.statusLabels[c.statusKey as keyof typeof t.statusLabels]}
+                      {c.status}
                     </span>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
 
+
             {/* Déploiements à venir */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={container} style={{ marginTop: 36 }}>
               <motion.div className="sahel-subhead" variants={item}>
-                <span className="ic"><TrendingUp size={16} /></span> {t.pendingLabel}
+                <span className="ic"><TrendingUp size={16} /></span> {markets.pendingLabel}
               </motion.div>
               <div className="country-list">
-                {COUNTRIES_PENDING.map((c) => (
+                {markets.pending.map((c) => (
                   <motion.div
                     className="country-row pending"
                     key={c.code}
                     variants={item}
                     whileHover={{ scale: 1.02 }}
                     style={{
-                      background: toSubtleGradient(c.colors),
+                      background: toSubtleGradient(((c as any).colors as string[]) || ['#fff']),
                       color: '#fff',
                       textShadow: '0 1px 2px rgba(0,0,0,0.4)',
                     }}
                   >
                     <div className="left">
                       <span className="code">
-                        <img src={c.flagUrl} alt={`Drapeau ${c.nameKey}`} style={{ width: 24, height: 'auto', marginRight: 8, verticalAlign: 'middle' }} />
+                        <img src={(c as any).flagUrl} alt={`Flag ${(c as any).name}`} style={{ width: 24, height: 'auto', marginRight: 8, verticalAlign: 'middle' }} />
                         {c.code}
                       </span>
-                      <span className="name">{t.countryNames[c.nameKey as keyof typeof t.countryNames]}</span>
+                      <span className="name">{c.name}</span>
                     </div>
                     <span className="status">
                       <span className="d" style={{ background: '#fff' }} />
-                      {t.statusLabels[c.statusKey as keyof typeof t.statusLabels]}
+                      {c.status}
                     </span>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
+
 
             {/* Objectif */}
             <motion.div
@@ -221,20 +168,20 @@ export const Markets: React.FC<MarketsProps> = ({ lang }) => {
               style={{ marginTop: 36, padding: '24px', borderRadius: 18 }}
             >
               <motion.div className="sahel-subhead" style={{ margin: 0, color: 'var(--gold-400)' }} whileHover={{ x: 4 }}>
-                <span className="ic"><Target size={16} /></span> {t.objectiveTitle}
+                <span className="ic"><Target size={16} /></span> Objective
               </motion.div>
               <p style={{ marginTop: 10, color: 'rgba(255,255,255,0.78)', fontSize: 13.5, lineHeight: 1.65 }}>
-                {t.objectiveText}
+                {markets.intro}
               </p>
               <div style={{ display: 'flex', gap: 6, marginTop: 16, flexWrap: 'wrap' }}>
-                {COUNTRIES_ACTIVE.concat(COUNTRIES_PENDING).map(c => (
+                {[...markets.active, ...markets.pending].map(c => (
                   <motion.img
                     key={c.code}
-                    src={c.flagUrl}
-                    alt={c.nameKey}
+                    src={(c as any).flagUrl}
+                    alt={(c as any).name}
                     style={{ width: 28, height: 'auto', borderRadius: 4, boxShadow: '0 2px 6px rgba(0,0,0,0.3)', cursor: 'pointer', filter: 'saturate(0.7)' }}
                     whileHover={{ scale: 1.3, filter: 'saturate(1.2) drop-shadow(0 0 6px rgba(201,161,75,0.8))', transition: { type: 'spring', stiffness: 300 } }}
-                    title={t.countryNames[c.nameKey as keyof typeof t.countryNames]}
+                    title={(c as any).name}
                   />
                 ))}
               </div>
