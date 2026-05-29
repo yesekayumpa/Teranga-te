@@ -177,7 +177,7 @@ export const Markets: React.FC<MarketsProps> = () => {
                 {[...markets.active, ...markets.pending].map(c => (
                   <motion.img
                     key={c.code}
-                    src={(c as any).flagUrl}
+                    src={c.flagUrl}
                     alt={(c as any).name}
                     style={{ width: 28, height: 'auto', borderRadius: 4, boxShadow: '0 2px 6px rgba(0,0,0,0.3)', cursor: 'pointer', filter: 'saturate(0.7)' }}
                     whileHover={{ scale: 1.3, filter: 'saturate(1.2) drop-shadow(0 0 6px rgba(201,161,75,0.8))', transition: { type: 'spring', stiffness: 300 } }}
