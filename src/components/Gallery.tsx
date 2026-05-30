@@ -24,6 +24,30 @@ export const Gallery: React.FC = () => {
   const { t } = useI18n();
   const gallery = t.gallery;
 
+  // Détection largeur d'écran pour la grille responsive
+  const [isLargeScreen, setIsLargeScreen] = React.useState(window.innerWidth >= 1200);
+  React.useEffect(() => {
+    const handleResize = () => setIsLargeScreen(window.innerWidth >= 1200);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const gridStyle: React.CSSProperties = isLargeScreen
+    ? {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, minmax(0, 280px))',
+        justifyContent: 'center',
+        gap: 26,
+        marginTop: 52,
+      }
+    : {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 280px))',
+        justifyContent: 'center',
+        gap: 26,
+        marginTop: 52,
+      };
+
   return (
     <section id="references" className="section section--cream">
       <div className="container">
@@ -39,24 +63,16 @@ export const Gallery: React.FC = () => {
           <p>{gallery.intro}</p>
         </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 280px))',
-            justifyContent: 'center',
-            gap: 26,
-            marginTop: 52,
-          }}
-        >
+        <div style={gridStyle}>
           {CLIENTS.map((c, idx) => {
             const clientSub = gallery.clients[c.name as keyof typeof gallery.clients]?.sub || '';
             const isClubMed = c.name === 'Club Med';
             const logoStyle: React.CSSProperties = isClubMed
               ? {
                   width: 'auto',
-                  maxWidth: 160,
-                  maxHeight: 60,
-                  objectFit: 'contain' as React.CSSProperties['objectFit'],
+                  maxWidth: 200,
+                  maxHeight: 80,
+                  objectFit: 'contain',
                   marginBottom: 14,
                   position: 'relative',
                   zIndex: 2,
@@ -67,7 +83,7 @@ export const Gallery: React.FC = () => {
                   width: 'auto',
                   maxWidth: 110,
                   maxHeight: 42,
-                  objectFit: 'contain' as React.CSSProperties['objectFit'],
+                  objectFit: 'contain',
                   marginBottom: 14,
                   position: 'relative',
                   zIndex: 2,
