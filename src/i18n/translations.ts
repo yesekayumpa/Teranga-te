@@ -15,7 +15,7 @@ export const translations = {
         { bracket:'Énergie verte', pre:'Avenir durable,', line1:'Le', accent1:'solaire', line2:'au service', accent2:'du Sahel.', lead:"EPC + financement, micro-réseaux, stockage batterie — une autonomie énergétique mesurable, et un impact ESG concret.", floater:'Solaire EPC' },
       ],
       ticker:["Technologies de l'Information",'CFO, CFA & CVC','Énergies Renouvelables','Contrôle Technique Lift','Audit Énergétique','Services Managés','Support 24/7','Infogérance'],
-      ctaServices:'Nos services', ctaContact:'Nous contacter',
+      ctaServices:'Nos services', ctaContact:'Découvrez nos expertises',
     },
     about: {
       eyebrow:'QUI SOMMES-NOUS', title:'À propos de Teranga Technology & Energy',
@@ -41,15 +41,125 @@ export const translations = {
       items:[{v:'6',lbl:'Collaborateurs',sub:'Experts certifiés'},{v:'8',lbl:'Clients',sub:'Entreprises'},{v:'6+',lbl:'Pays au Sahel',sub:'Couverture régionale'},{v:'98%',lbl:'SLA Garanti',sub:'Disponibilité'},{v:'24/7',lbl:'Support',sub:'Assistance continue'},{v:'4',lbl:'Expertises',sub:'Domaines complémentaires'}],
     },
     expertises: {
-      eyebrow:'CE QUE NOUS FAISONS', title:"Nos domaines d'", titleItal:'expertise.',
+      eyebrow:'CE QUE NOUS FAISONS',
+      title:"Nos domaines d'",
+      titleItal:'expertise.',
       intro:'Des solutions intégrées pour sécuriser et optimiser vos infrastructures critiques.',
       ctaAudit:'Demander un audit',
-      items:[
-        {id:'ict',label:'ICT',title:"Technologies de l'Information",quote:"Votre réseau ne s'arrête pas. Votre business non plus.",desc:"Des infrastructures robustes pour une entreprise connectée et performante, conçues, déployées et supervisées par nos équipes certifiées.",points:['MPS — Managed Print Services','Infogérance & Support IT 24/7','Câblage réseau structuré','Maintenance réseaux & serveurs']},
-        {id:'energie',label:'Énergie',title:'Solutions Énergétiques',quote:"L'énergie critique maîtrisée pour une continuité totale.",desc:"Assurez la disponibilité et la qualité de votre puissance électrique. De l'audit au déploiement, nous sécurisons l'alimentation de vos sites stratégiques.",points:['Audit & efficacité énergétique','Onduleurs (UPS) toutes capacités','Groupes électrogènes industriels','Régulateurs de tension']},
-        {id:'renouvelables',label:'Énergies Renouvelables',title:'Énergie Solaire & Durable',quote:"L'avenir du Sahel se construit sur une énergie propre.",desc:"Solutions photovoltaïques pour une autonomie énergétique mesurable et une empreinte carbone maîtrisée — du résidentiel à l'industriel.",points:['EPC — Ingénierie, Fourniture, Installation','EPC + Financement structuré','Solar Home System','Micro-réseaux & stockage batterie']},
-        {id:'lift',label:'Contrôle Technique',title:'Sécurité & Conformité',quote:'La sécurité verticale, une exigence non négociable.',desc:'Garantissez la conformité et la sécurité de vos équipements selon les standards internationaux les plus exigeants — EN 81-20 / EN 81-50.',points:['Inspection & certification','Contrôles périodiques','Conformité EN 81-20 / EN 81-50','Audit sécurité ascenseurs']},
-      ],
+      items: [
+        {
+          id: 'ict',
+          label: 'ICT',
+          title: "Technologies de l'Information",
+          quote: "Votre réseau ne s'arrête pas. Votre business non plus.",
+          desc: "Des infrastructures robustes pour une entreprise connectée et performante, conçues, déployées et supervisées par nos équipes certifiées.",
+          subs: [
+            {
+              title: 'MPS (Managed Print Services)',
+              points: ['CAPEX / OPEX', 'Multifonctions, scanners, imprimantes production', 'Maintenance', 'Leasing'],
+              brands: 'Ricoh, Epson, Riso'
+            },
+            {
+              title: 'Workstations & Serveurs',
+              points: ['Dell, HP, Lenovo', 'Dell, HP, IBM', 'Packages OPEX'],
+              brands: 'Dell, HP, Lenovo, IBM'
+            },
+            {
+              title: 'Réseaux & Sécurité',
+              points: ['Équipements réseau', 'Sécurité réseau', 'Firewalls, switches, Wi-Fi'],
+              brands: 'Cisco, Fortinet, Ubiquiti'
+            },
+            {
+              title: 'Câblage réseau',
+              points: ['Cuivre & fibre optique', 'Baies de brassage', 'Certification'],
+              brands: 'Legrand, Nexans, Belden'
+            },
+            {
+              title: 'Cloud, Virtualisation & Gestion IT',
+              points: ['Helpdesk 24/7', 'VMware, Microsoft Azure', 'Cybersécurité'],
+              brands: 'Microsoft, VMware'
+            }
+          ]
+        },
+        {
+          id: 'energie',
+          label: 'Énergie',
+          title: 'Solutions Énergétiques',
+          quote: "L'énergie critique maîtrisée pour une continuité totale.",
+          desc: "Assurez la disponibilité et la qualité de votre puissance électrique. De l'audit au déploiement, nous sécurisons l'alimentation de vos sites stratégiques.",
+          subs: [
+            {
+              title: 'CFO (Courant Fort)',
+              points: ['Onduleurs, groupes électrogènes', 'Régulateurs de tension', 'Câblage, TGBT', 'Maintenance préventive & corrective'],
+              brands: 'GE, Pramac, Kohler, Generac, APC, Eaton, Schneider, Socomec, Cummins, FG Wilson, Himoinsa, Eneria'
+            },
+            {
+              title: 'CFA (Courant Faible)',
+              points: ['Contrôle d’accès', 'Détection incendie', 'Vidéosurveillance, détection intrusion', 'Câblage CFA'],
+              brands: 'Honeywell, Hikvision, Axis, Vivotek, Paradox, Texecom, Siemens, Esser'
+            },
+            {
+              title: 'HVAC (Climatisation)',
+              points: ['Climatisation, refroidisseurs', 'Armoires de climatisation', 'Installation & maintenance'],
+              brands: 'Daikin, Carrier, Airwell, Lennox'
+            },
+            {
+              title: 'Audit énergétique',
+              points: ['Analyse de consommation & ROI', 'Suivi en temps réel', 'Packages OPEX']
+            }
+          ]
+        },
+        {
+          id: 'renouvelables',
+          label: 'Énergies Renouvelables',
+          title: 'Énergie Solaire & Durable',
+          quote: "L'avenir du Sahel se construit sur une énergie propre.",
+          desc: "Solutions photovoltaïques pour une autonomie énergétique mesurable et une empreinte carbone maîtrisée — du résidentiel à l’industriel.",
+          subs: [
+            {
+              title: 'Solaire Photovoltaïque',
+              points: ['On‑Grid, Off‑Grid, Hybride', 'EPC clé en main', 'EPC + Financement (OPEX)'],
+              brands: 'JA Solar, Jinko, Longi'
+            },
+            {
+              title: 'Solar Home System',
+              points: ['Kits modulaires', 'Paiement mobile (Pay‑as‑you‑go)', 'Supervision à distance'],
+              brands: 'Victron Energy, Bboxx, Mobisol, Schneider Electric'
+            },
+            {
+              title: 'Supervision & Reporting énergétique',
+              points: ['Suivi conso temps réel', 'Top 5 équipements consommateurs', 'Optimisation des coûts', 'Tableaux de bord personnalisés'],
+              brands: 'Fronius, Huawei, SMA, SolarEdge, Meteocontrol, Victron'
+            },
+            {
+              title: 'Stockage & Micro‑réseaux',
+              points: ['Batteries Li‑ion, EMS/BMS', 'Supervision IoT 24/7', 'Data centers, télécoms, éclairage public'],
+              brands: 'Huawei, SMA, Victron'
+            },
+            {
+              title: 'EPC & Maintenance',
+              points: ['Projets EPC clé en main', 'Suivi performance à distance', 'Exploitation & maintenance']
+            }
+          ]
+        },
+        {
+          id: 'lift',
+          label: 'Contrôle Technique',
+          title: 'Sécurité & Conformité',
+          quote: 'La sécurité verticale, une exigence non négociable.',
+          desc: 'Garantissez la conformité et la sécurité de vos équipements selon les standards internationaux les plus exigeants — EN 81‑20 / EN 81‑50.',
+          subs: [
+            {
+              title: 'Services certifiés',
+              points: ['Inspection de mise en service', 'Contrôles périodiques EN 81‑20/50', 'Audits de sécurité', 'Registre national & rapports réglementaires']
+            },
+            {
+              title: 'Nos engagements',
+              points: ['Organisme agréé', 'Rapports sous 48h', 'Techniciens certifiés', 'Couverture nationale & régionale']
+            }
+          ]
+        }
+      ]
     },
     services: {
       eyebrow: 'NOS FORMULES DE SERVICE',
@@ -100,24 +210,23 @@ export const translations = {
         },
       },
     },
-    // dans l'objet fr, à l'intérieur de gallery: { ... }
-gallery: {
-  eyebrow: 'ILS NOUS FONT CONFIANCE',
-  titlePrefix: 'Nos ',
-  titleItal: 'clients.',
-  intro: 'Des leaders du Sénégal et du Sahel qui nous confient la sécurisation de leurs infrastructures critiques.',
-  clients: {
-    'AFRI-RH': { sub: 'RH & Conseil' },
-    'AFRILAND': { sub: 'Immobilier & Bâtiment' },
-    'GODIFA': { sub: 'Technologies & Innovation' },
-    'ICP': { sub: 'Conseil & Projets' },
-    'NBW': { sub: 'Service Juridique' },
-    'AL AMINE': { sub: 'GED & Archivage' },
-    'KAI': { sub: 'Transport & Mobilité' },
-    'KPMG': { sub: 'Audit & Conseil' },
-    'NOVAGO': { sub: 'Mobilité Professionnelle' },
-  }
-},
+    gallery: {
+      eyebrow: 'ILS NOUS FONT CONFIANCE',
+      titlePrefix: 'Nos ',
+      titleItal: 'clients.',
+      intro: 'Des leaders du Sénégal et du Sahel qui nous confient la sécurisation de leurs infrastructures critiques.',
+      clients: {
+        'AFRI-RH': { sub: 'RH & Conseil' },
+        'AFRILAND': { sub: 'Immobilier & Bâtiment' },
+        'GODIFA': { sub: 'Technologies & Innovation' },
+        'ICP': { sub: 'Conseil & Projets' },
+        'NBW': { sub: 'Service Juridique' },
+        'AL AMINE': { sub: 'GED & Archivage' },
+        'KAI': { sub: 'Transport & Mobilité' },
+        'KPMG': { sub: 'Audit & Conseil' },
+        'NOVAGO': { sub: 'Mobilité Professionnelle' },
+      }
+    },
     partners: {
       eyebrow: 'ÉCOSYSTÈME PARTENAIRES',
       titlePrefix: 'Nos ',
@@ -156,7 +265,7 @@ gallery: {
       eyebrow:'NOTRE PRÉSENCE RÉGIONALE', title:'Ancrage', titleItal:'Sahel.',
       intro:'Une couverture géographique en expansion pour servir les entreprises de toute la région sahélienne.',
       activeLabel:'Présence active', pendingLabel:'En développement',
-    active:[
+      active:[
         {code:'SN',name:'Sénégal',status:'Siège',flagUrl:'https://flagcdn.com/w40/sn.png',colors:['#009E49','#FDEF42','#E31B23']},
         {code:'GM',name:'Gambie',status:'Actif',flagUrl:'https://flagcdn.com/w40/gm.png',colors:['#3A7728','#0C1C8C','#3A7728']},
         {code:'GN',name:'Guinée',status:'Actif',flagUrl:'https://flagcdn.com/w40/gn.png',colors:['#CE1126','#FCD116','#009460']}
@@ -193,7 +302,7 @@ gallery: {
         { bracket:'Green Energy', pre:'Sustainable future,', line1:'Solar', accent1:'power', line2:'serving', accent2:'the Sahel.', lead:"EPC + financing, micro-grids, battery storage — measurable energy autonomy with a concrete ESG impact.", floater:'Solar EPC' },
       ],
       ticker:['Information Technology','CFO, CFA & CVC','Renewable Energy','Lift Technical Control','Energy Audit','Managed Services','24/7 Support','IT Outsourcing'],
-      ctaServices:'Our services', ctaContact:'Contact us',
+      ctaServices:'Our services', ctaContact:'Discover our expertises',
     },
     about: {
       eyebrow:'WHO WE ARE', title:'About Teranga Technology & Energy',
@@ -219,15 +328,125 @@ gallery: {
       items:[{v:'6',lbl:'Team members',sub:'Certified experts'},{v:'8',lbl:'Clients',sub:'Businesses'},{v:'6+',lbl:'Sahel countries',sub:'Regional coverage'},{v:'98%',lbl:'SLA Guaranteed',sub:'Availability'},{v:'24/7',lbl:'Support',sub:'Continuous assistance'},{v:'4',lbl:'Expertise areas',sub:'Complementary domains'}],
     },
     expertises: {
-      eyebrow:'WHAT WE DO', title:'Our areas of ', titleItal:'expertise.',
+      eyebrow:'WHAT WE DO',
+      title:'Our areas of ',
+      titleItal:'expertise.',
       intro:'Integrated solutions to secure and optimise your critical infrastructure.',
       ctaAudit:'Request an audit',
-      items:[
-        {id:'ict',label:'ICT',title:'Information Technology',quote:"Your network never stops. Neither does your business.",desc:"Robust infrastructure for a connected, high-performing organisation — designed, deployed and supervised by our certified teams.",points:['MPS — Managed Print Services','IT Outsourcing & 24/7 Support','Structured network cabling','Network & server maintenance']},
-        {id:'energie',label:'Energy',title:'Energy Solutions',quote:"Critical energy mastered for total continuity.",desc:"Ensure the availability and quality of your electrical power. From audit to deployment, we secure the power supply for your strategic sites.",points:['Energy audit & efficiency','UPS (all capacities)','Industrial generators','Voltage regulators']},
-        {id:'renouvelables',label:'Renewables',title:'Solar & Sustainable Energy',quote:"The Sahel's future is built on clean energy.",desc:"Photovoltaic solutions for measurable energy autonomy and a controlled carbon footprint — from residential to industrial.",points:['EPC — Engineering, Procurement, Construction','EPC + Structured financing','Solar Home System','Micro-grids & battery storage']},
-        {id:'lift',label:'Technical Control',title:'Safety & Compliance',quote:'Vertical safety — a non-negotiable requirement.',desc:'Guarantee the compliance and safety of your equipment to the most demanding international standards — EN 81-20 / EN 81-50.',points:['Inspection & certification','Periodic inspections','EN 81-20 / EN 81-50 compliance','Lift safety audit']},
-      ],
+      items: [
+        {
+          id: 'ict',
+          label: 'ICT',
+          title: 'Information Technology',
+          quote: "Your network never stops. Neither does your business.",
+          desc: "Robust infrastructure for a connected, high-performing organisation — designed, deployed and supervised by our certified teams.",
+          subs: [
+            {
+              title: 'MPS (Managed Print Services)',
+              points: ['CAPEX / OPEX', 'Multifunction, scanners, production printers', 'Maintenance', 'Leasing'],
+              brands: 'Ricoh, Epson, Riso'
+            },
+            {
+              title: 'Workstations & Servers',
+              points: ['Dell, HP, Lenovo', 'Dell, HP, IBM', 'OPEX packages'],
+              brands: 'Dell, HP, Lenovo, IBM'
+            },
+            {
+              title: 'Networks & Security',
+              points: ['Network equipment', 'Network security', 'Firewalls, switches, Wi‑Fi'],
+              brands: 'Cisco, Fortinet, Ubiquiti'
+            },
+            {
+              title: 'Network Cabling',
+              points: ['Copper & fiber optic', 'Patch panels', 'Certification'],
+              brands: 'Legrand, Nexans, Belden'
+            },
+            {
+              title: 'Cloud, Virtualization & IT Management',
+              points: ['Helpdesk 24/7', 'VMware, Microsoft Azure', 'Cybersecurity'],
+              brands: 'Microsoft, VMware'
+            }
+          ]
+        },
+        {
+          id: 'energie',
+          label: 'Energy',
+          title: 'Energy Solutions',
+          quote: "Critical energy mastered for total continuity.",
+          desc: "Ensure the availability and quality of your electrical power. From audit to deployment, we secure the power supply for your strategic sites.",
+          subs: [
+            {
+              title: 'High Current (CFO)',
+              points: ['UPS, generators', 'Voltage regulators', 'Cabling, switchboards', 'Preventive & corrective maintenance'],
+              brands: 'GE, Pramac, Kohler, Generac, APC, Eaton, Schneider, Socomec, Cummins, FG Wilson, Himoinsa, Eneria'
+            },
+            {
+              title: 'Low Current (CFA)',
+              points: ['Access control', 'Fire detection', 'CCTV, intrusion detection', 'CFA cabling'],
+              brands: 'Honeywell, Hikvision, Axis, Vivotek, Paradox, Texecom, Siemens, Esser'
+            },
+            {
+              title: 'HVAC',
+              points: ['Air conditioning, chillers', 'Cooling cabinets', 'Installation & maintenance'],
+              brands: 'Daikin, Carrier, Airwell, Lennox'
+            },
+            {
+              title: 'Energy Audit',
+              points: ['Consumption analysis & ROI', 'Real-time monitoring', 'OPEX packages']
+            }
+          ]
+        },
+        {
+          id: 'renouvelables',
+          label: 'Renewables',
+          title: 'Solar & Sustainable Energy',
+          quote: "The Sahel's future is built on clean energy.",
+          desc: "Photovoltaic solutions for measurable energy autonomy and a controlled carbon footprint — from residential to industrial.",
+          subs: [
+            {
+              title: 'Solar Photovoltaic',
+              points: ['On‑Grid, Off‑Grid, Hybrid', 'Turnkey EPC', 'EPC + Financing (OPEX)'],
+              brands: 'JA Solar, Jinko, Longi'
+            },
+            {
+              title: 'Solar Home System',
+              points: ['Modular kits', 'Mobile payment (Pay‑as‑you‑go)', 'Remote monitoring'],
+              brands: 'Victron Energy, Bboxx, Mobisol, Schneider Electric'
+            },
+            {
+              title: 'Energy Monitoring & Reporting',
+              points: ['Real-time consumption tracking', 'TOP 5 energy-consuming equipment', 'Cost optimization', 'Custom dashboards'],
+              brands: 'Fronius, Huawei, SMA, SolarEdge, Meteocontrol, Victron'
+            },
+            {
+              title: 'Storage & Micro‑grids',
+              points: ['Li‑ion batteries, EMS/BMS', 'IoT monitoring 24/7', 'Data centers, telecoms, public lighting'],
+              brands: 'Huawei, SMA, Victron'
+            },
+            {
+              title: 'EPC & Maintenance',
+              points: ['Turnkey EPC projects', 'Remote performance tracking', 'O&M']
+            }
+          ]
+        },
+        {
+          id: 'lift',
+          label: 'Technical Control',
+          title: 'Safety & Compliance',
+          quote: 'Vertical safety — a non-negotiable requirement.',
+          desc: 'Guarantee the compliance and safety of your equipment to the most demanding international standards — EN 81‑20 / EN 81‑50.',
+          subs: [
+            {
+              title: 'Certified Services',
+              points: ['Commissioning inspection', 'Periodic controls EN 81‑20/50', 'Safety audits', 'National registry & regulatory reporting']
+            },
+            {
+              title: 'Our Commitments',
+              points: ['Approved body', 'Reports within 48h', 'Certified technicians', 'National & regional coverage']
+            }
+          ]
+        }
+      ]
     },
     services: {
       eyebrow: 'OUR SERVICE PLANS',
@@ -279,22 +498,22 @@ gallery: {
       },
     },
     gallery: {
-  eyebrow: 'THEY TRUST US',
-  titlePrefix: 'Our ',
-  titleItal: 'clients.',
-  intro: 'Leaders from Senegal and the Sahel entrust us with the security of their critical infrastructure.',
-  clients: {
-    'AFRI-RH': { sub: 'HR & Consulting' },
-    'AFRILAND': { sub: 'Real Estate & Construction' },
-    'GODIFA': { sub: 'Technology & Innovation' },
-    'ICP': { sub: 'Consulting & Projects' },
-    'NBW': { sub: 'Legal Service' },
-    'AL AMINE': { sub: 'GED & Archiving' },
-    'KAI': { sub: 'Transport & Mobility' },
-    'KPMG': { sub: 'Audit & Consulting' },
-    'NOVAGO': { sub: 'Professional Mobility' },
-  }
-},
+      eyebrow: 'THEY TRUST US',
+      titlePrefix: 'Our ',
+      titleItal: 'clients.',
+      intro: 'Leaders from Senegal and the Sahel entrust us with the security of their critical infrastructure.',
+      clients: {
+        'AFRI-RH': { sub: 'HR & Consulting' },
+        'AFRILAND': { sub: 'Real Estate & Construction' },
+        'GODIFA': { sub: 'Technology & Innovation' },
+        'ICP': { sub: 'Consulting & Projects' },
+        'NBW': { sub: 'Legal Service' },
+        'AL AMINE': { sub: 'GED & Archiving' },
+        'KAI': { sub: 'Transport & Mobility' },
+        'KPMG': { sub: 'Audit & Consulting' },
+        'NOVAGO': { sub: 'Professional Mobility' },
+      }
+    },
     partners: {
       eyebrow: 'PARTNER ECOSYSTEM',
       titlePrefix: 'Our ',
@@ -333,7 +552,7 @@ gallery: {
       eyebrow:'OUR REGIONAL PRESENCE', title:'Sahel', titleItal:'Footprint.',
       intro:'An expanding geographic coverage to serve businesses across the entire Sahelian region.',
       activeLabel:'Active presence', pendingLabel:'In development',
-     active:[
+      active:[
         {code:'SN',name:'Senegal',status:'HQ',flagUrl:'https://flagcdn.com/w40/sn.png',colors:['#009E49','#FDEF42','#E31B23']},
         {code:'GM',name:'Gambia',status:'Active',flagUrl:'https://flagcdn.com/w40/gm.png',colors:['#3A7728','#0C1C8C','#3A7728']},
         {code:'GN',name:'Guinea',status:'Active',flagUrl:'https://flagcdn.com/w40/gn.png',colors:['#CE1126','#FCD116','#009460']}
