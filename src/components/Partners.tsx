@@ -40,7 +40,7 @@ const PARTNERS_ITEMS: Record<string, PartnerItem[]> = {
   { name: 'Schneider Electric', logo: '/assets/logo partenaires/energie/schneider-electric.png', color: '#3DCD58' },
   { name: 'APC', logo: '/assets/logo partenaires/energie/apc.png', color: '#3DCD58' },
   { name: 'Socomec', logo: '/assets/logo partenaires/energie/socomec.png', color: '#003D7A' },
-  { name: 'Daikin', logo: 'https://logo-teka.com/wp-content/uploads/2026/02/daikin-horizontal-logo.svg', color: '#005A9C' },
+  { name: 'Daikin', logo: 'https://logos-marques.com/wp-content/uploads/2021/02/Daikin-logo.png', color: '#005A9C' },
   { name: 'Carrier', logo: 'https://upload.wikimedia.org/wikipedia/commons/8/8f/Logo_of_the_Carrier_Corporation.svg', color: '#E32219' },
   { name: 'SDMO', logo: 'https://www.solaris-store.com/images/brands/sdmo.webp', color: '#003399' },
 ],
