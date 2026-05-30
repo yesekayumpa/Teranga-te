@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { useI18n } from '../context/I18nContext';
 
-// Mapping des icônes pour les sous‑services (associé au titre)
+// Mapping des icônes pour les sous‑services
 const SUB_ICON_MAP: Record<string, LucideIcon> = {
   'MPS (Managed Print Services)': Printer,
   'Workstations & Serveurs': Laptop,
@@ -42,7 +42,7 @@ const SUB_ICON_MAP: Record<string, LucideIcon> = {
   'Our Commitments': CheckCircle2,
 };
 
-// Composant pour une sous‑carte
+// Sous‑carte (inchangée)
 const SubCard: React.FC<{
   title: string;
   points: ReadonlyArray<string>;
@@ -116,7 +116,6 @@ export const ExpertiseSection: React.FC = () => {
 
   const cur = ex.items.find((e) => e.id === activeId) ?? ex.items[0];
 
-  // Map des icônes pour les onglets
   const tabIconMap: Record<string, LucideIcon> = {
     ict: Monitor,
     energie: Zap,
@@ -124,7 +123,6 @@ export const ExpertiseSection: React.FC = () => {
     lift: ShieldCheck,
   };
 
-  // URLs des images (statiques car propres à chaque expertise)
   const imageMap: Record<string, string> = {
     ict: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/expertise-ict-fBaDApo4qym68m9DBUzyBE.webp',
     energie: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/expertise-energy-QxbZZfUAeoVkPzsMTwjhyn.webp',
@@ -132,7 +130,6 @@ export const ExpertiseSection: React.FC = () => {
     lift: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/inspection-ascenseurs_8f6624e3.png',
   };
 
-  // Couleur de badge par expertise
   const badgeColorMap: Record<string, string> = {
     ict: 'var(--navy-900)',
     energie: '#B8860B',
@@ -170,9 +167,10 @@ export const ExpertiseSection: React.FC = () => {
           })}
         </div>
 
+        {/* Carte unique : image pleine largeur + contenu texte en dessous */}
         <div className="exp-card reveal in" key={cur.id} ref={cardRef}>
-          {/* Côté image */}
-          <div className="img-side">
+          {/* Bloc image (pleine largeur) */}
+          <div className="exp-card__image">
             <img src={imageMap[cur.id]} alt={cur.title} referrerPolicy="no-referrer" />
             <span className="badge" style={{ background: badgeColorMap[cur.id], color: '#fff' }}>
               {cur.label}
@@ -183,8 +181,8 @@ export const ExpertiseSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Côté texte avec sous‑services */}
-          <div className="text-side" style={{ padding: '32px 32px 32px', overflow: 'auto', maxHeight: 600 }}>
+          {/* Bloc texte (sous l'image) */}
+          <div className="exp-card__content" style={{ padding: '32px 32px 32px' }}>
             <p className="lead" style={{ marginBottom: 24 }}>{cur.desc}</p>
 
             <div style={{
@@ -197,7 +195,7 @@ export const ExpertiseSection: React.FC = () => {
                   key={sub.title}
                   title={sub.title}
                   points={sub.points}
-                  brands={('brands' in sub ? sub.brands : undefined)}
+                  brands={'brands' in sub ? sub.brands : undefined}
                   accentColor={cur.id === 'renouvelables' ? '#4A7C40' : undefined}
                 />
               ))}
