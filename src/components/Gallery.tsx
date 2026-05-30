@@ -17,6 +17,7 @@ const CLIENTS: Client[] = [
   { name: 'KAI',      accent: '#7AB55C', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/kai-nu-dem-logo_192e88c7.png' },
   { name: 'KPMG',     accent: '#00338D', logo: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663476210552/X8H4fjGbsgzCUU4Ftp9pLB/s4TCDTV7TKKT_725f6646.png' },
   { name: 'NOVAGO',   accent: '#2E4A7A', logo: 'https://www.hitech.fr/wp-content/uploads/2024/08/marche-location-vehicule-afrique.webp' },
+  { name: 'Club Med', accent: '#004E9E', logo: 'https://awards.brandingforum.org/wp-content/uploads/2016/05/Club-Med-Logo-1-1024x1024.jpg' },
 ];
 
 export const Gallery: React.FC = () => {
@@ -26,7 +27,6 @@ export const Gallery: React.FC = () => {
   return (
     <section id="references" className="section section--cream">
       <div className="container">
-        {/* HEADER */}
         <div className="section-head reveal" data-reveal>
           <span className="eyebrow">
             <span className="bar" />
@@ -39,11 +39,11 @@ export const Gallery: React.FC = () => {
           <p>{gallery.intro}</p>
         </div>
 
-        {/* GRID */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 280px))',
+            justifyContent: 'center',
             gap: 26,
             marginTop: 52,
           }}
@@ -71,6 +71,7 @@ export const Gallery: React.FC = () => {
                   textAlign: 'center',
                   transition: 'transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease',
                   boxShadow: '0 2px 10px rgba(15,23,42,0.03)',
+                  width: '100%',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-6px)';
@@ -83,7 +84,6 @@ export const Gallery: React.FC = () => {
                   e.currentTarget.style.borderColor = '#EFE7DC';
                 }}
               >
-                {/* Glow subtil */}
                 <div
                   style={{
                     position: 'absolute',
@@ -92,8 +92,6 @@ export const Gallery: React.FC = () => {
                     pointerEvents: 'none',
                   }}
                 />
-
-                {/* Logo */}
                 {c.logo ? (
                   <img
                     src={c.logo}
@@ -130,8 +128,6 @@ export const Gallery: React.FC = () => {
                     {c.name}
                   </div>
                 )}
-
-                {/* Sous-titre traduit */}
                 <div
                   style={{
                     fontSize: 15,
@@ -144,8 +140,6 @@ export const Gallery: React.FC = () => {
                 >
                   {clientSub}
                 </div>
-
-                {/* Barre accent */}
                 <span
                   style={{
                     position: 'absolute',
