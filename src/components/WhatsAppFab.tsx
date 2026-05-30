@@ -25,7 +25,7 @@ export const WhatsAppButton = () => {
 
   const toggleModal = () => setIsOpen(!isOpen);
   const sendMessage = () => {
-    const url = `https://wa.me/221338295806?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/221773372628?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
     // Optionnel : fermer le modal après envoi
     setIsOpen(false);
