@@ -225,6 +225,7 @@ export const translations = {
         'KAI': { sub: 'Transport & Mobilité' },
         'KPMG': { sub: 'Audit & Conseil' },
         'NOVAGO': { sub: 'Mobilité Professionnelle' },
+        'Club Med': { sub: 'Hôtellerie & Tourisme' },
       }
     },
     partners: {
@@ -512,6 +513,7 @@ export const translations = {
         'KAI': { sub: 'Transport & Mobility' },
         'KPMG': { sub: 'Audit & Consulting' },
         'NOVAGO': { sub: 'Professional Mobility' },
+        'Club Med': { sub: 'Hospitality & Tourism' },
       }
     },
     partners: {
