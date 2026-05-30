@@ -3,8 +3,7 @@ import { Play } from 'lucide-react';
 import { useI18n } from '../context/I18nContext';
 
 const VIDEO_URL =
-  'https://qxxcxyoccysksywoigww.supabase.co/storage/v1/object/sign/teranga/mp_.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OGJkYTcxNy03Y2UxLTRiMjAtYWNhZS03NTMwOWJkMDBkMzEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZXJhbmdhL21wXy5tcDQiLCJpYXQiOjE3NzkzMDgzODIsImV4cCI6MTc3OTkxMzE4Mn0.7QaUEPM7oFsQo1nWHfKLQaDTsoKW0EcN5bNDwOFVA_Y';
-
+ 'https://qxxcxyoccysksywoigww.supabase.co/storage/v1/object/sign/teranga/mp_.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OGJkYTcxNy03Y2UxLTRiMjAtYWNhZS03NTMwOWJkMDBkMzEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ0ZXJhbmdhL21wXy5tcDQiLCJpYXQiOjE3ODAxNDQzNDksImV4cCI6MTgxMTY4MDM0OX0.TMmIV6mXf4W0s_u1l5bxRucXJ3hJhzEp-GFPwVJ32WM';
 const scrollTo = (id: string) => {
   const el = document.getElementById(id);
   if (!el) return;
