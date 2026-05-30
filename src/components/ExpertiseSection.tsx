@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import {
   Monitor, Zap, Sun, ShieldCheck,
   Printer, Laptop, ShieldAlert, Cable, Cloud,
@@ -9,7 +10,7 @@ import {
 } from 'lucide-react';
 import { useI18n } from '../context/I18nContext';
 
-// Mapping des icônes pour les sous‑services
+// Mapping des icônes pour les sous‑services (identique)
 const SUB_ICON_MAP: Record<string, LucideIcon> = {
   'MPS (Managed Print Services)': Printer,
   'Workstations & Serveurs': Laptop,
@@ -42,69 +43,95 @@ const SUB_ICON_MAP: Record<string, LucideIcon> = {
   'Our Commitments': CheckCircle2,
 };
 
-// Sous‑carte (inchangée)
+// Sous‑carte améliorée avec animations Framer Motion
 const SubCard: React.FC<{
   title: string;
   points: ReadonlyArray<string>;
   brands?: string;
   accentColor?: string;
-}> = ({ title, points, brands, accentColor }) => {
+  index: number;
+}> = ({ title, points, brands, accentColor, index }) => {
   const Ico = SUB_ICON_MAP[title] || FileCheck2;
   const accent = accentColor ?? 'var(--navy-900)';
   const bgAccent = accentColor ? `${accentColor}18` : 'rgba(11,17,30,0.07)';
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-20px 0px' });
 
   return (
-    <div style={{
-      background: '#fff',
-      border: '1px solid var(--line)',
-      borderRadius: 20,
-      padding: '24px 24px 20px',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 0,
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-        <div style={{
-          width: 44, height: 44, borderRadius: 14,
-          background: bgAccent,
-          display: 'grid', placeItems: 'center',
-          flexShrink: 0,
-        }}>
-          <Ico size={20} color={accent} />
-        </div>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.25, 1, 0.5, 1] }}
+      whileHover={{
+        y: -8,
+        transition: { duration: 0.2 },
+        boxShadow: `0 24px 48px -12px ${accent}40, 0 0 0 1px ${accent}80`,
+        borderColor: 'transparent',
+      }}
+      style={{
+        background: '#fff',
+        border: '1px solid var(--line)',
+        borderRadius: 24,
+        padding: '28px 24px 24px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 0,
+        transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
+        cursor: 'default',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
+        <motion.div
+          whileHover={{ rotate: -6, scale: 1.08 }}
+          transition={{ type: 'spring', stiffness: 300 }}
+          style={{
+            width: 48, height: 48, borderRadius: 16,
+            background: bgAccent,
+            display: 'grid', placeItems: 'center',
+            flexShrink: 0,
+          }}
+        >
+          <Ico size={22} color={accent} />
+        </motion.div>
         <h4 style={{
-          fontSize: 15, fontWeight: 800, color: 'var(--navy-900)',
+          fontSize: 16, fontWeight: 800, color: 'var(--navy-900)',
           margin: 0, lineHeight: 1.3,
         }}>
           {title}
         </h4>
       </div>
 
-      <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 18px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         {points.map((point) => (
-          <li key={point} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: 'var(--slate)', lineHeight: 1.4 }}>
-            <span style={{ color: 'var(--gold-500)', fontWeight: 700, fontSize: 14, lineHeight: 1, marginTop: 1, flexShrink: 0 }}>✓</span>
+          <li key={point} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: 'var(--slate)', lineHeight: 1.45 }}>
+            <span style={{ color: 'var(--gold-500)', fontWeight: 700, fontSize: 15, lineHeight: 1, marginTop: 2, flexShrink: 0 }}>✓</span>
             {point}
           </li>
         ))}
       </ul>
 
       {brands && (
-        <div style={{
-          borderTop: '1px solid var(--line)',
-          paddingTop: 12,
-          marginTop: 'auto',
-          fontSize: 11,
-          color: 'var(--slate)',
-          lineHeight: 1.4,
-        }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          style={{
+            borderTop: '1px solid var(--line)',
+            paddingTop: 14,
+            marginTop: 'auto',
+            fontSize: 11,
+            color: 'var(--slate)',
+            lineHeight: 1.4,
+          }}
+        >
           <span style={{ fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold-600)', fontSize: 10 }}>
             Marques :{' '}
           </span>
           {brands}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 
@@ -112,7 +139,9 @@ export const ExpertiseSection: React.FC = () => {
   const { t } = useI18n();
   const ex = t.expertises;
   const [activeId, setActiveId] = useState<string>(ex.items[0].id);
-  const cardRef = React.useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const isSectionInView = useInView(sectionRef, { once: true, margin: '-80px 0px' });
 
   const cur = ex.items.find((e) => e.id === activeId) ?? ex.items[0];
 
@@ -137,20 +166,36 @@ export const ExpertiseSection: React.FC = () => {
     lift: 'var(--navy-900)',
   };
 
-  React.useEffect(() => {
-    if (cardRef.current) cardRef.current.classList.add('in');
+  // Animation de la carte courante
+  useEffect(() => {
+    if (cardRef.current) {
+      cardRef.current.classList.add('in');
+      // Reset et rejouer l'animation pour les sous-cartes via leur propre hook useInView
+    }
   }, [activeId]);
 
   return (
-    <section id="expertises" className="section section--cream">
+    <section id="expertises" className="section section--cream" ref={sectionRef}>
       <div className="container">
-        <div className="section-head reveal" data-reveal>
+        {/* En-tête avec animation */}
+        <motion.div
+          className="section-head"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isSectionInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.1 }}
+        >
           <span className="eyebrow"><span className="bar" />{ex.eyebrow}</span>
           <h2>{ex.title}<span className="text-ital text-gold">{ex.titleItal}</span></h2>
           <p>{ex.intro}</p>
-        </div>
+        </motion.div>
 
-        <div className="exp-tabs reveal" data-reveal>
+        {/* Tabs avec animation */}
+        <motion.div
+          className="exp-tabs"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isSectionInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           {ex.items.map((e) => {
             const Icon = tabIconMap[e.id] || Monitor;
             return (
@@ -165,55 +210,116 @@ export const ExpertiseSection: React.FC = () => {
               </button>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* Carte unique : image pleine largeur + contenu texte en dessous */}
-        <div className="exp-card reveal in" key={cur.id} ref={cardRef}>
-          {/* Bloc image (pleine largeur) */}
-          <div className="exp-card__image">
-            <img src={imageMap[cur.id]} alt={cur.title} referrerPolicy="no-referrer" />
-            <span className="badge" style={{ background: badgeColorMap[cur.id], color: '#fff' }}>
-              {cur.label}
-            </span>
-            <div className="img-content">
-              <h3>{cur.title}</h3>
-              <p className="quote">{cur.quote}</p>
+        {/* Carte principale avec image pleine largeur et contenu */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={cur.id}
+            className="exp-card"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
+            ref={cardRef}
+          >
+            {/* Bloc image amélioré : zoom au survol, dégradé plus marqué */}
+            <div className="exp-card__image" style={{ position: 'relative', overflow: 'hidden' }}>
+              <motion.img
+                src={imageMap[cur.id]}
+                alt={cur.title}
+                referrerPolicy="no-referrer"
+                whileHover={{ scale: 1.08 }}
+                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+              <div className="badge" style={{ background: badgeColorMap[cur.id], color: '#fff' }}>
+                {cur.label}
+              </div>
+              <div className="img-content">
+                <motion.h3
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                  {cur.title}
+                </motion.h3>
+                <motion.p
+                  className="quote"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                  {cur.quote}
+                </motion.p>
+              </div>
+              {/* Dégradé plus riche pour la lisibilité */}
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%)',
+                pointerEvents: 'none',
+              }} />
             </div>
-          </div>
 
-          {/* Bloc texte (sous l'image) */}
-          <div className="exp-card__content" style={{ padding: '32px 32px 32px' }}>
-            <p className="lead" style={{ marginBottom: 24 }}>{cur.desc}</p>
+            {/* Contenu texte */}
+            <div className="exp-card__content" style={{ padding: '40px 36px 44px' }}>
+              <motion.p
+                className="lead"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.5 }}
+                style={{ marginBottom: 32, fontSize: 17, lineHeight: 1.65, color: 'var(--ink-2)' }}
+              >
+                {cur.desc}
+              </motion.p>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: cur.subs.length >= 2 ? 'repeat(2, 1fr)' : '1fr',
-              gap: 14,
-            }}>
-              {cur.subs.map((sub) => (
-                <SubCard
-                  key={sub.title}
-                  title={sub.title}
-                  points={sub.points}
-                  brands={'brands' in sub ? sub.brands : undefined}
-                  accentColor={cur.id === 'renouvelables' ? '#4A7C40' : undefined}
-                />
-              ))}
+              {/* Grille des sous-cartes avec animation stagger */}
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.2 } }
+                }}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: cur.subs.length >= 2 ? 'repeat(2, 1fr)' : '1fr',
+                  gap: 24,
+                }}
+              >
+                {cur.subs.map((sub, idx) => (
+                  <SubCard
+                    key={sub.title}
+                    title={sub.title}
+                    points={sub.points}
+                    brands={'brands' in sub ? sub.brands : undefined}
+                    accentColor={cur.id === 'renouvelables' ? '#4A7C40' : undefined}
+                    index={idx}
+                  />
+                ))}
+              </motion.div>
+
+              {/* CTA amélioré */}
+              <motion.div
+                style={{ marginTop: 40, textAlign: 'center' }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                <button className="btn btn--dark" style={{ paddingLeft: 32, paddingRight: 32 }}>
+                  {ex.ctaAudit}
+                  <span className="arrow-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <line x1="7" y1="17" x2="17" y2="7"/>
+                      <polyline points="7 7 17 7 17 17"/>
+                    </svg>
+                  </span>
+                </button>
+              </motion.div>
             </div>
-
-            <div style={{ marginTop: 28 }}>
-              <button className="btn btn--dark">
-                {ex.ctaAudit}
-                <span className="arrow-circle">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <line x1="7" y1="17" x2="17" y2="7"/>
-                    <polyline points="7 7 17 7 17 17"/>
-                  </svg>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
