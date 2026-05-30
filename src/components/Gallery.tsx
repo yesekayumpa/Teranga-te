@@ -50,6 +50,31 @@ export const Gallery: React.FC = () => {
         >
           {CLIENTS.map((c, idx) => {
             const clientSub = gallery.clients[c.name as keyof typeof gallery.clients]?.sub || '';
+            const isClubMed = c.name === 'Club Med';
+            const logoStyle: React.CSSProperties = isClubMed
+              ? {
+                  width: 'auto',
+                  maxWidth: 160,
+                  maxHeight: 60,
+                  objectFit: 'contain' as React.CSSProperties['objectFit'],
+                  marginBottom: 14,
+                  position: 'relative',
+                  zIndex: 2,
+                  transition: 'transform 0.35s ease, filter 0.35s ease',
+                  filter: 'grayscale(0.05)',
+                }
+              : {
+                  width: 'auto',
+                  maxWidth: 110,
+                  maxHeight: 42,
+                  objectFit: 'contain' as React.CSSProperties['objectFit'],
+                  marginBottom: 14,
+                  position: 'relative',
+                  zIndex: 2,
+                  transition: 'transform 0.35s ease, filter 0.35s ease',
+                  filter: 'grayscale(0.05)',
+                };
+
             return (
               <div
                 key={c.name}
@@ -96,17 +121,7 @@ export const Gallery: React.FC = () => {
                   <img
                     src={c.logo}
                     alt={c.name}
-                    style={{
-                      width: 'auto',
-                      maxWidth: 110,
-                      maxHeight: 42,
-                      objectFit: 'contain',
-                      marginBottom: 14,
-                      position: 'relative',
-                      zIndex: 2,
-                      transition: 'transform 0.35s ease, filter 0.35s ease',
-                      filter: 'grayscale(0.05)',
-                    }}
+                    style={logoStyle}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'scale(1.04)';
                       e.currentTarget.style.filter = `drop-shadow(0 4px 12px ${c.accent}40)`;
