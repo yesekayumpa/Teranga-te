@@ -59,7 +59,7 @@ export const Footer: React.FC = () => {
 
   const gridTemplate = isDesktop ? '1.2fr 1fr 1fr 1fr' : isTablet ? '1fr 1fr' : '1fr';
   const footerFontSize = isMobile ? 12 : 13;
-  const logoImgHeight = isMobile ? 32 : 36;
+  const logoImgHeight = isMobile ? 64 : 72;  // 2x original (32->64, 36->72)
 
   return (
     <footer style={{

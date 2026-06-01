@@ -59,7 +59,7 @@ export const Header: React.FC = () => {
         <div className="nav-inner">
           <a href="#accueil" className="nav-logo" onClick={(e) => { e.preventDefault(); scrollTo('accueil'); }}>
             <div className="logo-pill">
-              <img src="/assets/teranga-logo.png" alt="Teranga Technology & Energy" style={{ height: 36 }} />
+              <img src="/assets/teranga-logo.png" alt="Teranga Technology & Energy" style={{ height: 72 }} />
             </div>
           </a>
 
