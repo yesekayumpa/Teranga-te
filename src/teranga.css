@@ -652,7 +652,7 @@ p {
 .logo-pill {
     background: #fff;
     border-radius: 999px;
-    padding: 6px 14px;
+    padding: 8px 14px;
     display: inline-flex;
     align-items: center;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
@@ -665,7 +665,7 @@ p {
 }
 
 .logo-pill img {
-    max-height: px;
+    max-height: 72px;
 }
 
 .nav-links {

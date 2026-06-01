@@ -90,7 +90,7 @@ export const Footer: React.FC = () => {
                     style={{
                       background: '#fff',
                       borderRadius: 999,
-                      padding: '6px 14px',
+                      padding: '8px 18px',
                       display: 'inline-flex',
                       alignItems: 'center',
                       boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
