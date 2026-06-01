@@ -191,7 +191,7 @@ export const Footer: React.FC = () => {
            <address style={{ fontStyle: 'normal', color: PALETTE.muted, display: 'flex', flexDirection: 'column', gap: 8 }}>
             <a href="tel:+221773372628" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>+221 77 337 26 28</span></a>
             <a href="tel:+221338435927" style={contactItemStyle}><Phone size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>+221 33 843 59 27</span></a>
-            <a href="mailto:contact@teranga-te.com" style={contactItemStyle}><Mail size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>moussa.tine@teranga-te.com</span></a>
+            <a href="mailto:contact@teranga-te.com" style={contactItemStyle}><Mail size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>contact@teranga-te.com</span></a>
             <div style={contactItemStyle}><MapPin size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>3 Liberté 6 extension, Dakar</span></div>
             <a href="https://www.teranga-te.com" target="_blank" rel="noopener noreferrer" style={contactItemStyle}><Globe size={14} /> <span style={{ marginLeft: 8, fontSize: footerFontSize }}>www.teranga-te.com</span></a>
           </address>
