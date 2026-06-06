@@ -27,12 +27,20 @@ export const Header: React.FC = () => {
   const { t, lang, toggle } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const active = useActiveSection(NAV_IDS);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const scrollTo = (id: string) => {
@@ -75,7 +83,6 @@ export const Header: React.FC = () => {
           </nav>
 
           <div className="nav-right">
-            {/* Lang toggle — pill cliquable FR ↔ EN */}
             <button
               onClick={toggle}
               className="lang-pill"
@@ -90,8 +97,9 @@ export const Header: React.FC = () => {
               onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}
             >
               <Phone size={14} />
-              {t.nav.contactCta}
+              {!isMobile && t.nav.contactCta}
             </a>
+
             <button className="nav-burger" onClick={() => setMobileOpen((o) => !o)} aria-label="Menu">
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -107,7 +115,6 @@ export const Header: React.FC = () => {
             {it.name}
           </a>
         ))}
-        {/* Lang toggle dans le menu mobile aussi */}
         <button onClick={() => { toggle(); setMobileOpen(false); }}
           style={{ cursor:'pointer', background:'none', border:'none', color:'inherit', fontSize:14, fontWeight:700, textAlign:'left', padding:'16px 24px', display:'flex', alignItems:'center', gap:8 }}
         >
