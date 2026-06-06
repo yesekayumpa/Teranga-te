@@ -2317,6 +2317,28 @@ p {
     left: 150%;
 }
 
+.logo-img {
+    height: 72px;
+    width: auto;
+    transition: height 0.2s var(--ease);
+}
+
+@media (max-width: 720px) {
+    .logo-img {
+        height: 48px;
+        /* Valeur plus petite pour mobile */
+    }
+}
+
+
+/* Ajustement supplémentaire pour très petits écrans */
+
+@media (max-width: 480px) {
+    .logo-img {
+        height: 40px;
+    }
+}
+
 
 /* Logo image */
 
