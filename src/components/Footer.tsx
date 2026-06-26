@@ -153,7 +153,7 @@ export const Footer: React.FC = () => {
                 style={{ width: 80, height: 80, display: 'block', borderRadius: 12, marginBottom: 8 }}
               />
               <span style={{ fontSize: 10, color: PALETTE.muted, wordBreak: 'break-all' }}>
-                Teranga-Te 
+                teranga-te.com
               </span>
             </div>
           </div>
