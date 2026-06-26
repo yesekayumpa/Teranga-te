@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play } from 'lucide-react';
 import { useI18n } from '../context/I18nContext';
+import { cn } from "@/lib/utils";
 
 const VIDEO_URL = '/video_sans_logo_sans_son.mp4';
 const scrollTo = (id: string) => {
@@ -37,7 +38,7 @@ export const Hero: React.FC = () => {
   const s = slides[i];
 
   return (
-    <section id="accueil" className="hero hero--fullvideo">
+    <section id="accueil" className={cn('hero', 'hero--fullvideo')}>
 
       {/* ── Vidéo plein-écran en arrière-plan ────────────────────── */}
       <div className="hero-video-bg">
@@ -52,7 +53,7 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* ── Contenu centré par-dessus la vidéo ───────────────────── */}
-      <div className="container hero-inner hero-inner--fullvideo">
+      <div className={cn('container', 'hero-inner', 'hero-inner--fullvideo')}>
 
         {/* Colonne texte */}
         <div className="hero-text-col">
@@ -74,19 +75,19 @@ export const Hero: React.FC = () => {
           </p>
 
           <div className="hero-ctas">
-            <button className="btn btn--gold" onClick={() => scrollTo('expertises')}>
+            <button className={cn('btn', 'btn--gold')} onClick={() => scrollTo('expertises')}>
               {t.hero.ctaServices}
               <span className="arrow-circle">
                 <Play size={11} fill="currentColor" />
               </span>
             </button>
-            <button className="btn btn--ghost-light" onClick={() => scrollTo('contact')}>
+            <button className={cn('btn', 'btn--ghost-light')} onClick={() => scrollTo('contact')}>
               {t.hero.ctaContact}
             </button>
           </div>
 
           {/* Dots navigation */}
-          <div className="hero-dots hero-dots--inline">
+          <div className={cn('hero-dots', 'hero-dots--inline')}>
             {slides.map((_, idx) => (
               <button
                 key={idx}
@@ -99,15 +100,15 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Floaters & Badge — toujours présents, positionnés par CSS */}
-        {/* <div className="hero-side hero-side--overlay" aria-hidden="true">
-          <div className="hero-floater hero-floater--br float-y">
+        {/* <div className={cn('hero-side', 'hero-side--overlay')} aria-hidden="true">
+          <div className={cn('hero-floater', 'hero-floater--br', 'float-y')}>
             <span className="dotg" />
             {s.floater}
           </div>
-          <div className="hero-floater hero-floater--right float-y" style={{ animationDelay: '1.2s' }}>
+          <div className={cn('hero-floater', 'hero-floater--right', 'float-y')} style={{ animationDelay: '1.2s' }}>
             SLA 98%+
           </div>
-          <div className="hero-badge spin-slow">
+          <div className={cn('hero-badge', 'spin-slow')}>
             • TERANGA •<br />TECHNOLOGY<br />• &amp; ENERGY •
           </div>
         </div> */}
