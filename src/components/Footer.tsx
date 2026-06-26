@@ -147,19 +147,11 @@ export const Footer: React.FC = () => {
             </div>
 
             <div style={{ marginTop: 16, textAlign: 'left' }}>
-              <a
-                href="https://teranga-te.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Scanner ou cliquer pour visiter teranga-te.com"
-                style={{ display: 'inline-block' }}
-              >
-                <img
-                  src="https://quickchart.io/qr?size=100&text=https://teranga-te.com&margin=2"
-                  alt="QR code vers teranga-te.com"
-                  style={{ width: 80, height: 80, display: 'block', borderRadius: 12, marginBottom: 8 }}
-                />
-              </a>
+              <img
+                src="https://quickchart.io/qr?size=100&text=https://teranga-te.com&margin=2"
+                alt="QR code vers teranga-te.vercel.app"
+                style={{ width: 80, height: 80, display: 'block', borderRadius: 12, marginBottom: 8 }}
+              />
               <span style={{ fontSize: 10, color: PALETTE.muted, wordBreak: 'break-all' }}>
                 teranga-te.com
               </span>
