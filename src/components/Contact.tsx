@@ -69,10 +69,12 @@ export const Contact: React.FC = () => {
         body: JSON.stringify(formData)
       });
       
+      const data = await response.json();
+      
       if (response.ok) {
         next();
       } else {
-        alert('Erreur lors de l\'envoi du message');
+        alert(`Erreur: ${data.error || 'Erreur lors de l\'envoi du message'}${data.details ? ` - ${data.details}` : ''}`);
       }
     } catch (error) {
       console.error('Error:', error);
