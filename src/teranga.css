@@ -3928,6 +3928,7 @@ p {
     inset: 0;
     background: linear-gradient(135deg, rgba(201, 161, 75, 0.08), transparent, rgba(201, 161, 75, 0.08));
     z-index: 0;
+    pointer-events: none;
     animation: gradientShift 10s ease-in-out infinite;
 }
 
