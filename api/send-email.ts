@@ -1,21 +1,110 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import nodemailer from 'nodemailer';
 
+// Fonction de logging détaillé
+const logDebug = (step: string, data: any) => {
+  console.log(`[DEBUG ${new Date().toISOString()}] ${step}:`, JSON.stringify(data, null, 2));
+};
+
+const logError = (step: string, error: any) => {
+  console.error(`[ERROR ${new Date().toISOString()}] ${step}:`, {
+    name: error.name,
+    message: error.message,
+    code: error.code,
+    errno: error.errno,
+    syscall: error.syscall,
+    hostname: error.hostname,
+    stack: error.stack,
+    response: error.response,
+    command: error.command,
+    responseCode: error.responseCode,
+  });
+};
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  
+  logDebug('REQUEST_START', {
+    requestId,
+    method: req.method,
+    headers: req.headers,
+    body: req.body,
+    timestamp: new Date().toISOString(),
+  });
+
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    logDebug('METHOD_NOT_ALLOWED', { requestId, method: req.method });
+    return res.status(405).json({ 
+      error: 'Method not allowed',
+      technical: {
+        requestId,
+        receivedMethod: req.method,
+        expectedMethod: 'POST',
+        timestamp: new Date().toISOString(),
+      }
+    });
   }
 
   try {
     const { name, company, email, domain, formula, message } = req.body;
 
+    logDebug('VALIDATION_INPUT', { requestId, formData: { name, company, email, domain, formula, messageLength: message?.length } });
+
     if (!name || !email || !message) {
-      return res.status(400).json({ error: 'Missing required fields' });
+      logDebug('VALIDATION_FAILED', { requestId, missingFields: { name: !name, email: !email, message: !message } });
+      return res.status(400).json({ 
+        error: 'Missing required fields',
+        technical: {
+          requestId,
+          validation: {
+            name: name ? 'present' : 'missing',
+            email: email ? 'present' : 'missing',
+            message: message ? 'present' : 'missing',
+          },
+          timestamp: new Date().toISOString(),
+        }
+      });
     }
 
-    const recipients = [
-      'contact@teranga-te.com'
-    ];
+    const recipients = ['contact@teranga-te.com'];
+    logDebug('SMTP_CONFIG_START', { requestId, recipients });
+
+    // Vérification des variables d'environnement
+    const smtpConfig = {
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: process.env.SMTP_SECURE,
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS ? '***HIDDEN***' : 'MISSING',
+      from: process.env.SMTP_FROM,
+    };
+
+    logDebug('SMTP_ENV_VARS', { requestId, config: smtpConfig });
+
+    if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      logDebug('SMTP_CONFIG_MISSING', { 
+        requestId, 
+        missing: {
+          host: !process.env.SMTP_HOST,
+          user: !process.env.SMTP_USER,
+          pass: !process.env.SMTP_PASS,
+        }
+      });
+      return res.status(500).json({ 
+        error: 'SMTP configuration incomplete',
+        technical: {
+          requestId,
+          missingEnvVars: {
+            SMTP_HOST: !process.env.SMTP_HOST,
+            SMTP_USER: !process.env.SMTP_USER,
+            SMTP_PASS: !process.env.SMTP_PASS,
+          },
+          timestamp: new Date().toISOString(),
+        }
+      });
+    }
+
+    logDebug('TRANSPORTER_CREATION', { requestId, host: process.env.SMTP_HOST, port: process.env.SMTP_PORT });
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -25,14 +114,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
     });
 
-    console.log('Configuration SMTP:', {
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      user: process.env.SMTP_USER,
-      from: process.env.SMTP_FROM,
-    });
+    logDebug('TRANSPORTER_CREATED', { requestId });
+
+    // Vérification de la connexion
+    logDebug('SMTP_VERIFY_START', { requestId });
+    try {
+      await transporter.verify();
+      logDebug('SMTP_VERIFY_SUCCESS', { requestId });
+    } catch (verifyError: any) {
+      logError('SMTP_VERIFY_FAILED', verifyError);
+      return res.status(500).json({ 
+        error: 'SMTP connection verification failed',
+        technical: {
+          requestId,
+          verifyError: {
+            name: verifyError.name,
+            message: verifyError.message,
+            code: verifyError.code,
+            errno: verifyError.errno,
+            syscall: verifyError.syscall,
+            hostname: verifyError.hostname,
+          },
+          timestamp: new Date().toISOString(),
+        }
+      });
+    }
 
     const mailOptions = {
       from: process.env.SMTP_FROM || email,
@@ -60,13 +174,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       `,
     };
 
-    // Envoyer l'email aux destinataires internes
-    console.log('Envoi email interne aux destinataires:', recipients);
-    await transporter.sendMail(mailOptions);
-    console.log('Email interne envoyé avec succès');
+    logDebug('SEND_EMAIL_INTERNAL_START', { requestId, recipients, to: mailOptions.to });
 
-    // Envoyer un email de confirmation au client depuis l'entreprise
-    console.log('Envoi email de confirmation au client:', email);
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      logDebug('SEND_EMAIL_INTERNAL_SUCCESS', { 
+        requestId, 
+        messageId: info.messageId,
+        response: info.response,
+        accepted: info.accepted,
+        rejected: info.rejected,
+      });
+    } catch (sendError: any) {
+      logError('SEND_EMAIL_INTERNAL_FAILED', sendError);
+      return res.status(500).json({ 
+        error: 'Failed to send internal email',
+        technical: {
+          requestId,
+          sendError: {
+            name: sendError.name,
+            message: sendError.message,
+            code: sendError.code,
+            errno: sendError.errno,
+            syscall: sendError.syscall,
+            hostname: sendError.hostname,
+            response: sendError.response,
+            responseCode: sendError.responseCode,
+            command: sendError.command,
+          },
+          timestamp: new Date().toISOString(),
+        }
+      });
+    }
+
     const confirmationMailOptions = {
       from: process.env.SMTP_FROM,
       to: email,
@@ -90,20 +230,47 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       `,
     };
 
-    await transporter.sendMail(confirmationMailOptions);
-    console.log('Email de confirmation envoyé avec succès à:', email);
+    logDebug('SEND_EMAIL_CONFIRMATION_START', { requestId, to: email });
+
+    try {
+      const confirmInfo = await transporter.sendMail(confirmationMailOptions);
+      logDebug('SEND_EMAIL_CONFIRMATION_SUCCESS', { 
+        requestId, 
+        messageId: confirmInfo.messageId,
+        response: confirmInfo.response,
+      });
+    } catch (confirmError: any) {
+      logError('SEND_EMAIL_CONFIRMATION_FAILED', confirmError);
+      // On continue même si l'email de confirmation échoue
+      logDebug('SEND_EMAIL_CONFIRMATION_FAILED_CONTINUE', { requestId });
+    }
     
-    res.json({ success: true, message: 'Email sent successfully' });
-  } catch (error: any) {
-    console.error('Error sending email:', error);
-    console.error('Error details:', {
-      message: error.message,
-      code: error.code,
-      response: error.response,
+    logDebug('REQUEST_SUCCESS', { requestId });
+    res.json({ 
+      success: true, 
+      message: 'Email sent successfully',
+      technical: {
+        requestId,
+        timestamp: new Date().toISOString(),
+      }
     });
+  } catch (error: any) {
+    logError('UNEXPECTED_ERROR', error);
     res.status(500).json({ 
-      error: 'Failed to send email',
-      details: error.message 
+      error: 'Unexpected error occurred',
+      technical: {
+        requestId,
+        error: {
+          name: error.name,
+          message: error.message,
+          code: error.code,
+          errno: error.errno,
+          syscall: error.syscall,
+          hostname: error.hostname,
+          stack: error.stack,
+        },
+        timestamp: new Date().toISOString(),
+      }
     });
   }
 }
