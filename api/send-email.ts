@@ -91,7 +91,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         cc: email,
         replyTo: email,
         subject: `Nouvelle demande de contact - ${name}`,
-        html: `
+        template: process.env.RESEND_TEMPLATE_INTERNAL || null,
+        html: process.env.RESEND_TEMPLATE_INTERNAL ? undefined : `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #C29941;">Nouvelle demande de contact</h2>
             <div style="background: #f5f5f5; padding: 20px; border-radius: 8px;">
@@ -109,12 +110,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             </p>
           </div>
         `,
+        dynamicTemplateData: process.env.RESEND_TEMPLATE_INTERNAL ? {
+          name,
+          company: company || 'Non spécifié',
+          email,
+          domain: domain || 'Non spécifié',
+          formula: formula || 'Non spécifié',
+          message,
+          date: new Date().toLocaleDateString('fr-FR'),
+          subject: `Nouvelle demande de contact - ${name}`,
+        } : undefined,
       });
 
       logDebug('SEND_EMAIL_INTERNAL_SUCCESS', { 
         requestId, 
         messageId: internalEmail.data?.id,
         response: internalEmail,
+        usedTemplate: !!process.env.RESEND_TEMPLATE_INTERNAL,
       });
     } catch (sendError: any) {
       logError('SEND_EMAIL_INTERNAL_FAILED', sendError);
@@ -141,7 +153,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         from: fromEmail,
         to: email,
         subject: 'Confirmation de votre demande - Teranga Technology & Energy',
-        html: `
+        template: process.env.RESEND_TEMPLATE_CONFIRMATION || null,
+        html: process.env.RESEND_TEMPLATE_CONFIRMATION ? undefined : `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #C29941;">Merci pour votre message !</h2>
             <div style="background: #f5f5f5; padding: 20px; border-radius: 8px;">
@@ -158,12 +171,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             </p>
           </div>
         `,
+        dynamicTemplateData: process.env.RESEND_TEMPLATE_CONFIRMATION ? {
+          name,
+          email,
+          message,
+          company: company || 'Non spécifié',
+          year: new Date().getFullYear(),
+        } : undefined,
       });
 
       logDebug('SEND_EMAIL_CONFIRMATION_SUCCESS', { 
         requestId, 
         messageId: confirmationEmail.data?.id,
         response: confirmationEmail,
+        usedTemplate: !!process.env.RESEND_TEMPLATE_CONFIRMATION,
       });
     } catch (confirmError: any) {
       logError('SEND_EMAIL_CONFIRMATION_FAILED', confirmError);
