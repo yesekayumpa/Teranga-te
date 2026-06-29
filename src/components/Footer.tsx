@@ -148,13 +148,8 @@ export const Footer: React.FC = () => {
 
             <div style={{ marginTop: 16, textAlign: 'left' }}>
               <img
-<<<<<<< HEAD
-                src="https://quickchart.io/qr?size=100&text=https://teranga-te.com&margin=2"
-                alt="QR code vers teranga-te.vercel.app"
-=======
                 src="https://quickchart.io/qr?size=100&text=https://teranga-te.vercel.app&margin=2"
                 alt="QR code vers teranga-te.com"
->>>>>>> 0f37ab64775a2b742b35cd7e58ae0d1b35576b7f
                 style={{ width: 80, height: 80, display: 'block', borderRadius: 12, marginBottom: 8 }}
               />
               <span style={{ fontSize: 10, color: PALETTE.muted, wordBreak: 'break-all' }}>
