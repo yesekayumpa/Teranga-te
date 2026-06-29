@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Phone, Mail, Send, ChevronLeft, ChevronRight, CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { useI18n } from '../context/I18nContext';
+import { cn } from "@/lib/utils";
 
 const TERANGA_LAT = 14.7310;
 const TERANGA_LNG = -17.4674;
@@ -45,8 +46,41 @@ export const Contact: React.FC = () => {
   const c = t.contact;
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(1);
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    domain: '',
+    formula: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const next = () => { setDirection(1); setStep((s) => Math.min(s+1,4)); };
   const back = () => { setDirection(-1); setStep((s) => Math.max(s-1,1)); };
+  
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      const apiUrl = import.meta.env.PROD ? '/api/send-email' : 'http://localhost:3002/api/send-email';
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (response.ok) {
+        next();
+      } else {
+        alert('Erreur lors de l\'envoi du message');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Erreur de connexion au serveur');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   const variants = {
     enter:(dir:number)=>({x:dir>0?200:-200,opacity:0}),
     center:{x:0,opacity:1},
@@ -55,11 +89,11 @@ export const Contact: React.FC = () => {
   const mapsLink=`https://www.google.com/maps?q=${TERANGA_LAT},${TERANGA_LNG}`;
 
   return (
-    <section id="contact" className="section section--cream">
+    <section id="contact" className={cn('section', 'section--cream')}>
       <div className="container">
         <motion.div className="section-head" initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-80px 0px'}} transition={{duration:0.8}}>
           <span className="eyebrow"><span className="bar" />{c.eyebrow}</span>
-          <h2>{c.title} <span className="text-ital text-gold">{c.titleItal}</span></h2>
+          <h2>{c.title} <span className={cn('text-ital', 'text-gold')}>{c.titleItal}</span></h2>
           <p>{c.intro}</p>
         </motion.div>
         <motion.div className="contact-card" initial={{opacity:0,y:40}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.8,delay:0.1}}>
@@ -85,26 +119,26 @@ export const Contact: React.FC = () => {
             <AnimatePresence mode="wait" custom={direction}>
               {step===1&&<motion.div key="step1" custom={direction} variants={variants} initial="enter" animate="center" exit="exit">
                 <h3 style={{fontSize:26,marginBottom:28,fontWeight:700}}>{c.step1Title}</h3>
-                <div className="form-field"><label>{c.step1Name}</label><input type="text" placeholder={c.step1NamePh}/></div>
-                <div className="form-field"><label>{c.step1Company}</label><input type="text" placeholder={c.step1CompanyPh}/></div>
-                <div className="form-field"><label>{c.step1Email}</label><input type="email" placeholder={c.step1EmailPh}/></div>
-                <motion.button className="btn btn--gold" style={{width:'100%',justifyContent:'center',marginTop:12}} onClick={next} whileHover={{scale:1.02}} whileTap={{scale:0.98}}>{c.btnNext} <ChevronRight size={18}/></motion.button>
+                <div className="form-field"><label>{c.step1Name}</label><input type="text" placeholder={c.step1NamePh} value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})}/></div>
+                <div className="form-field"><label>{c.step1Company}</label><input type="text" placeholder={c.step1CompanyPh} value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})}/></div>
+                <div className="form-field"><label>{c.step1Email}</label><input type="email" placeholder={c.step1EmailPh} value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})}/></div>
+                <motion.button className={cn('btn', 'btn--gold')} style={{width:'100%',justifyContent:'center',marginTop:12}} onClick={next} whileHover={{scale:1.02}} whileTap={{scale:0.98}}>{c.btnNext} <ChevronRight size={18}/></motion.button>
               </motion.div>}
               {step===2&&<motion.div key="step2" custom={direction} variants={variants} initial="enter" animate="center" exit="exit">
                 <h3 style={{fontSize:26,marginBottom:28,fontWeight:700}}>{c.step2Title}</h3>
-                <div className="form-field"><label>{c.step2Domain}</label><select>{c.domains.map(d=><option key={d}>{d}</option>)}</select></div>
-                <div className="form-field"><label>{c.step2Formula}</label><select>{c.formulas.map(f=><option key={f}>{f}</option>)}</select></div>
+                <div className="form-field"><label>{c.step2Domain}</label><select value={formData.domain} onChange={(e) => setFormData({...formData, domain: e.target.value})}>{c.domains.map(d=><option key={d}>{d}</option>)}</select></div>
+                <div className="form-field"><label>{c.step2Formula}</label><select value={formData.formula} onChange={(e) => setFormData({...formData, formula: e.target.value})}>{c.formulas.map(f=><option key={f}>{f}</option>)}</select></div>
                 <div className="form-row">
                   <motion.button className="btn-back" onClick={back} whileHover={{x:-4}} whileTap={{scale:0.95}}><ChevronLeft size={20}/></motion.button>
-                  <motion.button className="btn btn--gold" style={{flex:1,justifyContent:'center'}} onClick={next} whileHover={{scale:1.02}} whileTap={{scale:0.98}}>{c.btnNext} <ChevronRight size={18}/></motion.button>
+                  <motion.button className={cn('btn', 'btn--gold')} style={{flex:1,justifyContent:'center'}} onClick={next} whileHover={{scale:1.02}} whileTap={{scale:0.98}}>{c.btnNext} <ChevronRight size={18}/></motion.button>
                 </div>
               </motion.div>}
               {step===3&&<motion.div key="step3" custom={direction} variants={variants} initial="enter" animate="center" exit="exit">
                 <h3 style={{fontSize:26,marginBottom:28,fontWeight:700}}>{c.step3Title}</h3>
-                <div className="form-field"><label>{c.step3Desc}</label><textarea rows={6} placeholder={c.step3DescPh}/></div>
+                <div className="form-field"><label>{c.step3Desc}</label><textarea rows={6} placeholder={c.step3DescPh} value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})}/></div>
                 <div className="form-row">
                   <motion.button className="btn-back" onClick={back} whileHover={{x:-4}} whileTap={{scale:0.95}}><ChevronLeft size={20}/></motion.button>
-                  <motion.button className="btn btn--gold" style={{flex:1,justifyContent:'center'}} onClick={next} whileHover={{scale:1.02}} whileTap={{scale:0.98}}>{c.btnSend} <Send size={18}/></motion.button>
+                  <motion.button className={cn('btn', 'btn--gold')} style={{flex:1,justifyContent:'center'}} onClick={handleSubmit} disabled={isSubmitting} whileHover={{scale:1.02}} whileTap={{scale:0.98}}>{isSubmitting ? 'Envoi...' : c.btnSend} <Send size={18}/></motion.button>
                 </div>
               </motion.div>}
               {step===4&&<motion.div key="step4" custom={direction} variants={variants} initial="enter" animate="center" exit="exit" className="success-state">
@@ -116,7 +150,7 @@ export const Contact: React.FC = () => {
             </AnimatePresence>
           </div>
         </motion.div>
-        <motion.div className="maps-block reveal" initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.7,delay:0.2}}>
+        <motion.div className={cn('maps-block', 'reveal')} initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.7,delay:0.2}}>
           <div className="maps-head">
             <span className="ic"><MapPin size={18}/></span>
             <div><div className="t">{c.mapsLabel}</div><div className="a">{TERANGA_LABEL} — {TERANGA_ADDRESS}</div></div>
