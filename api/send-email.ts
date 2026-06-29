@@ -14,7 +14,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const recipients = [
-      'moussa.tine@teranga-te.com',
       'contact@teranga-te.com'
     ];
 

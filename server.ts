@@ -12,7 +12,6 @@ app.use(cors());
 app.use(express.json());
 
 const recipients = [
-  'moussa.tine@teranga-te.com',
   'contact@teranga-te.com'
 ];
 
